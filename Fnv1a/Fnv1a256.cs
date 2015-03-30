@@ -26,6 +26,7 @@ namespace Fnv1a
                 BigInteger.Parse("0000000000000000000001000000000000000000000000000000000000000163", NumberStyles.AllowHexSpecifier),
                 BigInteger.Parse("0DD268DBCAAC550362D98C384C4E576CCC8B1536847B6BBB31023B4C8CAEE0535", NumberStyles.AllowHexSpecifier))
         {
+            this.HashSizeValue = 256;
         }
     }
 }

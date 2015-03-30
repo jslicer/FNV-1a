@@ -71,6 +71,7 @@ namespace Fnv1aTests
         {
             using (HashAlgorithm alg = new Fnv1a256())
             {
+                Assert.AreEqual(256, alg.HashSize);
                 return new BigInteger(alg.ComputeHash(Encoding.UTF8.GetBytes(data)));
             }
         }

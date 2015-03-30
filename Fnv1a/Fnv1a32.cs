@@ -40,6 +40,7 @@ namespace Fnv1a
         public Fnv1a32()
         {
             this.Initialize();
+            this.HashSizeValue = 32;
         }
 
         /// <summary>

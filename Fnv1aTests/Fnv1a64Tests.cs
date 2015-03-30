@@ -64,6 +64,7 @@ namespace Fnv1aTests
         {
             using (HashAlgorithm alg = new Fnv1a64())
             {
+                Assert.AreEqual(64, alg.HashSize);
                 return (ulong)BitConverter.ToInt64(alg.ComputeHash(Encoding.UTF8.GetBytes(data)), 0);
             }
         }
