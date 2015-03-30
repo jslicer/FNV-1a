@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fnv1a", "Fnv1a\Fnv1a.csproj", "{ECF0B024-0E08-4B90-9959-E9175C5EA65D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fnv1aTests", "Fnv1aTests\Fnv1aTests.csproj", "{746A18AD-F747-4619-94F2-E64B27D460FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fnv1aTestVectorGenerator", "Fnv1aTestVectorGenerator\Fnv1aTestVectorGenerator.csproj", "{6DDFF2B9-73F1-4CCC-9DB8-DF5C67BB5126}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ECF0B024-0E08-4B90-9959-E9175C5EA65D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECF0B024-0E08-4B90-9959-E9175C5EA65D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECF0B024-0E08-4B90-9959-E9175C5EA65D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECF0B024-0E08-4B90-9959-E9175C5EA65D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{746A18AD-F747-4619-94F2-E64B27D460FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{746A18AD-F747-4619-94F2-E64B27D460FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{746A18AD-F747-4619-94F2-E64B27D460FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{746A18AD-F747-4619-94F2-E64B27D460FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DDFF2B9-73F1-4CCC-9DB8-DF5C67BB5126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DDFF2B9-73F1-4CCC-9DB8-DF5C67BB5126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DDFF2B9-73F1-4CCC-9DB8-DF5C67BB5126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DDFF2B9-73F1-4CCC-9DB8-DF5C67BB5126}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
