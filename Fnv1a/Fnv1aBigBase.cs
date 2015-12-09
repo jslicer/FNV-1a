@@ -77,7 +77,7 @@ namespace Fnv1a
                 unchecked
                 {
                     this._Hash ^= array[i];
-                    this._Hash = (this._Hash * this._FnvPrime) % this._ModValue;
+                    this._Hash = this._Hash * this._FnvPrime % this._ModValue;
                 }
             }
         }

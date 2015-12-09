@@ -31,7 +31,7 @@ namespace Fnv1aTests
         // ReSharper disable once InconsistentNaming
         public void TestVector1()
         {
-            Assert.AreEqual(unchecked(0xcbf29ce484222325), Fnv1a64(string.Empty));
+            Assert.AreEqual(0xcbf29ce484222325, Fnv1a64(string.Empty));
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Fnv1aTests
         // ReSharper disable once InconsistentNaming
         public void TestVector2()
         {
-            Assert.AreEqual(unchecked(0xaf63dc4c8601ec8c), Fnv1a64("a"));
+            Assert.AreEqual(0xaf63dc4c8601ec8c, Fnv1a64("a"));
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Fnv1aTests
         // ReSharper disable once InconsistentNaming
         public void TestVector3()
         {
-            Assert.AreEqual(unchecked(0x85944171f73967e8), Fnv1a64("foobar"));
+            Assert.AreEqual(0x85944171f73967e8, Fnv1a64("foobar"));
         }
 
         /// <summary>

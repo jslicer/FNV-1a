@@ -22,12 +22,12 @@ namespace Fnv1a
         /// <summary>
         /// The prime.
         /// </summary>
-        private const ulong FnvPrime = unchecked(0x00000100000001B3);
+        private const ulong FnvPrime = 0x00000100000001B3;
 
         /// <summary>
         /// The non-zero offset basis.
         /// </summary>
-        private const ulong FnvOffsetBasis = unchecked(0xCBF29CE484222325);
+        private const ulong FnvOffsetBasis = 0xCBF29CE484222325;
 
         /// <summary>
         /// The hash.

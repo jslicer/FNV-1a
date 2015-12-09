@@ -22,12 +22,12 @@ namespace Fnv1a
         /// <summary>
         /// The prime.
         /// </summary>
-        private const uint FnvPrime = unchecked(0x01000193);
+        private const uint FnvPrime = 0x01000193;
 
         /// <summary>
         /// The non-zero offset basis.
         /// </summary>
-        private const uint FnvOffsetBasis = unchecked(0x811C9DC5);
+        private const uint FnvOffsetBasis = 0x811C9DC5;
 
         /// <summary>
         /// The hash.
