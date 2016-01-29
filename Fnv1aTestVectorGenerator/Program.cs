@@ -11,6 +11,7 @@ namespace Fnv1aTestVectorGenerator
 {
     using System;
     using System.Globalization;
+    using System.IO;
     using System.Numerics;
     using System.Security.Cryptography;
     using System.Text;
@@ -48,211 +49,294 @@ namespace Fnv1aTestVectorGenerator
         /// </summary>
         private static void Main()
         {
+            var writer = Console.Out;
+            var reader = Console.In;
+
             Console.OutputEncoding = Encoding.UTF8;
-            Console.WriteLine(Test(string.Empty));
-            Console.WriteLine(Test("a"));
-            Console.WriteLine(Test("b"));
-            Console.WriteLine(Test("c"));
-            Console.WriteLine(Test("d"));
-            Console.WriteLine(Test("e"));
-            Console.WriteLine(Test("f"));
-            Console.WriteLine(Test("fo"));
-            Console.WriteLine(Test("foo"));
-            Console.WriteLine(Test("foob"));
-            Console.WriteLine(Test("fooba"));
-            Console.WriteLine(Test("foobar"));
-            Console.WriteLine(Test0(string.Empty));
-            Console.WriteLine(Test0("a"));
-            Console.WriteLine(Test0("b"));
-            Console.WriteLine(Test0("c"));
-            Console.WriteLine(Test0("d"));
-            Console.WriteLine(Test0("e"));
-            Console.WriteLine(Test0("f"));
-            Console.WriteLine(Test0("fo"));
-            Console.WriteLine(Test0("foo"));
-            Console.WriteLine(Test0("foob"));
-            Console.WriteLine(Test0("fooba"));
-            Console.WriteLine(Test0("foobar"));
-            Console.WriteLine(Test("ch"));
-            Console.WriteLine(Test("cho"));
-            Console.WriteLine(Test("chon"));
-            Console.WriteLine(Test("chong"));
-            Console.WriteLine(Test("chongo"));
-            Console.WriteLine(Test("chongo "));
-            Console.WriteLine(Test("chongo w"));
-            Console.WriteLine(Test("chongo wa"));
-            Console.WriteLine(Test("chongo was"));
-            Console.WriteLine(Test("chongo was "));
-            Console.WriteLine(Test("chongo was h"));
-            Console.WriteLine(Test("chongo was he"));
-            Console.WriteLine(Test("chongo was her"));
-            Console.WriteLine(Test("chongo was here"));
-            Console.WriteLine(Test("chongo was here!"));
-            Console.WriteLine(Test("chongo was here!\n"));
-            Console.WriteLine(Test0("ch"));
-            Console.WriteLine(Test0("cho"));
-            Console.WriteLine(Test0("chon"));
-            Console.WriteLine(Test0("chong"));
-            Console.WriteLine(Test0("chongo"));
-            Console.WriteLine(Test0("chongo "));
-            Console.WriteLine(Test0("chongo w"));
-            Console.WriteLine(Test0("chongo wa"));
-            Console.WriteLine(Test0("chongo was"));
-            Console.WriteLine(Test0("chongo was "));
-            Console.WriteLine(Test0("chongo was h"));
-            Console.WriteLine(Test0("chongo was he"));
-            Console.WriteLine(Test0("chongo was her"));
-            Console.WriteLine(Test0("chongo was here"));
-            Console.WriteLine(Test0("chongo was here!"));
-            Console.WriteLine(Test0("chongo was here!\n"));
-            Console.WriteLine(Test("cu"));
-            Console.WriteLine(Test("cur"));
-            Console.WriteLine(Test("curd"));
-            Console.WriteLine(Test("curds"));
-            Console.WriteLine(Test("curds "));
-            Console.WriteLine(Test("curds a"));
-            Console.WriteLine(Test("curds an"));
-            Console.WriteLine(Test("curds and"));
-            Console.WriteLine(Test("curds and "));
-            Console.WriteLine(Test("curds and w"));
-            Console.WriteLine(Test("curds and wh"));
-            Console.WriteLine(Test("curds and whe"));
-            Console.WriteLine(Test("curds and whey"));
-            Console.WriteLine(Test("curds and whey\n"));
-            Console.WriteLine(Test0("cu"));
-            Console.WriteLine(Test0("cur"));
-            Console.WriteLine(Test0("curd"));
-            Console.WriteLine(Test0("curds"));
-            Console.WriteLine(Test0("curds "));
-            Console.WriteLine(Test0("curds a"));
-            Console.WriteLine(Test0("curds an"));
-            Console.WriteLine(Test0("curds and"));
-            Console.WriteLine(Test0("curds and "));
-            Console.WriteLine(Test0("curds and w"));
-            Console.WriteLine(Test0("curds and wh"));
-            Console.WriteLine(Test0("curds and whe"));
-            Console.WriteLine(Test0("curds and whey"));
-            Console.WriteLine(Test0("curds and whey\n"));
-            Console.WriteLine(Test("hi"));
-            Console.WriteLine(Test0("hi"));
-            Console.WriteLine(Test("hello"));
-            Console.WriteLine(Test0("hello"));
-            Console.WriteLine(Test("\xff\x00\x00\x01"));
-            Console.WriteLine(Test("\x01\x00\x00\xff"));
-            Console.WriteLine(Test("\xff\x00\x00\x02"));
-            Console.WriteLine(Test("\x02\x00\x00\xff"));
-            Console.WriteLine(Test("\xff\x00\x00\x03"));
-            Console.WriteLine(Test("\x03\x00\x00\xff"));
-            Console.WriteLine(Test("\xff\x00\x00\x04"));
-            Console.WriteLine(Test("\x04\x00\x00\xff"));
-            Console.WriteLine(Test("\x40\x51\x4e\x44"));
-            Console.WriteLine(Test("\x44\x4e\x51\x40"));
-            Console.WriteLine(Test("\x40\x51\x4e\x4a"));
-            Console.WriteLine(Test("\x4a\x4e\x51\x40"));
-            Console.WriteLine(Test("\x40\x51\x4e\x54"));
-            Console.WriteLine(Test("\x54\x4e\x51\x40"));
-            Console.WriteLine(Test("127.0.0.1"));
-            Console.WriteLine(Test0("127.0.0.1"));
-            Console.WriteLine(Test("127.0.0.2"));
-            Console.WriteLine(Test0("127.0.0.2"));
-            Console.WriteLine(Test("127.0.0.3"));
-            Console.WriteLine(Test0("127.0.0.3"));
-            Console.WriteLine(Test("64.81.78.68"));
-            Console.WriteLine(Test0("64.81.78.68"));
-            Console.WriteLine(Test("64.81.78.74"));
-            Console.WriteLine(Test0("64.81.78.74"));
-            Console.WriteLine(Test("64.81.78.84"));
-            Console.WriteLine(Test0("64.81.78.84"));
-            Console.WriteLine(Test("feedface"));
-            Console.WriteLine(Test0("feedface"));
-            Console.WriteLine(Test("feedfacedaffdeed"));
-            Console.WriteLine(Test0("feedfacedaffdeed"));
-            Console.WriteLine(Test("feedfacedeadbeef"));
-            Console.WriteLine(Test0("feedfacedeadbeef"));
-            Console.WriteLine(Test("line 1\nline 2\nline 3"));
-            Console.WriteLine(Test("chongo <Landon Curt Noll> /\\../\\"));
-            Console.WriteLine(Test0("chongo <Landon Curt Noll> /\\../\\"));
-            Console.WriteLine(Test("chongo (Landon Curt Noll) /\\../\\"));
-            Console.WriteLine(Test0("chongo (Landon Curt Noll) /\\../\\"));
-            Console.WriteLine(Test("http://antwrp.gsfc.nasa.gov/apod/astropix.html"));
-            Console.WriteLine(Test("http://en.wikipedia.org/wiki/Fowler_Noll_Vo_hash"));
-            Console.WriteLine(Test("http://epod.usra.edu/"));
-            Console.WriteLine(Test("http://exoplanet.eu/"));
-            Console.WriteLine(Test("http://hvo.wr.usgs.gov/cam3/"));
-            Console.WriteLine(Test("http://hvo.wr.usgs.gov/cams/HMcam/"));
-            Console.WriteLine(Test("http://hvo.wr.usgs.gov/kilauea/update/deformation.html"));
-            Console.WriteLine(Test("http://hvo.wr.usgs.gov/kilauea/update/images.html"));
-            Console.WriteLine(Test("http://hvo.wr.usgs.gov/kilauea/update/maps.html"));
-            Console.WriteLine(Test("http://hvo.wr.usgs.gov/volcanowatch/current_issue.html"));
-            Console.WriteLine(Test("http://neo.jpl.nasa.gov/risk/"));
-            Console.WriteLine(Test("http://norvig.com/21-days.html"));
-            Console.WriteLine(Test("http://primes.utm.edu/curios/home.php"));
-            Console.WriteLine(Test("http://slashdot.org/"));
-            Console.WriteLine(Test("http://tux.wr.usgs.gov/Maps/155.25-19.5.html"));
-            Console.WriteLine(Test("http://volcano.wr.usgs.gov/kilaueastatus.php"));
-            Console.WriteLine(Test("http://www.avo.alaska.edu/activity/Redoubt.php"));
-            Console.WriteLine(Test("http://www.dilbert.com/fast/"));
-            Console.WriteLine(Test("http://www.fourmilab.ch/gravitation/orbits/"));
-            Console.WriteLine(Test("http://www.fpoa.net/"));
-            Console.WriteLine(Test("http://www.ioccc.org/index.html"));
-            Console.WriteLine(Test("http://www.isthe.com/cgi-bin/number.cgi"));
-            Console.WriteLine(Test("http://www.isthe.com/chongo/bio.html"));
-            Console.WriteLine(Test("http://www.isthe.com/chongo/index.html"));
-            Console.WriteLine(Test("http://www.isthe.com/chongo/src/calc/lucas-calc"));
-            Console.WriteLine(Test("http://www.isthe.com/chongo/tech/astro/venus2004.html"));
-            Console.WriteLine(Test("http://www.isthe.com/chongo/tech/astro/vita.html"));
-            Console.WriteLine(Test("http://www.isthe.com/chongo/tech/comp/c/expert.html"));
-            Console.WriteLine(Test("http://www.isthe.com/chongo/tech/comp/calc/index.html"));
-            Console.WriteLine(Test("http://www.isthe.com/chongo/tech/comp/fnv/index.html"));
-            Console.WriteLine(Test("http://www.isthe.com/chongo/tech/math/number/howhigh.html"));
-            Console.WriteLine(Test("http://www.isthe.com/chongo/tech/math/number/number.html"));
-            Console.WriteLine(Test("http://www.isthe.com/chongo/tech/math/prime/mersenne.html"));
-            Console.WriteLine(Test("http://www.isthe.com/chongo/tech/math/prime/mersenne.html#largest"));
-            Console.WriteLine(Test("http://www.lavarnd.org/cgi-bin/corpspeak.cgi"));
-            Console.WriteLine(Test("http://www.lavarnd.org/cgi-bin/haiku.cgi"));
-            Console.WriteLine(Test("http://www.lavarnd.org/cgi-bin/rand-none.cgi"));
-            Console.WriteLine(Test("http://www.lavarnd.org/cgi-bin/randdist.cgi"));
-            Console.WriteLine(Test("http://www.lavarnd.org/index.html"));
-            Console.WriteLine(Test("http://www.lavarnd.org/what/nist-test.html"));
-            Console.WriteLine(Test("http://www.macosxhints.com/"));
-            Console.WriteLine(Test("http://www.mellis.com/"));
-            Console.WriteLine(Test("http://www.nature.nps.gov/air/webcams/parks/havoso2alert/havoalert.cfm"));
-            Console.WriteLine(Test("http://www.nature.nps.gov/air/webcams/parks/havoso2alert/timelines_24.cfm"));
-            Console.WriteLine(Test("http://www.paulnoll.com/"));
-            Console.WriteLine(Test("http://www.pepysdiary.com/"));
-            Console.WriteLine(Test("http://www.sciencenews.org/index/home/activity/view"));
-            Console.WriteLine(Test("http://www.skyandtelescope.com/"));
-            Console.WriteLine(Test("http://www.sput.nl/~rob/sirius.html"));
-            Console.WriteLine(Test("http://www.systemexperts.com/"));
-            Console.WriteLine(Test("http://www.tq-international.com/phpBB3/index.php"));
-            Console.WriteLine(Test("http://www.travelquesttours.com/index.htm"));
-            Console.WriteLine(Test("http://www.wunderground.com/global/stations/89606.html"));
-            Console.WriteLine(R10("21701"));
-            Console.WriteLine(R10("M21701"));
-            Console.WriteLine(R10("2^21701-1"));
-            Console.WriteLine(R10("\x54\xc5"));
-            Console.WriteLine(R10("\xc5\x54"));
-            Console.WriteLine(R10("23209"));
-            Console.WriteLine(R10("M23209"));
-            Console.WriteLine(R10("2^23209-1"));
-            Console.WriteLine(R10("\x5a\xa9"));
-            Console.WriteLine(R10("\xa9\x5a"));
-            Console.WriteLine(R10("391581216093"));
-            Console.WriteLine(R10("391581*2^216093-1"));
-            Console.WriteLine(R10("\x05\xf9\x9d\x03\x4c\x81"));
-            Console.WriteLine(R10("FEDCBA9876543210"));
-            Console.WriteLine(R10("\xfe\xdc\xba\x98\x76\x54\x32\x10"));
-            Console.WriteLine(R10("EFCDAB8967452301"));
-            Console.WriteLine(R10("\xef\xcd\xab\x89\x67\x45\x23\x01"));
-            Console.WriteLine(R10("0123456789ABCDEF"));
-            Console.WriteLine(R10("\x01\x23\x45\x67\x89\xab\xcd\xef"));
-            Console.WriteLine(R10("1032547698BADCFE"));
-            Console.WriteLine(R10("\x10\x32\x54\x76\x98\xba\xdc\xfe"));
-            Console.WriteLine(R500("\x00"));
-            Console.WriteLine(R500("\x07"));
-            Console.WriteLine(R500("~"));
-            Console.WriteLine(R500("\x7f"));
-            Console.ReadLine();
+            Set0(writer);
+            Set1(writer);
+            Set2(writer);
+            Set3(writer);
+            Set4(writer);
+            Set5(writer);
+            Set6(writer);
+            Set7(writer);
+            Set8(writer);
+            Set9(writer);
+            Set10(writer);
+            Set11(writer);
+            Set12(writer);
+            Set13(writer);
+            Set14(writer);
+            Set15(writer);
+            reader.ReadLine();
+        }
+
+        private static void Set0(TextWriter writer)
+        {
+            writer.WriteLine(string.Empty.Test());
+            writer.WriteLine("a".Test());
+            writer.WriteLine("b".Test());
+            writer.WriteLine("c".Test());
+            writer.WriteLine("d".Test());
+            writer.WriteLine("e".Test());
+            writer.WriteLine("f".Test());
+            writer.WriteLine("fo".Test());
+            writer.WriteLine("foo".Test());
+            writer.WriteLine("foob".Test());
+            writer.WriteLine("fooba".Test());
+            writer.WriteLine("foobar".Test());
+        }
+
+        private static void Set1(TextWriter writer)
+        {
+            writer.WriteLine(string.Empty.Test0());
+            writer.WriteLine("a".Test0());
+            writer.WriteLine("b".Test0());
+            writer.WriteLine("c".Test0());
+            writer.WriteLine("d".Test0());
+            writer.WriteLine("e".Test0());
+            writer.WriteLine("f".Test0());
+            writer.WriteLine("fo".Test0());
+            writer.WriteLine("foo".Test0());
+            writer.WriteLine("foob".Test0());
+            writer.WriteLine("fooba".Test0());
+            writer.WriteLine("foobar".Test0());
+        }
+
+        private static void Set2(TextWriter writer)
+        {
+            writer.WriteLine("ch".Test());
+            writer.WriteLine("cho".Test());
+            writer.WriteLine("chon".Test());
+            writer.WriteLine("chong".Test());
+            writer.WriteLine("chongo".Test());
+            writer.WriteLine("chongo ".Test());
+            writer.WriteLine("chongo w".Test());
+            writer.WriteLine("chongo wa".Test());
+            writer.WriteLine("chongo was".Test());
+            writer.WriteLine("chongo was ".Test());
+            writer.WriteLine("chongo was h".Test());
+            writer.WriteLine("chongo was he".Test());
+            writer.WriteLine("chongo was her".Test());
+            writer.WriteLine("chongo was here".Test());
+            writer.WriteLine("chongo was here!".Test());
+            writer.WriteLine("chongo was here!\n".Test());
+        }
+
+        private static void Set3(TextWriter writer)
+        {
+            writer.WriteLine("ch".Test0());
+            writer.WriteLine("cho".Test0());
+            writer.WriteLine("chon".Test0());
+            writer.WriteLine("chong".Test0());
+            writer.WriteLine("chongo".Test0());
+            writer.WriteLine("chongo ".Test0());
+            writer.WriteLine("chongo w".Test0());
+            writer.WriteLine("chongo wa".Test0());
+            writer.WriteLine("chongo was".Test0());
+            writer.WriteLine("chongo was ".Test0());
+            writer.WriteLine("chongo was h".Test0());
+            writer.WriteLine("chongo was he".Test0());
+            writer.WriteLine("chongo was her".Test0());
+            writer.WriteLine("chongo was here".Test0());
+            writer.WriteLine("chongo was here!".Test0());
+            writer.WriteLine("chongo was here!\n".Test0());
+        }
+
+        private static void Set4(TextWriter writer)
+        {
+            writer.WriteLine("cu".Test());
+            writer.WriteLine("cur".Test());
+            writer.WriteLine("curd".Test());
+            writer.WriteLine("curds".Test());
+            writer.WriteLine("curds ".Test());
+            writer.WriteLine("curds a".Test());
+            writer.WriteLine("curds an".Test());
+            writer.WriteLine("curds and".Test());
+            writer.WriteLine("curds and ".Test());
+            writer.WriteLine("curds and w".Test());
+            writer.WriteLine("curds and wh".Test());
+            writer.WriteLine("curds and whe".Test());
+            writer.WriteLine("curds and whey".Test());
+            writer.WriteLine("curds and whey\n".Test());
+        }
+
+        private static void Set5(TextWriter writer)
+        {
+            writer.WriteLine("cu".Test0());
+            writer.WriteLine("cur".Test0());
+            writer.WriteLine("curd".Test0());
+            writer.WriteLine("curds".Test0());
+            writer.WriteLine("curds ".Test0());
+            writer.WriteLine("curds a".Test0());
+            writer.WriteLine("curds an".Test0());
+            writer.WriteLine("curds and".Test0());
+            writer.WriteLine("curds and ".Test0());
+            writer.WriteLine("curds and w".Test0());
+            writer.WriteLine("curds and wh".Test0());
+            writer.WriteLine("curds and whe".Test0());
+            writer.WriteLine("curds and whey".Test0());
+            writer.WriteLine("curds and whey\n".Test0());
+        }
+
+        private static void Set6(TextWriter writer)
+        {
+            writer.WriteLine("hi".Test());
+            writer.WriteLine("hi".Test0());
+            writer.WriteLine("hello".Test());
+            writer.WriteLine("hello".Test0());
+        }
+
+        private static void Set7(TextWriter writer)
+        {
+            writer.WriteLine("\xff\x00\x00\x01".Test());
+            writer.WriteLine("\x01\x00\x00\xff".Test());
+            writer.WriteLine("\xff\x00\x00\x02".Test());
+            writer.WriteLine("\x02\x00\x00\xff".Test());
+            writer.WriteLine("\xff\x00\x00\x03".Test());
+            writer.WriteLine("\x03\x00\x00\xff".Test());
+            writer.WriteLine("\xff\x00\x00\x04".Test());
+            writer.WriteLine("\x04\x00\x00\xff".Test());
+            writer.WriteLine("\x40\x51\x4e\x44".Test());
+            writer.WriteLine("\x44\x4e\x51\x40".Test());
+            writer.WriteLine("\x40\x51\x4e\x4a".Test());
+            writer.WriteLine("\x4a\x4e\x51\x40".Test());
+            writer.WriteLine("\x40\x51\x4e\x54".Test());
+            writer.WriteLine("\x54\x4e\x51\x40".Test());
+        }
+
+        private static void Set8(TextWriter writer)
+        {
+            writer.WriteLine("127.0.0.1".Test());
+            writer.WriteLine("127.0.0.1".Test0());
+            writer.WriteLine("127.0.0.2".Test());
+            writer.WriteLine("127.0.0.2".Test0());
+            writer.WriteLine("127.0.0.3".Test());
+            writer.WriteLine("127.0.0.3".Test0());
+        }
+
+        private static void Set9(TextWriter writer)
+        {
+            writer.WriteLine("64.81.78.68".Test());
+            writer.WriteLine("64.81.78.68".Test0());
+            writer.WriteLine("64.81.78.74".Test());
+            writer.WriteLine("64.81.78.74".Test0());
+            writer.WriteLine("64.81.78.84".Test());
+            writer.WriteLine("64.81.78.84".Test0());
+        }
+
+        private static void Set10(TextWriter writer)
+        {
+            writer.WriteLine("feedface".Test());
+            writer.WriteLine("feedface".Test0());
+            writer.WriteLine("feedfacedaffdeed".Test());
+            writer.WriteLine("feedfacedaffdeed".Test0());
+            writer.WriteLine("feedfacedeadbeef".Test());
+            writer.WriteLine("feedfacedeadbeef".Test0());
+        }
+
+        private static void Set11(TextWriter writer)
+        {
+            writer.WriteLine("line 1\nline 2\nline 3".Test());
+        }
+
+        private static void Set12(TextWriter writer)
+        {
+            writer.WriteLine("chongo <Landon Curt Noll> /\\../\\".Test());
+            writer.WriteLine("chongo <Landon Curt Noll> /\\../\\".Test0());
+            writer.WriteLine("chongo (Landon Curt Noll) /\\../\\".Test());
+            writer.WriteLine("chongo (Landon Curt Noll) /\\../\\".Test0());
+        }
+
+        private static void Set13(TextWriter writer)
+        {
+            writer.WriteLine("http://antwrp.gsfc.nasa.gov/apod/astropix.html".Test());
+            writer.WriteLine("http://en.wikipedia.org/wiki/Fowler_Noll_Vo_hash".Test());
+            writer.WriteLine("http://epod.usra.edu/".Test());
+            writer.WriteLine("http://exoplanet.eu/".Test());
+            writer.WriteLine("http://hvo.wr.usgs.gov/cam3/".Test());
+            writer.WriteLine("http://hvo.wr.usgs.gov/cams/HMcam/".Test());
+            writer.WriteLine("http://hvo.wr.usgs.gov/kilauea/update/deformation.html".Test());
+            writer.WriteLine("http://hvo.wr.usgs.gov/kilauea/update/images.html".Test());
+            writer.WriteLine("http://hvo.wr.usgs.gov/kilauea/update/maps.html".Test());
+            writer.WriteLine("http://hvo.wr.usgs.gov/volcanowatch/current_issue.html".Test());
+            writer.WriteLine("http://neo.jpl.nasa.gov/risk/".Test());
+            writer.WriteLine("http://norvig.com/21-days.html".Test());
+            writer.WriteLine("http://primes.utm.edu/curios/home.php".Test());
+            writer.WriteLine("http://slashdot.org/".Test());
+            writer.WriteLine("http://tux.wr.usgs.gov/Maps/155.25-19.5.html".Test());
+            writer.WriteLine("http://volcano.wr.usgs.gov/kilaueastatus.php".Test());
+            writer.WriteLine("http://www.avo.alaska.edu/activity/Redoubt.php".Test());
+            writer.WriteLine("http://www.dilbert.com/fast/".Test());
+            writer.WriteLine("http://www.fourmilab.ch/gravitation/orbits/".Test());
+            writer.WriteLine("http://www.fpoa.net/".Test());
+            writer.WriteLine("http://www.ioccc.org/index.html".Test());
+            writer.WriteLine("http://www.isthe.com/cgi-bin/number.cgi".Test());
+            writer.WriteLine("http://www.isthe.com/chongo/bio.html".Test());
+            writer.WriteLine("http://www.isthe.com/chongo/index.html".Test());
+            writer.WriteLine("http://www.isthe.com/chongo/src/calc/lucas-calc".Test());
+            writer.WriteLine("http://www.isthe.com/chongo/tech/astro/venus2004.html".Test());
+            writer.WriteLine("http://www.isthe.com/chongo/tech/astro/vita.html".Test());
+            writer.WriteLine("http://www.isthe.com/chongo/tech/comp/c/expert.html".Test());
+            writer.WriteLine("http://www.isthe.com/chongo/tech/comp/calc/index.html".Test());
+            writer.WriteLine("http://www.isthe.com/chongo/tech/comp/fnv/index.html".Test());
+            writer.WriteLine("http://www.isthe.com/chongo/tech/math/number/howhigh.html".Test());
+            writer.WriteLine("http://www.isthe.com/chongo/tech/math/number/number.html".Test());
+            writer.WriteLine("http://www.isthe.com/chongo/tech/math/prime/mersenne.html".Test());
+            writer.WriteLine("http://www.isthe.com/chongo/tech/math/prime/mersenne.html#largest".Test());
+            writer.WriteLine("http://www.lavarnd.org/cgi-bin/corpspeak.cgi".Test());
+            writer.WriteLine("http://www.lavarnd.org/cgi-bin/haiku.cgi".Test());
+            writer.WriteLine("http://www.lavarnd.org/cgi-bin/rand-none.cgi".Test());
+            writer.WriteLine("http://www.lavarnd.org/cgi-bin/randdist.cgi".Test());
+            writer.WriteLine("http://www.lavarnd.org/index.html".Test());
+            writer.WriteLine("http://www.lavarnd.org/what/nist-test.html".Test());
+            writer.WriteLine("http://www.macosxhints.com/".Test());
+            writer.WriteLine("http://www.mellis.com/".Test());
+            writer.WriteLine("http://www.nature.nps.gov/air/webcams/parks/havoso2alert/havoalert.cfm".Test());
+            writer.WriteLine("http://www.nature.nps.gov/air/webcams/parks/havoso2alert/timelines_24.cfm".Test());
+            writer.WriteLine("http://www.paulnoll.com/".Test());
+            writer.WriteLine("http://www.pepysdiary.com/".Test());
+            writer.WriteLine("http://www.sciencenews.org/index/home/activity/view".Test());
+            writer.WriteLine("http://www.skyandtelescope.com/".Test());
+            writer.WriteLine("http://www.sput.nl/~rob/sirius.html".Test());
+            writer.WriteLine("http://www.systemexperts.com/".Test());
+            writer.WriteLine("http://www.tq-international.com/phpBB3/index.php".Test());
+            writer.WriteLine("http://www.travelquesttours.com/index.htm".Test());
+            writer.WriteLine("http://www.wunderground.com/global/stations/89606.html".Test());
+        }
+
+        private static void Set14(TextWriter writer)
+        {
+            writer.WriteLine("21701".R10());
+            writer.WriteLine("M21701".R10());
+            writer.WriteLine("2^21701-1".R10());
+            writer.WriteLine("\x54\xc5".R10());
+            writer.WriteLine("\xc5\x54".R10());
+            writer.WriteLine("23209".R10());
+            writer.WriteLine("M23209".R10());
+            writer.WriteLine("2^23209-1".R10());
+            writer.WriteLine("\x5a\xa9".R10());
+            writer.WriteLine("\xa9\x5a".R10());
+            writer.WriteLine("391581216093".R10());
+            writer.WriteLine("391581*2^216093-1".R10());
+            writer.WriteLine("\x05\xf9\x9d\x03\x4c\x81".R10());
+            writer.WriteLine("FEDCBA9876543210".R10());
+            writer.WriteLine("\xfe\xdc\xba\x98\x76\x54\x32\x10".R10());
+            writer.WriteLine("EFCDAB8967452301".R10());
+            writer.WriteLine("\xef\xcd\xab\x89\x67\x45\x23\x01".R10());
+            writer.WriteLine("0123456789ABCDEF".R10());
+            writer.WriteLine("\x01\x23\x45\x67\x89\xab\xcd\xef".R10());
+            writer.WriteLine("1032547698BADCFE".R10());
+            writer.WriteLine("\x10\x32\x54\x76\x98\xba\xdc\xfe".R10());
+        }
+
+        private static void Set15(TextWriter writer)
+        {
+            writer.WriteLine("\x00".R500());
+            writer.WriteLine("\x07".R500());
+            writer.WriteLine("~".R500());
+            writer.WriteLine("\x7f".R500());
         }
 
         /// <summary>
@@ -424,8 +508,7 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a256())
             {
-                var value =
-                    new BigInteger(alg.ComputeHash(Encoding.UTF8.GetBytes(data))).ToString("X64");
+                var value = new BigInteger(alg.ComputeHash(Encoding.UTF8.GetBytes(data))).ToString("X64");
 
                 return "0x" + value.Substring(value.Length - 64);
             }
