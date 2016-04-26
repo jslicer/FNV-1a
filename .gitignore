@@ -229,3 +229,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+/Fnv1a/Fnv1a.snk
