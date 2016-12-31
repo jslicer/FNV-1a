@@ -50,7 +50,7 @@ namespace Fnv1aTests
         }
 
         /// <summary>
-        /// Tests the string "foobar" against the known vector result.
+        /// Tests the string against the known vector result.
         /// </summary>
         [TestMethod]
         // ReSharper disable once InconsistentNaming

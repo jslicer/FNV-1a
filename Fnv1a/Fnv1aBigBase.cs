@@ -57,7 +57,7 @@ namespace Fnv1a
         /// <summary>
         /// Initializes an implementation of the <see cref="T:System.Security.Cryptography.HashAlgorithm" /> class.
         /// </summary>
-        public sealed override void Initialize()
+        public override sealed void Initialize()
         {
             this._Hash = this._FnvOffsetBasis;
         }
@@ -77,7 +77,7 @@ namespace Fnv1a
                 unchecked
                 {
                     this._Hash ^= array[i];
-                    this._Hash = this._Hash * this._FnvPrime % this._ModValue;
+                    this._Hash = (this._Hash * this._FnvPrime) % this._ModValue;
                 }
             }
         }

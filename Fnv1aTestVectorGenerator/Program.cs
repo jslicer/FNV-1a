@@ -49,29 +49,37 @@ namespace Fnv1aTestVectorGenerator
         /// </summary>
         private static void Main()
         {
-            var writer = Console.Out;
-            var reader = Console.In;
+            var writer = TextWriter.Null; ////Console.Out;
+            var reader = TextReader.Null; ////Console.In;
 
             Console.OutputEncoding = Encoding.UTF8;
-            Set0(writer);
-            Set1(writer);
-            Set2(writer);
-            Set3(writer);
-            Set4(writer);
-            Set5(writer);
-            Set6(writer);
-            Set7(writer);
-            Set8(writer);
-            Set9(writer);
-            Set10(writer);
-            Set11(writer);
-            Set12(writer);
-            Set13(writer);
-            Set14(writer);
-            Set15(writer);
+            for (var loop = 0; loop < 1000; loop++)
+            {
+                Set0(writer);
+                Set1(writer);
+                Set2(writer);
+                Set3(writer);
+                Set4(writer);
+                Set5(writer);
+                Set6(writer);
+                Set7(writer);
+                Set8(writer);
+                Set9(writer);
+                Set10(writer);
+                Set11(writer);
+                Set12(writer);
+                Set13(writer);
+                Set14(writer);
+                Set15(writer);
+            }
+
             reader.ReadLine();
         }
 
+        /// <summary>
+        /// Performs Set 0.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
         private static void Set0(TextWriter writer)
         {
             writer.WriteLine(string.Empty.Test());
@@ -88,6 +96,10 @@ namespace Fnv1aTestVectorGenerator
             writer.WriteLine("foobar".Test());
         }
 
+        /// <summary>
+        /// Performs Set 1.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
         private static void Set1(TextWriter writer)
         {
             writer.WriteLine(string.Empty.Test0());
@@ -104,7 +116,11 @@ namespace Fnv1aTestVectorGenerator
             writer.WriteLine("foobar".Test0());
         }
 
-        private static void Set2(TextWriter writer)
+         /// <summary>
+        /// Performs Set 2.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
+       private static void Set2(TextWriter writer)
         {
             writer.WriteLine("ch".Test());
             writer.WriteLine("cho".Test());
@@ -124,6 +140,10 @@ namespace Fnv1aTestVectorGenerator
             writer.WriteLine("chongo was here!\n".Test());
         }
 
+        /// <summary>
+        /// Performs Set 3.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
         private static void Set3(TextWriter writer)
         {
             writer.WriteLine("ch".Test0());
@@ -144,6 +164,10 @@ namespace Fnv1aTestVectorGenerator
             writer.WriteLine("chongo was here!\n".Test0());
         }
 
+        /// <summary>
+        /// Performs Set 4.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
         private static void Set4(TextWriter writer)
         {
             writer.WriteLine("cu".Test());
@@ -162,6 +186,10 @@ namespace Fnv1aTestVectorGenerator
             writer.WriteLine("curds and whey\n".Test());
         }
 
+        /// <summary>
+        /// Performs Set 5.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
         private static void Set5(TextWriter writer)
         {
             writer.WriteLine("cu".Test0());
@@ -180,6 +208,10 @@ namespace Fnv1aTestVectorGenerator
             writer.WriteLine("curds and whey\n".Test0());
         }
 
+        /// <summary>
+        /// Performs Set 6.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
         private static void Set6(TextWriter writer)
         {
             writer.WriteLine("hi".Test());
@@ -188,6 +220,10 @@ namespace Fnv1aTestVectorGenerator
             writer.WriteLine("hello".Test0());
         }
 
+        /// <summary>
+        /// Performs Set 7.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
         private static void Set7(TextWriter writer)
         {
             writer.WriteLine("\xff\x00\x00\x01".Test());
@@ -206,6 +242,10 @@ namespace Fnv1aTestVectorGenerator
             writer.WriteLine("\x54\x4e\x51\x40".Test());
         }
 
+        /// <summary>
+        /// Performs Set 8.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
         private static void Set8(TextWriter writer)
         {
             writer.WriteLine("127.0.0.1".Test());
@@ -216,6 +256,10 @@ namespace Fnv1aTestVectorGenerator
             writer.WriteLine("127.0.0.3".Test0());
         }
 
+        /// <summary>
+        /// Performs Set 9.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
         private static void Set9(TextWriter writer)
         {
             writer.WriteLine("64.81.78.68".Test());
@@ -226,6 +270,10 @@ namespace Fnv1aTestVectorGenerator
             writer.WriteLine("64.81.78.84".Test0());
         }
 
+        /// <summary>
+        /// Performs Set 10.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
         private static void Set10(TextWriter writer)
         {
             writer.WriteLine("feedface".Test());
@@ -236,11 +284,19 @@ namespace Fnv1aTestVectorGenerator
             writer.WriteLine("feedfacedeadbeef".Test0());
         }
 
+        /// <summary>
+        /// Performs Set 11.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
         private static void Set11(TextWriter writer)
         {
             writer.WriteLine("line 1\nline 2\nline 3".Test());
         }
 
+        /// <summary>
+        /// Performs Set 12.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
         private static void Set12(TextWriter writer)
         {
             writer.WriteLine("chongo <Landon Curt Noll> /\\../\\".Test());
@@ -249,6 +305,10 @@ namespace Fnv1aTestVectorGenerator
             writer.WriteLine("chongo (Landon Curt Noll) /\\../\\".Test0());
         }
 
+        /// <summary>
+        /// Performs Set 13.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
         private static void Set13(TextWriter writer)
         {
             writer.WriteLine("http://antwrp.gsfc.nasa.gov/apod/astropix.html".Test());
@@ -306,6 +366,10 @@ namespace Fnv1aTestVectorGenerator
             writer.WriteLine("http://www.wunderground.com/global/stations/89606.html".Test());
         }
 
+        /// <summary>
+        /// Performs Set 14.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
         private static void Set14(TextWriter writer)
         {
             writer.WriteLine("21701".R10());
@@ -331,6 +395,10 @@ namespace Fnv1aTestVectorGenerator
             writer.WriteLine("\x10\x32\x54\x76\x98\xba\xdc\xfe".R10());
         }
 
+        /// <summary>
+        /// Performs Set 15.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
         private static void Set15(TextWriter writer)
         {
             writer.WriteLine("\x00".R500());
@@ -433,15 +501,15 @@ namespace Fnv1aTestVectorGenerator
         /// <returns>The printable string.</returns>
         private static string Print(this string data)
         {
-            var isControl = false;
+            var controlCharacter = false;
             var sb = new StringBuilder(data.Length);
 
             foreach (var c in data)
             {
-                if (isControl || char.IsControl(c))
+                if (controlCharacter || char.IsControl(c))
                 {
                     sb.AppendFormat("\\x{0:x2}", (uint)c);
-                    isControl = true;
+                    controlCharacter = true;
                 }
                 else
                 {
