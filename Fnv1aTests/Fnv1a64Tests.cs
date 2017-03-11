@@ -17,6 +17,8 @@ namespace Fnv1aTests
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+
     /// <summary>
     /// Tests the FNV-1a 64-bit algorithm.
     /// </summary>
@@ -31,7 +33,7 @@ namespace Fnv1aTests
         // ReSharper disable once InconsistentNaming
         public void TestVector1()
         {
-            Assert.AreEqual(0xcbf29ce484222325, Fnv1a64(string.Empty));
+            AreEqual(0xcbf29ce484222325, Fnv1a64(string.Empty));
         }
 
         /// <summary>
@@ -41,7 +43,7 @@ namespace Fnv1aTests
         // ReSharper disable once InconsistentNaming
         public void TestVector2()
         {
-            Assert.AreEqual(0xaf63dc4c8601ec8c, Fnv1a64("a"));
+            AreEqual(0xaf63dc4c8601ec8c, Fnv1a64("a"));
         }
 
         /// <summary>
@@ -51,7 +53,7 @@ namespace Fnv1aTests
         // ReSharper disable once InconsistentNaming
         public void TestVector3()
         {
-            Assert.AreEqual(0x85944171f73967e8, Fnv1a64("foobar"));
+            AreEqual(0x85944171f73967e8, Fnv1a64("foobar"));
         }
 
         /// <summary>
@@ -64,7 +66,7 @@ namespace Fnv1aTests
         {
             using (HashAlgorithm alg = new Fnv1a64())
             {
-                Assert.AreEqual(64, alg.HashSize);
+                AreEqual(64, alg.HashSize);
                 return (ulong)BitConverter.ToInt64(alg.ComputeHash(Encoding.UTF8.GetBytes(data)), 0);
             }
         }

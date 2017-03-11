@@ -10,7 +10,8 @@
 namespace Fnv1a
 {
     using System.Globalization;
-    using System.Numerics;
+
+    using static System.Numerics.BigInteger;
 
     /// <summary>
     /// Implements the FNV-1a 256-bit variant hashing algorithm.
@@ -22,9 +23,9 @@ namespace Fnv1a
         /// Initializes a new instance of the <see cref="Fnv1a256"/> class.
         /// </summary>
         public Fnv1a256() : base(
-                BigInteger.Parse("1000000000000000000000000000000000000000000000000000000000000000", NumberStyles.AllowHexSpecifier),
-                BigInteger.Parse("0000000000000000000001000000000000000000000000000000000000000163", NumberStyles.AllowHexSpecifier),
-                BigInteger.Parse("0DD268DBCAAC550362D98C384C4E576CCC8B1536847B6BBB31023B4C8CAEE0535", NumberStyles.AllowHexSpecifier))
+                Parse("1000000000000000000000000000000000000000000000000000000000000000", NumberStyles.AllowHexSpecifier),
+                Parse("0000000000000000000001000000000000000000000000000000000000000163", NumberStyles.AllowHexSpecifier),
+                Parse("0DD268DBCAAC550362D98C384C4E576CCC8B1536847B6BBB31023B4C8CAEE0535", NumberStyles.AllowHexSpecifier))
         {
             this.HashSizeValue = 256;
         }

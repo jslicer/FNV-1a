@@ -18,6 +18,8 @@ namespace Fnv1aTests
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+
     /// <summary>
     /// Tests the FNV-1a 128-bit algorithm.
     /// </summary>
@@ -32,7 +34,7 @@ namespace Fnv1aTests
         // ReSharper disable once InconsistentNaming
         public void TestVector1()
         {
-            Assert.AreEqual(
+            AreEqual(
                 BigInteger.Parse("6C62272E07BB014262B821756295C58D", NumberStyles.AllowHexSpecifier),
                 Fnv1a128(string.Empty));
         }
@@ -44,7 +46,7 @@ namespace Fnv1aTests
         // ReSharper disable once InconsistentNaming
         public void TestVector2()
         {
-            Assert.AreEqual(
+            AreEqual(
                 BigInteger.Parse("0D228CB696F1A8CAF78912B704E4A8964", NumberStyles.AllowHexSpecifier),
                 Fnv1a128("a"));
         }
@@ -56,7 +58,7 @@ namespace Fnv1aTests
         // ReSharper disable once InconsistentNaming
         public void TestVector3()
         {
-            Assert.AreEqual(
+            AreEqual(
                 BigInteger.Parse("343E1662793C64BF6F0D3597BA446F18", NumberStyles.AllowHexSpecifier),
                 Fnv1a128("foobar"));
         }
@@ -71,7 +73,7 @@ namespace Fnv1aTests
         {
             using (HashAlgorithm alg = new Fnv1a128())
             {
-                Assert.AreEqual(128, alg.HashSize);
+                AreEqual(128, alg.HashSize);
                 return new BigInteger(alg.ComputeHash(Encoding.UTF8.GetBytes(data)));
             }
         }
