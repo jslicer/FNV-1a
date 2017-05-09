@@ -9,8 +9,8 @@
 
 namespace Fnv1a
 {
-    using System.Globalization;
-
+    using static System.Globalization.CultureInfo;
+    using static System.Globalization.NumberStyles;
     using static System.Numerics.BigInteger;
 
     /// <summary>
@@ -23,9 +23,9 @@ namespace Fnv1a
         /// Initializes a new instance of the <see cref="Fnv1a256"/> class.
         /// </summary>
         public Fnv1a256() : base(
-                Parse("1000000000000000000000000000000000000000000000000000000000000000", NumberStyles.AllowHexSpecifier),
-                Parse("0000000000000000000001000000000000000000000000000000000000000163", NumberStyles.AllowHexSpecifier),
-                Parse("0DD268DBCAAC550362D98C384C4E576CCC8B1536847B6BBB31023B4C8CAEE0535", NumberStyles.AllowHexSpecifier))
+                Parse("1000000000000000000000000000000000000000000000000000000000000000", AllowHexSpecifier, InvariantCulture),
+                Parse("0000000000000000000001000000000000000000000000000000000000000163", AllowHexSpecifier, InvariantCulture),
+                Parse("0DD268DBCAAC550362D98C384C4E576CCC8B1536847B6BBB31023B4C8CAEE0535", AllowHexSpecifier, InvariantCulture))
         {
             this.HashSizeValue = 256;
         }

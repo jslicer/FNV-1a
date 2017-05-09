@@ -18,6 +18,8 @@ namespace Fnv1aTests
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    using static System.Globalization.CultureInfo;
+
     using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
     /// <summary>
@@ -35,7 +37,7 @@ namespace Fnv1aTests
         public void TestVector1()
         {
             AreEqual(
-                BigInteger.Parse("6C62272E07BB014262B821756295C58D", NumberStyles.AllowHexSpecifier),
+                BigInteger.Parse("6C62272E07BB014262B821756295C58D", NumberStyles.AllowHexSpecifier, InvariantCulture),
                 Fnv1a128(string.Empty));
         }
 
@@ -47,7 +49,7 @@ namespace Fnv1aTests
         public void TestVector2()
         {
             AreEqual(
-                BigInteger.Parse("0D228CB696F1A8CAF78912B704E4A8964", NumberStyles.AllowHexSpecifier),
+                BigInteger.Parse("0D228CB696F1A8CAF78912B704E4A8964", NumberStyles.AllowHexSpecifier, InvariantCulture),
                 Fnv1a128("a"));
         }
 
@@ -59,7 +61,7 @@ namespace Fnv1aTests
         public void TestVector3()
         {
             AreEqual(
-                BigInteger.Parse("343E1662793C64BF6F0D3597BA446F18", NumberStyles.AllowHexSpecifier),
+                BigInteger.Parse("343E1662793C64BF6F0D3597BA446F18", NumberStyles.AllowHexSpecifier, InvariantCulture),
                 Fnv1a128("foobar"));
         }
 
