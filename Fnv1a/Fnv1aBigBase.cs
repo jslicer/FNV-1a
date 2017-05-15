@@ -9,15 +9,13 @@
 
 namespace Fnv1a
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Numerics;
-    using System.Security.Cryptography;
 
     /// <summary>
     /// Implements the FNV-1a variant hashing algorithm for subtypes using the BigInteger class.
     /// </summary>
     // ReSharper disable once InconsistentNaming
-    public abstract class Fnv1aBigBase : HashAlgorithm
+    public abstract class Fnv1aBigBase : System.Security.Cryptography.HashAlgorithm
     {
         /// <summary>
         /// The "wrap-around" modulo value for keeping multiplication within the number of bits.
@@ -69,7 +67,7 @@ namespace Fnv1a
         /// <param name="array">The input to compute the hash code for.</param>
         /// <param name="ibStart">The offset into the byte array from which to begin using data.</param>
         /// <param name="cbSize">The number of bytes in the byte array to use as data.</param>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         protected override void HashCore(byte[] array, int ibStart, int cbSize)
         {
             for (var i = ibStart; i < cbSize; i++)

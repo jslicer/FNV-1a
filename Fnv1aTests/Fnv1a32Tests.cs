@@ -11,11 +11,12 @@ namespace Fnv1aTests
 {
     using System;
     using System.Security.Cryptography;
-    using System.Text;
 
     using Fnv1a;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using static System.Text.Encoding;
 
     using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
@@ -67,7 +68,7 @@ namespace Fnv1aTests
             using (HashAlgorithm alg = new Fnv1a32())
             {
                 AreEqual(32, alg.HashSize);
-                return (uint)BitConverter.ToInt32(alg.ComputeHash(Encoding.UTF8.GetBytes(data)), 0);
+                return (uint)BitConverter.ToInt32(alg.ComputeHash(UTF8.GetBytes(data)), 0);
             }
         }
     }

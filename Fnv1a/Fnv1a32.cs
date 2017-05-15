@@ -9,15 +9,11 @@
 
 namespace Fnv1a
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Security.Cryptography;
-
     /// <summary>
     /// Implements the FNV-1a 32-bit variant hashing algorithm.
     /// </summary>
     // ReSharper disable once InconsistentNaming
-    public sealed class Fnv1a32 : HashAlgorithm
+    public sealed class Fnv1a32 : System.Security.Cryptography.HashAlgorithm
     {
         /// <summary>
         /// The prime.
@@ -58,7 +54,7 @@ namespace Fnv1a
         /// <param name="array">The input to compute the hash code for.</param>
         /// <param name="ibStart">The offset into the byte array from which to begin using data.</param>
         /// <param name="cbSize">The number of bytes in the byte array to use as data.</param>
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         protected override void HashCore(byte[] array, int ibStart, int cbSize)
         {
             for (var i = ibStart; i < cbSize; i++)
@@ -80,7 +76,7 @@ namespace Fnv1a
         /// </returns>
         protected override byte[] HashFinal()
         {
-            return BitConverter.GetBytes(this._Hash);
+            return System.BitConverter.GetBytes(this._Hash);
         }
     }
 }

@@ -9,7 +9,6 @@
 
 namespace Fnv1aTestVectorGenerator
 {
-    using System;
     using System.IO;
     using System.Numerics;
     using System.Security.Cryptography;
@@ -17,8 +16,13 @@ namespace Fnv1aTestVectorGenerator
 
     using Fnv1a;
 
+    using static System.BitConverter;
+    using static System.Console;
+    using static System.Environment;
     using static System.Globalization.CultureInfo;
     using static System.Globalization.NumberStyles;
+    using static System.Numerics.BigInteger;
+    using static System.Text.Encoding;
 
     /// <summary>
     /// Contains the entry point of the application.
@@ -28,7 +32,7 @@ namespace Fnv1aTestVectorGenerator
         /// <summary>
         /// The bottom 64 bytes.
         /// </summary>
-        private static readonly BigInteger _Bottom64Bytes = BigInteger.Parse(
+        private static readonly BigInteger _Bottom64Bytes = Parse(
             "0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
             AllowHexSpecifier,
             InvariantCulture);
@@ -36,7 +40,7 @@ namespace Fnv1aTestVectorGenerator
         /// <summary>
         /// The third 64 bytes.
         /// </summary>
-        private static readonly BigInteger _Third64Bytes = BigInteger.Parse(
+        private static readonly BigInteger _Third64Bytes = Parse(
             "0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000000000000000000000000000000000000000000000000000000000000000",
             AllowHexSpecifier,
             InvariantCulture);
@@ -44,7 +48,7 @@ namespace Fnv1aTestVectorGenerator
         /// <summary>
         /// The second 64 bytes.
         /// </summary>
-        private static readonly BigInteger _Second64Bytes = BigInteger.Parse(
+        private static readonly BigInteger _Second64Bytes = Parse(
             "0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             AllowHexSpecifier,
             InvariantCulture);
@@ -54,10 +58,10 @@ namespace Fnv1aTestVectorGenerator
         /// </summary>
         private static void Main()
         {
-            var writer = TextWriter.Null; ////Console.Out;
-            var reader = TextReader.Null; ////Console.In;
+            var writer = TextWriter.Null; ////Out;
+            var reader = TextReader.Null; ////In;
 
-            Console.OutputEncoding = Encoding.UTF8;
+            OutputEncoding = UTF8;
             for (var loop = 0; loop < 1000; loop++)
             {
                 Set0(writer);
@@ -419,13 +423,13 @@ namespace Fnv1aTestVectorGenerator
         /// <returns>The test result string.</returns>
         private static string Test(this string data)
         {
-            return "Test:" + Environment.NewLine
-                + data + " 32: " + data.Fnv1a32s() + Environment.NewLine
-                + data + " 64: " + data.Fnv1a64s() + Environment.NewLine
-                + data + " 128: " + data.Fnv1a128s() + Environment.NewLine
-                + data + " 256: " + data.Fnv1a256s() + Environment.NewLine
-                + data + " 512: " + data.Fnv1a512s() + Environment.NewLine
-                + data + " 1024: " + data.Fnv1a1024s() + Environment.NewLine;
+            return "Test:" + NewLine
+                + data + " 32: " + data.Fnv1a32s() + NewLine
+                + data + " 64: " + data.Fnv1a64s() + NewLine
+                + data + " 128: " + data.Fnv1a128s() + NewLine
+                + data + " 256: " + data.Fnv1a256s() + NewLine
+                + data + " 512: " + data.Fnv1a512s() + NewLine
+                + data + " 1024: " + data.Fnv1a1024s() + NewLine;
         }
 
         /// <summary>
@@ -438,13 +442,13 @@ namespace Fnv1aTestVectorGenerator
             var newData = data + '\0';
             var printData = data.Print();
 
-            return "Test0:" + Environment.NewLine
-                + printData + " 32: " + newData.Fnv1a32s() + Environment.NewLine
-                + printData + " 64: " + newData.Fnv1a64s() + Environment.NewLine
-                + printData + " 128: " + newData.Fnv1a128s() + Environment.NewLine
-                + printData + " 256: " + newData.Fnv1a256s() + Environment.NewLine
-                + printData + " 512: " + newData.Fnv1a512s() + Environment.NewLine
-                + printData + " 1024: " + newData.Fnv1a1024s() + Environment.NewLine;
+            return "Test0:" + NewLine
+                + printData + " 32: " + newData.Fnv1a32s() + NewLine
+                + printData + " 64: " + newData.Fnv1a64s() + NewLine
+                + printData + " 128: " + newData.Fnv1a128s() + NewLine
+                + printData + " 256: " + newData.Fnv1a256s() + NewLine
+                + printData + " 512: " + newData.Fnv1a512s() + NewLine
+                + printData + " 1024: " + newData.Fnv1a1024s() + NewLine;
         }
 
         /// <summary>
@@ -464,13 +468,13 @@ namespace Fnv1aTestVectorGenerator
             var newData = sb.ToString();
             var printData = data.Print();
 
-            return "R10:" + Environment.NewLine
-                + printData.Print() + " 32: " + newData.Fnv1a32s() + Environment.NewLine
-                + printData.Print() + " 64: " + newData.Fnv1a64s() + Environment.NewLine
-                + printData.Print() + " 128: " + newData.Fnv1a128s() + Environment.NewLine
-                + printData.Print() + " 256: " + newData.Fnv1a256s() + Environment.NewLine
-                + printData.Print() + " 512: " + newData.Fnv1a512s() + Environment.NewLine
-                + printData.Print() + " 1024: " + newData.Fnv1a1024s() + Environment.NewLine;
+            return "R10:" + NewLine
+                + printData.Print() + " 32: " + newData.Fnv1a32s() + NewLine
+                + printData.Print() + " 64: " + newData.Fnv1a64s() + NewLine
+                + printData.Print() + " 128: " + newData.Fnv1a128s() + NewLine
+                + printData.Print() + " 256: " + newData.Fnv1a256s() + NewLine
+                + printData.Print() + " 512: " + newData.Fnv1a512s() + NewLine
+                + printData.Print() + " 1024: " + newData.Fnv1a1024s() + NewLine;
         }
 
         /// <summary>
@@ -490,13 +494,13 @@ namespace Fnv1aTestVectorGenerator
             var newData = sb.ToString();
             var printData = data.Print();
 
-            return "R500:" + Environment.NewLine
-                + printData.Print() + " 32: " + newData.Fnv1a32s() + Environment.NewLine
-                + printData.Print() + " 64: " + newData.Fnv1a64s() + Environment.NewLine
-                + printData.Print() + " 128: " + newData.Fnv1a128s() + Environment.NewLine
-                + printData.Print() + " 256: " + newData.Fnv1a256s() + Environment.NewLine
-                + printData.Print() + " 512: " + newData.Fnv1a512s() + Environment.NewLine
-                + printData.Print() + " 1024: " + newData.Fnv1a1024s() + Environment.NewLine;
+            return "R500:" + NewLine
+                + printData.Print() + " 32: " + newData.Fnv1a32s() + NewLine
+                + printData.Print() + " 64: " + newData.Fnv1a64s() + NewLine
+                + printData.Print() + " 128: " + newData.Fnv1a128s() + NewLine
+                + printData.Print() + " 256: " + newData.Fnv1a256s() + NewLine
+                + printData.Print() + " 512: " + newData.Fnv1a512s() + NewLine
+                + printData.Print() + " 1024: " + newData.Fnv1a1024s() + NewLine;
         }
 
         /// <summary>
@@ -536,7 +540,7 @@ namespace Fnv1aTestVectorGenerator
             using (HashAlgorithm alg = new Fnv1a32())
             {
                 return "0x"
-                    + ((uint)BitConverter.ToInt32(alg.ComputeHash(Encoding.UTF8.GetBytes(data)), 0)).ToString("X8", InvariantCulture);
+                    + ((uint)ToInt32(alg.ComputeHash(UTF8.GetBytes(data)), 0)).ToString("X8", InvariantCulture);
             }
         }
 
@@ -551,7 +555,7 @@ namespace Fnv1aTestVectorGenerator
             using (HashAlgorithm alg = new Fnv1a64())
             {
                 return "0x"
-                    + ((ulong)BitConverter.ToInt64(alg.ComputeHash(Encoding.UTF8.GetBytes(data)), 0)).ToString("X16", InvariantCulture);
+                    + ((ulong)ToInt64(alg.ComputeHash(UTF8.GetBytes(data)), 0)).ToString("X16", InvariantCulture);
             }
         }
 
@@ -565,7 +569,7 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a128())
             {
-                var value = new BigInteger(alg.ComputeHash(Encoding.UTF8.GetBytes(data))).ToString("X32", InvariantCulture);
+                var value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data))).ToString("X32", InvariantCulture);
 
                 return "0x" + value.Substring(value.Length - 32);
             }
@@ -581,7 +585,7 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a256())
             {
-                var value = new BigInteger(alg.ComputeHash(Encoding.UTF8.GetBytes(data))).ToString("X64", InvariantCulture);
+                var value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data))).ToString("X64", InvariantCulture);
 
                 return "0x" + value.Substring(value.Length - 64);
             }
@@ -597,7 +601,7 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a512())
             {
-                var hash = new BigInteger(alg.ComputeHash(Encoding.UTF8.GetBytes(data)));
+                var hash = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)));
                 var value1 = (hash >> 256).ToString("X64", InvariantCulture);
                 var value2 = (hash & _Bottom64Bytes).ToString("X64", InvariantCulture);
 
@@ -615,7 +619,7 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a1024())
             {
-                var hash = new BigInteger(alg.ComputeHash(Encoding.UTF8.GetBytes(data)));
+                var hash = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)));
                 var value1 = (hash >> 768).ToString("X64", InvariantCulture);
                 var value2 = ((hash & _Second64Bytes) >> 512).ToString("X64", InvariantCulture);
                 var value3 = ((hash & _Third64Bytes) >> 256).ToString("X64", InvariantCulture);

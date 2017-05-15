@@ -9,16 +9,17 @@
 
 namespace Fnv1aTests
 {
-    using System.Globalization;
     using System.Numerics;
     using System.Security.Cryptography;
-    using System.Text;
 
     using Fnv1a;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using static System.Globalization.CultureInfo;
+    using static System.Globalization.NumberStyles;
+    using static System.Numerics.BigInteger;
+    using static System.Text.Encoding;
 
     using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
@@ -37,7 +38,7 @@ namespace Fnv1aTests
         public void TestVector1()
         {
             AreEqual(
-                BigInteger.Parse("0DD268DBCAAC550362D98C384C4E576CCC8B1536847B6BBB31023B4C8CAEE0535", NumberStyles.AllowHexSpecifier, InvariantCulture),
+                Parse("0DD268DBCAAC550362D98C384C4E576CCC8B1536847B6BBB31023B4C8CAEE0535", AllowHexSpecifier, InvariantCulture),
                 Fnv1a256(string.Empty));
         }
 
@@ -49,7 +50,7 @@ namespace Fnv1aTests
         public void TestVector2()
         {
             AreEqual(
-                BigInteger.Parse("03323FB0F35303EC28DC751D0A33BDFA4DE6A99B7266494F6183B2716811637C", NumberStyles.AllowHexSpecifier, InvariantCulture),
+                Parse("03323FB0F35303EC28DC751D0A33BDFA4DE6A99B7266494F6183B2716811637C", AllowHexSpecifier, InvariantCulture),
                 Fnv1a256("a"));
         }
 
@@ -61,7 +62,7 @@ namespace Fnv1aTests
         public void TestVector3()
         {
             AreEqual(
-                BigInteger.Parse("0055EA2F306CADAD4F0F81C02D3889DC32453DAD5AE35B753BA1A91084AF3428", NumberStyles.AllowHexSpecifier, InvariantCulture),
+                Parse("0055EA2F306CADAD4F0F81C02D3889DC32453DAD5AE35B753BA1A91084AF3428", AllowHexSpecifier, InvariantCulture),
                 Fnv1a256("foobar"));
         }
 
@@ -76,7 +77,7 @@ namespace Fnv1aTests
             using (HashAlgorithm alg = new Fnv1a256())
             {
                 AreEqual(256, alg.HashSize);
-                return new BigInteger(alg.ComputeHash(Encoding.UTF8.GetBytes(data)));
+                return new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)));
             }
         }
     }
