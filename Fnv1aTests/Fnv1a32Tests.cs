@@ -9,11 +9,6 @@
 
 namespace Fnv1aTests
 {
-    using System;
-    using System.Security.Cryptography;
-
-    using Fnv1a;
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using static System.Text.Encoding;
@@ -65,10 +60,10 @@ namespace Fnv1aTests
         // ReSharper disable once InconsistentNaming
         private static uint Fnv1a32(string data)
         {
-            using (HashAlgorithm alg = new Fnv1a32())
+            using (System.Security.Cryptography.HashAlgorithm alg = new Fnv1a.Fnv1a32())
             {
                 AreEqual(32, alg.HashSize);
-                return (uint)BitConverter.ToInt32(alg.ComputeHash(UTF8.GetBytes(data)), 0);
+                return (uint)System.BitConverter.ToInt32(alg.ComputeHash(UTF8.GetBytes(data)), 0);
             }
         }
     }

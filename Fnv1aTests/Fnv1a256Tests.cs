@@ -10,9 +10,6 @@
 namespace Fnv1aTests
 {
     using System.Numerics;
-    using System.Security.Cryptography;
-
-    using Fnv1a;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -74,7 +71,7 @@ namespace Fnv1aTests
         // ReSharper disable once InconsistentNaming
         private static BigInteger Fnv1a256(string data)
         {
-            using (HashAlgorithm alg = new Fnv1a256())
+            using (System.Security.Cryptography.HashAlgorithm alg = new Fnv1a.Fnv1a256())
             {
                 AreEqual(256, alg.HashSize);
                 return new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)));
