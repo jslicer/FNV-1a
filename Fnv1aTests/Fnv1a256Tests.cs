@@ -25,8 +25,39 @@ namespace Fnv1aTests
     /// </summary>
     [TestClass]
     // ReSharper disable once InconsistentNaming
-    public sealed class Fnv1a256Tests
+    public sealed class Fnv1a256Tests : System.IDisposable
     {
+        /// <summary>
+        /// The hash algorithm being tested.
+        /// </summary>
+        private System.Security.Cryptography.HashAlgorithm _Alg;
+
+        /// <summary>
+        /// The method to run before each test.
+        /// </summary>
+        [TestInitialize]
+        public void Initialize()
+        {
+            this._Alg = new Fnv1a.Fnv1a256();
+        }
+
+        /// <summary>
+        /// The method to run after each test.
+        /// </summary>
+        [TestCleanup]
+        public void Cleanup()
+        {
+            this.Dispose();
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            this._Alg.Dispose();
+        }
+
         /// <summary>
         /// Tests the empty string against the known vector result.
         /// </summary>
@@ -36,7 +67,7 @@ namespace Fnv1aTests
         {
             AreEqual(
                 Parse("0DD268DBCAAC550362D98C384C4E576CCC8B1536847B6BBB31023B4C8CAEE0535", AllowHexSpecifier, InvariantCulture),
-                Fnv1a256(string.Empty));
+                this.Fnv1a256(string.Empty));
         }
 
         /// <summary>
@@ -48,7 +79,7 @@ namespace Fnv1aTests
         {
             AreEqual(
                 Parse("03323FB0F35303EC28DC751D0A33BDFA4DE6A99B7266494F6183B2716811637C", AllowHexSpecifier, InvariantCulture),
-                Fnv1a256("a"));
+                this.Fnv1a256("a"));
         }
 
         /// <summary>
@@ -60,7 +91,7 @@ namespace Fnv1aTests
         {
             AreEqual(
                 Parse("0055EA2F306CADAD4F0F81C02D3889DC32453DAD5AE35B753BA1A91084AF3428", AllowHexSpecifier, InvariantCulture),
-                Fnv1a256("foobar"));
+                this.Fnv1a256("foobar"));
         }
 
         /// <summary>
@@ -69,13 +100,10 @@ namespace Fnv1aTests
         /// <param name="data">The data.</param>
         /// <returns>The FNV-1a 256-bit hash of the specified data.</returns>
         // ReSharper disable once InconsistentNaming
-        private static BigInteger Fnv1a256(string data)
+        private BigInteger Fnv1a256(string data)
         {
-            using (System.Security.Cryptography.HashAlgorithm alg = new Fnv1a.Fnv1a256())
-            {
-                AreEqual(256, alg.HashSize);
-                return new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)));
-            }
+            AreEqual(256, this._Alg.HashSize);
+            return new BigInteger(this._Alg.ComputeHash(UTF8.GetBytes(data)));
         }
     }
 }

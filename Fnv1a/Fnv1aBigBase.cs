@@ -25,12 +25,12 @@ namespace Fnv1a
         /// <summary>
         /// The prime.
         /// </summary>
-        private readonly BigInteger _FnvPrime;
+        private readonly BigInteger _Prime;
 
         /// <summary>
         /// The non-zero offset basis.
         /// </summary>
-        private readonly BigInteger _FnvOffsetBasis;
+        private readonly BigInteger _OffsetBasis;
 
         /// <summary>
         /// The hash.
@@ -42,14 +42,14 @@ namespace Fnv1a
         /// </summary>
         /// <param name="modValue">The "wrap-around" modulo value for keeping multiplication within the number of
         /// bits.</param>
-        /// <param name="fnvPrime">The FNV-1a prime.</param>
-        /// <param name="fnvOffsetBasis">The FNV-1a offset basis.</param>
-        protected Fnv1aBigBase(BigInteger modValue, BigInteger fnvPrime, BigInteger fnvOffsetBasis)
+        /// <param name="prime">The FNV-1a prime.</param>
+        /// <param name="offsetBasis">The FNV-1a offset basis.</param>
+        protected Fnv1aBigBase(BigInteger modValue, BigInteger prime, BigInteger offsetBasis)
         {
             this._ModValue = modValue;
-            this._FnvPrime = fnvPrime;
-            this._FnvOffsetBasis = fnvOffsetBasis;
-            this.Initialize();
+            this._Prime = prime;
+            this._OffsetBasis = offsetBasis;
+            this.Init();
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Fnv1a
         /// </summary>
         public override sealed void Initialize()
         {
-            this._Hash = this._FnvOffsetBasis;
+            this.Init();
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Fnv1a
                 unchecked
                 {
                     this._Hash ^= array[i];
-                    this._Hash = (this._Hash * this._FnvPrime) % this._ModValue;
+                    this._Hash = (this._Hash * this._Prime) % this._ModValue;
                 }
             }
         }
@@ -90,6 +90,14 @@ namespace Fnv1a
         protected override byte[] HashFinal()
         {
             return this._Hash.ToByteArray();
+        }
+
+        /// <summary>
+        /// Initializes the hash for this instance.
+        /// </summary>
+        private void Init()
+        {
+            this._Hash = this._OffsetBasis;
         }
     }
 }

@@ -9,6 +9,8 @@
 
 namespace Fnv1aTests
 {
+    using System;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using static System.Text.Encoding;
@@ -20,8 +22,39 @@ namespace Fnv1aTests
     /// </summary>
     [TestClass]
     // ReSharper disable once InconsistentNaming
-    public sealed class Fnv1a32Tests
+    public sealed class Fnv1a32Tests : IDisposable
     {
+        /// <summary>
+        /// The hash algorithm being tested.
+        /// </summary>
+        private System.Security.Cryptography.HashAlgorithm _Alg;
+
+        /// <summary>
+        /// The method to run before each test.
+        /// </summary>
+        [TestInitialize]
+        public void Initialize()
+        {
+            this._Alg = new Fnv1a.Fnv1a32();
+        }
+
+        /// <summary>
+        /// The method to run after each test.
+        /// </summary>
+        [TestCleanup]
+        public void Cleanup()
+        {
+            this.Dispose();
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            this._Alg.Dispose();
+        }
+
         /// <summary>
         /// Tests the empty string against the known vector result.
         /// </summary>
@@ -29,7 +62,7 @@ namespace Fnv1aTests
         // ReSharper disable once InconsistentNaming
         public void TestVector1()
         {
-            AreEqual(0x811c9dc5, Fnv1a32(string.Empty));
+            AreEqual(0x811c9dc5, this.Fnv1a32(string.Empty));
         }
 
         /// <summary>
@@ -39,7 +72,7 @@ namespace Fnv1aTests
         // ReSharper disable once InconsistentNaming
         public void TestVector2()
         {
-            AreEqual(0xe40c292c, Fnv1a32("a"));
+            AreEqual(0xe40c292c, this.Fnv1a32("a"));
         }
 
         /// <summary>
@@ -49,7 +82,7 @@ namespace Fnv1aTests
         // ReSharper disable once InconsistentNaming
         public void TestVector3()
         {
-            AreEqual(0xbf9cf968, Fnv1a32("foobar"));
+            AreEqual(0xbf9cf968, this.Fnv1a32("foobar"));
         }
 
         /// <summary>
@@ -58,13 +91,10 @@ namespace Fnv1aTests
         /// <param name="data">The data.</param>
         /// <returns>The FNV-1a 32-bit hash of the specified data.</returns>
         // ReSharper disable once InconsistentNaming
-        private static uint Fnv1a32(string data)
+        private uint Fnv1a32(string data)
         {
-            using (System.Security.Cryptography.HashAlgorithm alg = new Fnv1a.Fnv1a32())
-            {
-                AreEqual(32, alg.HashSize);
-                return (uint)System.BitConverter.ToInt32(alg.ComputeHash(UTF8.GetBytes(data)), 0);
-            }
+            AreEqual(32, this._Alg.HashSize);
+            return (uint)BitConverter.ToInt32(this._Alg.ComputeHash(UTF8.GetBytes(data)), 0);
         }
     }
 }
