@@ -72,6 +72,7 @@
     <Compile Include="Fnv1a256Tests.cs" />
     <Compile Include="Fnv1a32Tests.cs" />
     <Compile Include="Fnv1a512Tests.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Fnv1a64Tests.cs" />
   </ItemGroup>

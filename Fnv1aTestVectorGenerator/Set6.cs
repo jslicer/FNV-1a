@@ -15,31 +15,27 @@ namespace Fnv1aTestVectorGenerator
     /// Provides an implementation for performing test vector set 6 generation.
     /// </summary>
     /// <seealso cref="ISet" />
-    internal sealed class Set6 : ISet
+    internal sealed class Set6 : SetBase
     {
-        /// <summary>
-        /// The writer.
-        /// </summary>
-        private readonly TextWriter _Writer;
-
+        /// <inheritdoc />
         /// <summary>
         /// Initializes a new instance of the <see cref="Set6"/> class.
         /// </summary>
         /// <param name="writer">The writer.</param>
-        public Set6(TextWriter writer = null)
+        public Set6(TextWriter writer = null) : base(writer)
         {
-            this._Writer = writer ?? TextWriter.Null;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Performs the test vector set 6 generation.
         /// </summary>
-        public void Perform()
+        public override void Perform()
         {
-            this._Writer.WriteLine("hi".Test());
-            this._Writer.WriteLine("hi".Test0());
-            this._Writer.WriteLine("hello".Test());
-            this._Writer.WriteLine("hello".Test0());
+            this.WriteLine("hi".Test());
+            this.WriteLine("hi".Test0());
+            this.WriteLine("hello".Test());
+            this.WriteLine("hello".Test0());
         }
     }
 }

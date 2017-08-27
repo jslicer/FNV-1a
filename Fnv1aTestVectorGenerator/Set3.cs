@@ -15,43 +15,39 @@ namespace Fnv1aTestVectorGenerator
     /// Provides an implementation for performing test vector set 3 generation.
     /// </summary>
     /// <seealso cref="ISet" />
-    internal sealed class Set3 : ISet
+    internal sealed class Set3 : SetBase
     {
-        /// <summary>
-        /// The writer.
-        /// </summary>
-        private readonly TextWriter _Writer;
-
+        /// <inheritdoc />
         /// <summary>
         /// Initializes a new instance of the <see cref="Set3"/> class.
         /// </summary>
         /// <param name="writer">The writer.</param>
-        public Set3(TextWriter writer = null)
+        public Set3(TextWriter writer = null) : base(writer)
         {
-            this._Writer = writer ?? TextWriter.Null;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Performs the test vector set 3 generation.
         /// </summary>
-        public void Perform()
+        public override void Perform()
         {
-            this._Writer.WriteLine("ch".Test0());
-            this._Writer.WriteLine("cho".Test0());
-            this._Writer.WriteLine("chon".Test0());
-            this._Writer.WriteLine("chong".Test0());
-            this._Writer.WriteLine("chongo".Test0());
-            this._Writer.WriteLine("chongo ".Test0());
-            this._Writer.WriteLine("chongo w".Test0());
-            this._Writer.WriteLine("chongo wa".Test0());
-            this._Writer.WriteLine("chongo was".Test0());
-            this._Writer.WriteLine("chongo was ".Test0());
-            this._Writer.WriteLine("chongo was h".Test0());
-            this._Writer.WriteLine("chongo was he".Test0());
-            this._Writer.WriteLine("chongo was her".Test0());
-            this._Writer.WriteLine("chongo was here".Test0());
-            this._Writer.WriteLine("chongo was here!".Test0());
-            this._Writer.WriteLine("chongo was here!\n".Test0());
+            this.WriteLine("ch".Test0());
+            this.WriteLine("cho".Test0());
+            this.WriteLine("chon".Test0());
+            this.WriteLine("chong".Test0());
+            this.WriteLine("chongo".Test0());
+            this.WriteLine("chongo ".Test0());
+            this.WriteLine("chongo w".Test0());
+            this.WriteLine("chongo wa".Test0());
+            this.WriteLine("chongo was".Test0());
+            this.WriteLine("chongo was ".Test0());
+            this.WriteLine("chongo was h".Test0());
+            this.WriteLine("chongo was he".Test0());
+            this.WriteLine("chongo was her".Test0());
+            this.WriteLine("chongo was here".Test0());
+            this.WriteLine("chongo was here!".Test0());
+            this.WriteLine("chongo was here!\n".Test0());
         }
     }
 }

@@ -9,6 +9,9 @@
 
 namespace Fnv1a
 {
+    using System;
+
+    /// <inheritdoc />
     /// <summary>
     /// Implements the FNV-1a 64-bit variant hashing algorithm.
     /// </summary>
@@ -30,6 +33,7 @@ namespace Fnv1a
         /// </summary>
         private ulong _Hash;
 
+        /// <inheritdoc />
         /// <summary>
         /// Initializes a new instance of the <see cref="Fnv1a64"/> class.
         /// </summary>
@@ -39,14 +43,13 @@ namespace Fnv1a
             this.HashSizeValue = 64;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Initializes an implementation of the <see cref="T:System.Security.Cryptography.HashAlgorithm"/> class.
         /// </summary>
-        public override void Initialize()
-        {
-            this._Hash = FnvOffsetBasis;
-        }
+        public override void Initialize() => this._Hash = FnvOffsetBasis;
 
+        /// <inheritdoc />
         /// <summary>
         /// When overridden in a derived class, routes data written to the object into the hash algorithm for computing
         /// the hash.
@@ -54,9 +57,13 @@ namespace Fnv1a
         /// <param name="array">The input to compute the hash code for.</param>
         /// <param name="ibStart">The offset into the byte array from which to begin using data.</param>
         /// <param name="cbSize">The number of bytes in the byte array to use as data.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         protected override void HashCore(byte[] array, int ibStart, int cbSize)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
             for (var i = ibStart; i < cbSize; i++)
             {
                 unchecked
@@ -67,6 +74,7 @@ namespace Fnv1a
             }
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// When overridden in a derived class, finalizes the hash computation after the last data is processed by the
         /// cryptographic stream object.
@@ -74,9 +82,6 @@ namespace Fnv1a
         /// <returns>
         /// The computed hash code.
         /// </returns>
-        protected override byte[] HashFinal()
-        {
-            return System.BitConverter.GetBytes(this._Hash);
-        }
+        protected override byte[] HashFinal() => BitConverter.GetBytes(this._Hash);
     }
 }

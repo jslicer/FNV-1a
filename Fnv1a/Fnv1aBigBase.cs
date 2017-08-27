@@ -11,6 +11,7 @@ namespace Fnv1a
 {
     using System.Numerics;
 
+    /// <inheritdoc />
     /// <summary>
     /// Implements the FNV-1a variant hashing algorithm for subtypes using the BigInteger class.
     /// </summary>
@@ -37,6 +38,7 @@ namespace Fnv1a
         /// </summary>
         private BigInteger _Hash;
 
+        /// <inheritdoc />
         /// <summary>
         /// Initializes a new instance of the <see cref="Fnv1aBigBase"/> class.
         /// </summary>
@@ -52,14 +54,13 @@ namespace Fnv1a
             this.Init();
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Initializes an implementation of the <see cref="T:System.Security.Cryptography.HashAlgorithm" /> class.
         /// </summary>
-        public override sealed void Initialize()
-        {
-            this.Init();
-        }
+        public sealed override void Initialize() => this.Init();
 
+        /// <inheritdoc />
         /// <summary>
         /// When overridden in a derived class, routes data written to the object into the hash algorithm for computing
         /// the hash.
@@ -67,9 +68,13 @@ namespace Fnv1a
         /// <param name="array">The input to compute the hash code for.</param>
         /// <param name="ibStart">The offset into the byte array from which to begin using data.</param>
         /// <param name="cbSize">The number of bytes in the byte array to use as data.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         protected override void HashCore(byte[] array, int ibStart, int cbSize)
         {
+            if (array == null)
+            {
+                throw new System.ArgumentNullException(nameof(array));
+            }
+
             for (var i = ibStart; i < cbSize; i++)
             {
                 unchecked
@@ -80,6 +85,7 @@ namespace Fnv1a
             }
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// When overridden in a derived class, finalizes the hash computation after the last data is processed by the
         /// cryptographic stream object.
@@ -87,17 +93,11 @@ namespace Fnv1a
         /// <returns>
         /// The computed hash code.
         /// </returns>
-        protected override byte[] HashFinal()
-        {
-            return this._Hash.ToByteArray();
-        }
+        protected override byte[] HashFinal() => this._Hash.ToByteArray();
 
         /// <summary>
         /// Initializes the hash for this instance.
         /// </summary>
-        private void Init()
-        {
-            this._Hash = this._OffsetBasis;
-        }
+        private void Init() => this._Hash = this._OffsetBasis;
     }
 }

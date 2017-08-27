@@ -60,6 +60,7 @@
     <Compile Include="Fnv1a512.cs" />
     <Compile Include="Fnv1a64.cs" />
     <Compile Include="Fnv1aBigBase.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -17,6 +17,7 @@ namespace Fnv1aTests
 
     using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
+    /// <inheritdoc />
     /// <summary>
     /// Tests the FNV-1a 32-bit algorithm.
     /// </summary>
@@ -33,57 +34,40 @@ namespace Fnv1aTests
         /// The method to run before each test.
         /// </summary>
         [TestInitialize]
-        public void Initialize()
-        {
-            this._Alg = new Fnv1a.Fnv1a32();
-        }
+        public void Initialize() => this._Alg = new Fnv1a.Fnv1a32();
 
         /// <summary>
         /// The method to run after each test.
         /// </summary>
         [TestCleanup]
-        public void Cleanup()
-        {
-            this.Dispose();
-        }
+        public void Cleanup() => this.Dispose();
 
+        /// <inheritdoc />
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose()
-        {
-            this._Alg.Dispose();
-        }
+        public void Dispose() => this._Alg.Dispose();
 
         /// <summary>
         /// Tests the empty string against the known vector result.
         /// </summary>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
-        public void TestVector1()
-        {
-            AreEqual(0x811c9dc5, this.Fnv1a32(string.Empty));
-        }
+        public void TestVector1() => AreEqual(0x811C9DC5, this.Fnv1a32(string.Empty));
 
         /// <summary>
         /// Tests the string "a" against the known vector result.
         /// </summary>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
-        public void TestVector2()
-        {
-            AreEqual(0xe40c292c, this.Fnv1a32("a"));
-        }
+        public void TestVector2() => AreEqual(0xE40C292C, this.Fnv1a32("a"));
 
         /// <summary>
         /// Tests the string against the known vector result.
         /// </summary>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
-        public void TestVector3()
-        {
-            AreEqual(0xbf9cf968, this.Fnv1a32("foobar"));
-        }
+        public void TestVector3() => AreEqual(0xBF9CF968, this.Fnv1a32("foobar"));
 
         /// <summary>
         /// Computes the FNV-1a 32-bit hash for the specified data.

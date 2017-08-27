@@ -72,6 +72,7 @@
     <Compile Include="Set7.cs" />
     <Compile Include="Set8.cs" />
     <Compile Include="Set9.cs" />
+    <Compile Include="SetBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fnv1a\Fnv1a.csproj">

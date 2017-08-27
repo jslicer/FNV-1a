@@ -15,33 +15,29 @@ namespace Fnv1aTestVectorGenerator
     /// Provides an implementation for performing test vector set 10 generation.
     /// </summary>
     /// <seealso cref="ISet" />
-    internal sealed class Set10 : ISet
+    internal sealed class Set10 : SetBase
     {
-        /// <summary>
-        /// The writer.
-        /// </summary>
-        private readonly TextWriter _Writer;
-
+        /// <inheritdoc />
         /// <summary>
         /// Initializes a new instance of the <see cref="Set10"/> class.
         /// </summary>
         /// <param name="writer">The writer.</param>
-        public Set10(TextWriter writer = null)
+        public Set10(TextWriter writer = null) : base(writer)
         {
-            this._Writer = writer ?? TextWriter.Null;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Performs the test vector set 10 generation.
         /// </summary>
-        public void Perform()
+        public override void Perform()
         {
-            this._Writer.WriteLine("feedface".Test());
-            this._Writer.WriteLine("feedface".Test0());
-            this._Writer.WriteLine("feedfacedaffdeed".Test());
-            this._Writer.WriteLine("feedfacedaffdeed".Test0());
-            this._Writer.WriteLine("feedfacedeadbeef".Test());
-            this._Writer.WriteLine("feedfacedeadbeef".Test0());
+            this.WriteLine("feedface".Test());
+            this.WriteLine("feedface".Test0());
+            this.WriteLine("feedfacedaffdeed".Test());
+            this.WriteLine("feedfacedaffdeed".Test0());
+            this.WriteLine("feedfacedeadbeef".Test());
+            this.WriteLine("feedfacedeadbeef".Test0());
         }
     }
 }

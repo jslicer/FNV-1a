@@ -15,33 +15,29 @@ namespace Fnv1aTestVectorGenerator
     /// Provides an implementation for performing test vector set 8 generation.
     /// </summary>
     /// <seealso cref="ISet" />
-    internal sealed class Set8 : ISet
+    internal sealed class Set8 : SetBase
     {
-        /// <summary>
-        /// The writer.
-        /// </summary>
-        private readonly TextWriter _Writer;
-
+        /// <inheritdoc />
         /// <summary>
         /// Initializes a new instance of the <see cref="Set8"/> class.
         /// </summary>
         /// <param name="writer">The writer.</param>
-        public Set8(TextWriter writer = null)
+        public Set8(TextWriter writer = null) : base(writer)
         {
-            this._Writer = writer ?? TextWriter.Null;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Performs the test vector set 8 generation.
         /// </summary>
-        public void Perform()
+        public override void Perform()
         {
-            this._Writer.WriteLine("127.0.0.1".Test());
-            this._Writer.WriteLine("127.0.0.1".Test0());
-            this._Writer.WriteLine("127.0.0.2".Test());
-            this._Writer.WriteLine("127.0.0.2".Test0());
-            this._Writer.WriteLine("127.0.0.3".Test());
-            this._Writer.WriteLine("127.0.0.3".Test0());
+            this.WriteLine("127.0.0.1".Test());
+            this.WriteLine("127.0.0.1".Test0());
+            this.WriteLine("127.0.0.2".Test());
+            this.WriteLine("127.0.0.2".Test0());
+            this.WriteLine("127.0.0.3".Test());
+            this.WriteLine("127.0.0.3".Test0());
         }
     }
 }

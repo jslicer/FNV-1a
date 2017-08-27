@@ -20,6 +20,7 @@ namespace Fnv1aTests
 
     using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
+    /// <inheritdoc />
     /// <summary>
     /// Tests the FNV-1a 128-bit algorithm.
     /// </summary>
@@ -36,63 +37,46 @@ namespace Fnv1aTests
         /// The method to run before each test.
         /// </summary>
         [TestInitialize]
-        public void Initialize()
-        {
-            this._Alg = new Fnv1a.Fnv1a128();
-        }
+        public void Initialize() => this._Alg = new Fnv1a.Fnv1a128();
 
         /// <summary>
         /// The method to run after each test.
         /// </summary>
         [TestCleanup]
-        public void Cleanup()
-        {
-            this.Dispose();
-        }
+        public void Cleanup() => this.Dispose();
 
+        /// <inheritdoc />
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose()
-        {
-            this._Alg.Dispose();
-        }
+        public void Dispose() => this._Alg.Dispose();
 
         /// <summary>
         /// Tests the empty string against the known vector result.
         /// </summary>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
-        public void TestVector1()
-        {
-            AreEqual(
-                Parse("6C62272E07BB014262B821756295C58D", AllowHexSpecifier, InvariantCulture),
-                this.Fnv1a128(string.Empty));
-        }
+        public void TestVector1() => AreEqual(
+            Parse("6C62272E07BB014262B821756295C58D", AllowHexSpecifier, InvariantCulture),
+            this.Fnv1a128(string.Empty));
 
         /// <summary>
         /// Tests the string "a" against the known vector result.
         /// </summary>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
-        public void TestVector2()
-        {
-            AreEqual(
-                Parse("0D228CB696F1A8CAF78912B704E4A8964", AllowHexSpecifier, InvariantCulture),
-                this.Fnv1a128("a"));
-        }
+        public void TestVector2() => AreEqual(
+            Parse("0D228CB696F1A8CAF78912B704E4A8964", AllowHexSpecifier, InvariantCulture),
+            this.Fnv1a128("a"));
 
         /// <summary>
         /// Tests the string against the known vector result.
         /// </summary>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
-        public void TestVector3()
-        {
-            AreEqual(
-                Parse("343E1662793C64BF6F0D3597BA446F18", AllowHexSpecifier, InvariantCulture),
-                this.Fnv1a128("foobar"));
-        }
+        public void TestVector3() => AreEqual(
+            Parse("343E1662793C64BF6F0D3597BA446F18", AllowHexSpecifier, InvariantCulture),
+            this.Fnv1a128("foobar"));
 
         /// <summary>
         /// Computes the FNV-1a 128-bit hash for the specified data.

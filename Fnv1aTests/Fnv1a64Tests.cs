@@ -17,6 +17,7 @@ namespace Fnv1aTests
 
     using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
+    /// <inheritdoc />
     /// <summary>
     /// Tests the FNV-1a 64-bit algorithm.
     /// </summary>
@@ -33,57 +34,40 @@ namespace Fnv1aTests
         /// The method to run before each test.
         /// </summary>
         [TestInitialize]
-        public void Initialize()
-        {
-            this._Alg = new Fnv1a.Fnv1a64();
-        }
+        public void Initialize() => this._Alg = new Fnv1a.Fnv1a64();
 
         /// <summary>
         /// The method to run after each test.
         /// </summary>
         [TestCleanup]
-        public void Cleanup()
-        {
-            this.Dispose();
-        }
+        public void Cleanup() => this.Dispose();
 
+        /// <inheritdoc />
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose()
-        {
-            this._Alg.Dispose();
-        }
+        public void Dispose() => this._Alg.Dispose();
 
         /// <summary>
         /// Tests the empty string against the known vector result.
         /// </summary>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
-        public void TestVector1()
-        {
-            AreEqual(0xcbf29ce484222325, this.Fnv1a64(string.Empty));
-        }
+        public void TestVector1() => AreEqual(0xCBF29CE484222325, this.Fnv1a64(string.Empty));
 
         /// <summary>
         /// Tests the string "a" against the known vector result.
         /// </summary>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
-        public void TestVector2()
-        {
-            AreEqual(0xaf63dc4c8601ec8c, this.Fnv1a64("a"));
-        }
+        public void TestVector2() => AreEqual(0xAF63DC4C8601EC8C, this.Fnv1a64("a"));
 
         /// <summary>
         /// Tests the string against the known vector result.
         /// </summary>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
-        public void TestVector3()
-        {
-            AreEqual(0x85944171f73967e8, this.Fnv1a64("foobar"));
-        }
+        public void TestVector3() => AreEqual(0x85944171F73967E8, this.Fnv1a64("foobar"));
 
         /// <summary>
         /// Computes the FNV-1a 64-bit hash for the specified data.

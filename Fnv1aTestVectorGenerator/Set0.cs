@@ -15,39 +15,35 @@ namespace Fnv1aTestVectorGenerator
     /// Provides an implementation for performing test vector set 0 generation.
     /// </summary>
     /// <seealso cref="ISet" />
-    internal sealed class Set0 : ISet
+    internal sealed class Set0 : SetBase
     {
+        /// <inheritdoc />
         /// <summary>
-        /// The writer.
-        /// </summary>
-        private readonly TextWriter _Writer;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Set0"/> class.
+        /// Initializes a new instance of the <see cref="T:Fnv1aTestVectorGenerator.Set0" /> class.
         /// </summary>
         /// <param name="writer">The writer.</param>
-        public Set0(TextWriter writer = null)
+        public Set0(TextWriter writer = null) : base(writer)
         {
-            this._Writer = writer ?? TextWriter.Null;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Performs the test vector set 0 generation.
         /// </summary>
-        public void Perform()
+        public override void Perform()
         {
-            this._Writer.WriteLine(string.Empty.Test());
-            this._Writer.WriteLine("a".Test());
-            this._Writer.WriteLine("b".Test());
-            this._Writer.WriteLine("c".Test());
-            this._Writer.WriteLine("d".Test());
-            this._Writer.WriteLine("e".Test());
-            this._Writer.WriteLine("f".Test());
-            this._Writer.WriteLine("fo".Test());
-            this._Writer.WriteLine("foo".Test());
-            this._Writer.WriteLine("foob".Test());
-            this._Writer.WriteLine("fooba".Test());
-            this._Writer.WriteLine("foobar".Test());
+            this.WriteLine(string.Empty.Test());
+            this.WriteLine("a".Test());
+            this.WriteLine("b".Test());
+            this.WriteLine("c".Test());
+            this.WriteLine("d".Test());
+            this.WriteLine("e".Test());
+            this.WriteLine("f".Test());
+            this.WriteLine("fo".Test());
+            this.WriteLine("foo".Test());
+            this.WriteLine("foob".Test());
+            this.WriteLine("fooba".Test());
+            this.WriteLine("foobar".Test());
         }
     }
 }
