@@ -11,10 +11,11 @@ namespace Fnv1aTestVectorGenerator
 {
     using System.IO;
 
+    /// <inheritdoc />
     /// <summary>
     /// Provides an implementation for performing test vector set 13 generation.
     /// </summary>
-    /// <seealso cref="ISet" />
+    /// <seealso cref="T:Fnv1aTestVectorGenerator.ISet" />
     internal sealed class Set13 : SetBase
     {
         /// <inheritdoc />

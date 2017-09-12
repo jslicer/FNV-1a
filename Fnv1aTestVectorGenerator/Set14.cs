@@ -11,6 +11,7 @@ namespace Fnv1aTestVectorGenerator
 {
     using System.IO;
 
+    /// <inheritdoc />
     /// <summary>
     /// Provides an implementation for performing test vector set 14 generation.
     /// </summary>
