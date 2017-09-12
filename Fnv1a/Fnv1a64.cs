@@ -10,6 +10,7 @@
 namespace Fnv1a
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <inheritdoc />
     /// <summary>
@@ -31,7 +32,7 @@ namespace Fnv1a
         /// <summary>
         /// The hash.
         /// </summary>
-        private ulong _Hash;
+        private ulong _hash;
 
         /// <inheritdoc />
         /// <summary>
@@ -47,7 +48,7 @@ namespace Fnv1a
         /// <summary>
         /// Initializes an implementation of the <see cref="T:System.Security.Cryptography.HashAlgorithm"/> class.
         /// </summary>
-        public override void Initialize() => this._Hash = FnvOffsetBasis;
+        public override void Initialize() => this._hash = FnvOffsetBasis;
 
         /// <inheritdoc />
         /// <summary>
@@ -57,6 +58,7 @@ namespace Fnv1a
         /// <param name="array">The input to compute the hash code for.</param>
         /// <param name="ibStart">The offset into the byte array from which to begin using data.</param>
         /// <param name="cbSize">The number of bytes in the byte array to use as data.</param>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         protected override void HashCore(byte[] array, int ibStart, int cbSize)
         {
             if (array == null)
@@ -68,8 +70,8 @@ namespace Fnv1a
             {
                 unchecked
                 {
-                    this._Hash ^= array[i];
-                    this._Hash *= FnvPrime;
+                    this._hash ^= array[i];
+                    this._hash *= FnvPrime;
                 }
             }
         }
@@ -82,6 +84,6 @@ namespace Fnv1a
         /// <returns>
         /// The computed hash code.
         /// </returns>
-        protected override byte[] HashFinal() => BitConverter.GetBytes(this._Hash);
+        protected override byte[] HashFinal() => BitConverter.GetBytes(this._hash);
     }
 }

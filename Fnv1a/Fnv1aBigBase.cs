@@ -9,6 +9,7 @@
 
 namespace Fnv1a
 {
+    using System.Diagnostics.CodeAnalysis;
     using System.Numerics;
 
     /// <inheritdoc />
@@ -21,22 +22,22 @@ namespace Fnv1a
         /// <summary>
         /// The "wrap-around" modulo value for keeping multiplication within the number of bits.
         /// </summary>
-        private readonly BigInteger _ModValue;
+        private readonly BigInteger _modValue;
 
         /// <summary>
         /// The prime.
         /// </summary>
-        private readonly BigInteger _Prime;
+        private readonly BigInteger _prime;
 
         /// <summary>
         /// The non-zero offset basis.
         /// </summary>
-        private readonly BigInteger _OffsetBasis;
+        private readonly BigInteger _offsetBasis;
 
         /// <summary>
         /// The hash.
         /// </summary>
-        private BigInteger _Hash;
+        private BigInteger _hash;
 
         /// <inheritdoc />
         /// <summary>
@@ -48,9 +49,9 @@ namespace Fnv1a
         /// <param name="offsetBasis">The FNV-1a offset basis.</param>
         protected Fnv1aBigBase(BigInteger modValue, BigInteger prime, BigInteger offsetBasis)
         {
-            this._ModValue = modValue;
-            this._Prime = prime;
-            this._OffsetBasis = offsetBasis;
+            this._modValue = modValue;
+            this._prime = prime;
+            this._offsetBasis = offsetBasis;
             this.Init();
         }
 
@@ -58,7 +59,7 @@ namespace Fnv1a
         /// <summary>
         /// Initializes an implementation of the <see cref="T:System.Security.Cryptography.HashAlgorithm" /> class.
         /// </summary>
-        public sealed override void Initialize() => this.Init();
+        public override sealed void Initialize() => this.Init();
 
         /// <inheritdoc />
         /// <summary>
@@ -68,6 +69,7 @@ namespace Fnv1a
         /// <param name="array">The input to compute the hash code for.</param>
         /// <param name="ibStart">The offset into the byte array from which to begin using data.</param>
         /// <param name="cbSize">The number of bytes in the byte array to use as data.</param>
+        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         protected override void HashCore(byte[] array, int ibStart, int cbSize)
         {
             if (array == null)
@@ -79,8 +81,8 @@ namespace Fnv1a
             {
                 unchecked
                 {
-                    this._Hash ^= array[i];
-                    this._Hash = (this._Hash * this._Prime) % this._ModValue;
+                    this._hash ^= array[i];
+                    this._hash = (this._hash * this._prime) % this._modValue;
                 }
             }
         }
@@ -93,11 +95,11 @@ namespace Fnv1a
         /// <returns>
         /// The computed hash code.
         /// </returns>
-        protected override byte[] HashFinal() => this._Hash.ToByteArray();
+        protected override byte[] HashFinal() => this._hash.ToByteArray();
 
         /// <summary>
         /// Initializes the hash for this instance.
         /// </summary>
-        private void Init() => this._Hash = this._OffsetBasis;
+        private void Init() => this._hash = this._offsetBasis;
     }
 }

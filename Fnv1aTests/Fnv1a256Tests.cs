@@ -31,13 +31,13 @@ namespace Fnv1aTests
         /// <summary>
         /// The hash algorithm being tested.
         /// </summary>
-        private System.Security.Cryptography.HashAlgorithm _Alg;
+        private System.Security.Cryptography.HashAlgorithm _alg;
 
         /// <summary>
         /// The method to run before each test.
         /// </summary>
         [TestInitialize]
-        public void Initialize() => this._Alg = new Fnv1a.Fnv1a256();
+        public void Initialize() => this._alg = new Fnv1a.Fnv1a256();
 
         /// <summary>
         /// The method to run after each test.
@@ -49,7 +49,7 @@ namespace Fnv1aTests
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose() => this._Alg.Dispose();
+        public void Dispose() => this._alg.Dispose();
 
         /// <summary>
         /// Tests the empty string against the known vector result.
@@ -86,8 +86,8 @@ namespace Fnv1aTests
         // ReSharper disable once InconsistentNaming
         private BigInteger Fnv1a256(string data)
         {
-            AreEqual(256, this._Alg.HashSize);
-            return new BigInteger(this._Alg.ComputeHash(UTF8.GetBytes(data)));
+            AreEqual(256, this._alg.HashSize);
+            return new BigInteger(this._alg.ComputeHash(UTF8.GetBytes(data)));
         }
     }
 }
