@@ -77,7 +77,7 @@ namespace Fnv1a
                 throw new System.ArgumentNullException(nameof(array));
             }
 
-            for (var i = ibStart; i < cbSize; i++)
+            for (int i = ibStart; i < cbSize; i++)
             {
                 unchecked
                 {

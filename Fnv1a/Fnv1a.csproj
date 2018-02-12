@@ -13,7 +13,7 @@
     <Copyright />
     <PackageProjectUrl>https://github.com/sonicbhoc/FNV-1a</PackageProjectUrl>
     <PackageTags>FNV-1a</PackageTags>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>cjcii.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
   </PropertyGroup>

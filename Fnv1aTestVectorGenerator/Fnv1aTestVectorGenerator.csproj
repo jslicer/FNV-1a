@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>Fnv1aTestVectorGenerator</RootNamespace>
     <AssemblyName>Fnv1aTestVectorGenerator</AssemblyName>
+    <StartupObject>Fnv1aTestVectorGenerator.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

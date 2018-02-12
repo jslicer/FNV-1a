@@ -31,9 +31,6 @@ namespace Fnv1aTestVectorGenerator
         /// <summary>
         /// Performs the test vector set 11 generation.
         /// </summary>
-        public override void Perform()
-        {
-            this.WriteLine("line 1\nline 2\nline 3".Test());
-        }
+        public override void Perform() => this.WriteLine("line 1\nline 2\nline 3".Test());
     }
 }

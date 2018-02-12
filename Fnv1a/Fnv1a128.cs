@@ -25,11 +25,9 @@ namespace Fnv1a
         /// Initializes a new instance of the <see cref="Fnv1a128"/> class.
         /// </summary>
         public Fnv1a128() : base(
-                Parse("100000000000000000000000000000000", AllowHexSpecifier, InvariantCulture),
-                Parse("0000000001000000000000000000013B", AllowHexSpecifier, InvariantCulture),
-                Parse("6C62272E07BB014262B821756295C58D", AllowHexSpecifier, InvariantCulture))
-        {
-            this.HashSizeValue = 128;
-        }
+            Parse("100000000000000000000000000000000", AllowHexSpecifier, InvariantCulture),
+            Parse("0000000001000000000000000000013B", AllowHexSpecifier, InvariantCulture),
+            Parse("6C62272E07BB014262B821756295C58D", AllowHexSpecifier, InvariantCulture))
+            => this.HashSizeValue = 128;
     }
 }
