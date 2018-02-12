@@ -56,16 +56,13 @@ namespace Fnv1aTestVectorGenerator
         /// </summary>
         /// <param name="data">The data.</param>
         /// <returns>The test result string.</returns>
-        public static string Test(this string data)
-        {
-            return "Test:" + NewLine
-                + data + " 32: " + data.Fnv1a32s() + NewLine
-                + data + " 64: " + data.Fnv1a64s() + NewLine
-                + data + " 128: " + data.Fnv1a128s() + NewLine
-                + data + " 256: " + data.Fnv1a256s() + NewLine
-                + data + " 512: " + data.Fnv1a512s() + NewLine
-                + data + " 1024: " + data.Fnv1a1024s() + NewLine;
-        }
+        public static string Test(this string data) => "Test:" + NewLine
+            + data + " 32: " + data.Fnv1a32s() + NewLine
+            + data + " 64: " + data.Fnv1a64s() + NewLine
+            + data + " 128: " + data.Fnv1a128s() + NewLine
+            + data + " 256: " + data.Fnv1a256s() + NewLine
+            + data + " 512: " + data.Fnv1a512s() + NewLine
+            + data + " 1024: " + data.Fnv1a1024s() + NewLine;
 
         /// <summary>
         /// Tests the specified data adding a trailing NULL byte.
@@ -74,8 +71,8 @@ namespace Fnv1aTestVectorGenerator
         /// <returns>The test result string.</returns>
         public static string Test0(this string data)
         {
-            var newData = data + '\0';
-            var printData = data.Print();
+            string newData = data + '\0';
+            string printData = data.Print();
 
             return "Test0:" + NewLine
                 + printData + " 32: " + newData.Fnv1a32s() + NewLine
@@ -93,15 +90,15 @@ namespace Fnv1aTestVectorGenerator
         /// <returns>The test result string.</returns>
         public static string R10(this string data)
         {
-            var sb = new StringBuilder(10 * data.Length);
+            StringBuilder sb = new StringBuilder(10 * data.Length);
 
-            for (var i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++)
             {
                 sb.Append(data);
             }
 
-            var newData = sb.ToString();
-            var printData = data.Print();
+            string newData = sb.ToString();
+            string printData = data.Print();
 
             return "R10:" + NewLine
                 + printData.Print() + " 32: " + newData.Fnv1a32s() + NewLine
@@ -119,15 +116,15 @@ namespace Fnv1aTestVectorGenerator
         /// <returns>The test result string.</returns>
         public static string R500(this string data)
         {
-            var sb = new StringBuilder(500 * data.Length);
+            StringBuilder sb = new StringBuilder(500 * data.Length);
 
-            for (var i = 0; i < 500; i++)
+            for (int i = 0; i < 500; i++)
             {
                 sb.Append(data);
             }
 
-            var newData = sb.ToString();
-            var printData = data.Print();
+            string newData = sb.ToString();
+            string printData = data.Print();
 
             return "R500:" + NewLine
                 + printData.Print() + " 32: " + newData.Fnv1a32s() + NewLine
@@ -145,10 +142,10 @@ namespace Fnv1aTestVectorGenerator
         /// <returns>The printable string.</returns>
         private static string Print(this string data)
         {
-            var controlCharacter = false;
-            var sb = new StringBuilder(data.Length);
+            bool controlCharacter = false;
+            StringBuilder sb = new StringBuilder(data.Length);
 
-            foreach (var c in data)
+            foreach (char c in data)
             {
                 if (controlCharacter || char.IsControl(c))
                 {
@@ -204,9 +201,9 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a128())
             {
-                var value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data))).ToString("X32", InvariantCulture);
+                string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data))).ToString("X32", InvariantCulture);
 
-                return "0x" + value.Substring(value.Length - 32);
+                return "0x" + value?.Substring(value.Length - 32);
             }
         }
 
@@ -220,9 +217,9 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a256())
             {
-                var value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data))).ToString("X64", InvariantCulture);
+                string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data))).ToString("X64", InvariantCulture);
 
-                return "0x" + value.Substring(value.Length - 64);
+                return "0x" + value?.Substring(value.Length - 64);
             }
         }
 
@@ -236,11 +233,11 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a512())
             {
-                var hash = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)));
-                var value1 = (hash >> 256).ToString("X64", InvariantCulture);
-                var value2 = (hash & _Bottom64Bytes).ToString("X64", InvariantCulture);
+                BigInteger hash = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)));
+                string value1 = (hash >> 256).ToString("X64", InvariantCulture);
+                string value2 = (hash & _Bottom64Bytes).ToString("X64", InvariantCulture);
 
-                return "0x" + value1.Substring(value1.Length - 64) + value2.Substring(value2.Length - 64);
+                return "0x" + value1?.Substring(value1.Length - 64) + value2?.Substring(value2.Length - 64);
             }
         }
 
@@ -254,17 +251,17 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a1024())
             {
-                var hash = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)));
-                var value1 = (hash >> 768).ToString("X64", InvariantCulture);
-                var value2 = ((hash & _Second64Bytes) >> 512).ToString("X64", InvariantCulture);
-                var value3 = ((hash & _Third64Bytes) >> 256).ToString("X64", InvariantCulture);
-                var value4 = (hash & _Bottom64Bytes).ToString("X64", InvariantCulture);
+                BigInteger hash = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)));
+                string value1 = (hash >> 768).ToString("X64", InvariantCulture);
+                string value2 = ((hash & _Second64Bytes) >> 512).ToString("X64", InvariantCulture);
+                string value3 = ((hash & _Third64Bytes) >> 256).ToString("X64", InvariantCulture);
+                string value4 = (hash & _Bottom64Bytes).ToString("X64", InvariantCulture);
 
                 return "0x"
-                    + value1.Substring(value1.Length - 64)
-                    + value2.Substring(value2.Length - 64)
-                    + value3.Substring(value3.Length - 64)
-                    + value4.Substring(value4.Length - 64);
+                    + value1?.Substring(value1.Length - 64)
+                    + value2?.Substring(value2.Length - 64)
+                    + value3?.Substring(value3.Length - 64)
+                    + value4?.Substring(value4.Length - 64);
             }
         }
     }

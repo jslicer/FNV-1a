@@ -24,9 +24,9 @@ namespace Fnv1aTestVectorGenerator
         /// </summary>
         private static void Main()
         {
-            var writer = TextWriter.Null; ////Out;
-            var reader = TextReader.Null; ////In;
-            var sets = new ISet[]
+            TextWriter writer = TextWriter.Null; ////Out;
+            TextReader reader = TextReader.Null; ////In;
+            ISet[] sets =
             {
                 new Set0(writer),
                 new Set1(writer),
@@ -47,9 +47,9 @@ namespace Fnv1aTestVectorGenerator
             };
 
             OutputEncoding = UTF8;
-            for (var loop = 0; loop < 1000; loop++)
+            for (int loop = 0; loop < 1000; loop++)
             {
-                foreach (var set in sets)
+                foreach (ISet set in sets)
                 {
                     set.Perform();
                 }

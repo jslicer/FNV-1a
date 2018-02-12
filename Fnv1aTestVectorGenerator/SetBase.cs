@@ -27,10 +27,7 @@ namespace Fnv1aTestVectorGenerator
         /// Initializes a new instance of the <see cref="SetBase"/> class.
         /// </summary>
         /// <param name="writer">The writer.</param>
-        protected SetBase(TextWriter writer = null)
-        {
-            this._writer = writer ?? TextWriter.Null;
-        }
+        protected SetBase(TextWriter writer = null) => this._writer = writer ?? TextWriter.Null;
 
         /// <inheritdoc />
         /// <summary>

@@ -66,7 +66,7 @@ namespace Fnv1a
                 throw new ArgumentNullException(nameof(array));
             }
 
-            for (var i = ibStart; i < cbSize; i++)
+            for (int i = ibStart; i < cbSize; i++)
             {
                 unchecked
                 {
