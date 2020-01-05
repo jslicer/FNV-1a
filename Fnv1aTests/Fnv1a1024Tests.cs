@@ -89,7 +89,7 @@ namespace Fnv1aTests
         private BigInteger Fnv1a1024(string data)
         {
             AreEqual(1024, this._alg.HashSize);
-            return new BigInteger(this._alg.ComputeHash(UTF8.GetBytes(data)));
+            return new BigInteger(this._alg.ComputeHash(UTF8.GetBytes(data)).AddZero());
         }
     }
 }

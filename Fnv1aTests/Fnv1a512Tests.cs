@@ -68,7 +68,7 @@ namespace Fnv1aTests
         [TestMethod]
         // ReSharper disable once InconsistentNaming
         public void TestVector2() => AreEqual(
-            Parse("043A992DC8FC5AD7DE493E3D696D6F85D64326EC07000000000000000011986F90C2532CAF5BE7D88291BAA894A395225328B196BD6A8A643FE12CD87B27FF88", AllowHexSpecifier, InvariantCulture),
+            Parse("0E43A992DC8FC5AD7DE493E3D696D6F85D64326EC07000000000000000011986F90C2532CAF5BE7D88291BAA894A395225328B196BD6A8A643FE12CD87B27FF88", AllowHexSpecifier, InvariantCulture),
             this.Fnv1a512("a"));
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Fnv1aTests
         [TestMethod]
         // ReSharper disable once InconsistentNaming
         public void TestVector3() => AreEqual(
-            Parse("00EC738D9C6FD969D05F0B35F6C0ED53ADCACCCD8E0000004BF99F58EE4196AFB9700E20110830FEA5396B76280E47FD022B6E81331CA1A9CED729C364BE7788", AllowHexSpecifier, InvariantCulture),
+            Parse("0B0EC738D9C6FD969D05F0B35F6C0ED53ADCACCCD8E0000004BF99F58EE4196AFB9700E20110830FEA5396B76280E47FD022B6E81331CA1A9CED729C364BE7788", AllowHexSpecifier, InvariantCulture),
             this.Fnv1a512("foobar"));
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Fnv1aTests
         private BigInteger Fnv1a512(string data)
         {
             AreEqual(512, this._alg.HashSize);
-            return new BigInteger(this._alg.ComputeHash(UTF8.GetBytes(data)));
+            return new BigInteger(this._alg.ComputeHash(UTF8.GetBytes(data)).AddZero());
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Fnv1aTests
         [TestMethod]
         // ReSharper disable once InconsistentNaming
         public void TestVector1() => AreEqual(
-            Parse("0DD268DBCAAC550362D98C384C4E576CCC8B1536847B6BBB31023B4C8CAEE0535", AllowHexSpecifier, InvariantCulture),
+            Parse("DD268DBCAAC550362D98C384C4E576CCC8B1536847B6BBB31023B4C8CAEE0535", AllowHexSpecifier, InvariantCulture).ToString("X64", InvariantCulture),
             this.Fnv1a256(string.Empty));
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Fnv1aTests
         [TestMethod]
         // ReSharper disable once InconsistentNaming
         public void TestVector2() => AreEqual(
-            Parse("03323FB0F35303EC28DC751D0A33BDFA4DE6A99B7266494F6183B2716811637C", AllowHexSpecifier, InvariantCulture),
+            Parse("63323FB0F35303EC28DC751D0A33BDFA4DE6A99B7266494F6183B2716811637C", AllowHexSpecifier, InvariantCulture).ToString("X64", InvariantCulture),
             this.Fnv1a256("a"));
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Fnv1aTests
         [TestMethod]
         // ReSharper disable once InconsistentNaming
         public void TestVector3() => AreEqual(
-            Parse("0055EA2F306CADAD4F0F81C02D3889DC32453DAD5AE35B753BA1A91084AF3428", AllowHexSpecifier, InvariantCulture),
+            Parse("B055EA2F306CADAD4F0F81C02D3889DC32453DAD5AE35B753BA1A91084AF3428", AllowHexSpecifier, InvariantCulture).ToString("X64", InvariantCulture),
             this.Fnv1a256("foobar"));
 
         /// <summary>
@@ -86,10 +86,13 @@ namespace Fnv1aTests
         /// <param name="data">The data.</param>
         /// <returns>The FNV-1a 256-bit hash of the specified data.</returns>
         // ReSharper disable once InconsistentNaming
-        private BigInteger Fnv1a256(string data)
+        private string Fnv1a256(string data)
         {
             AreEqual(256, this._alg.HashSize);
-            return new BigInteger(this._alg.ComputeHash(UTF8.GetBytes(data)));
+
+            string value = new BigInteger(this._alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X64", InvariantCulture);
+
+            return value.Substring(value.Length - 64);
         }
     }
 }

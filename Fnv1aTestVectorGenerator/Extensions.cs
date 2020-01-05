@@ -342,7 +342,7 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a128())
             {
-                string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data))).ToString("X32", InvariantCulture);
+                string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X32", InvariantCulture);
 
                 return "0x" + value.Substring(value.Length - 32);
             }
@@ -358,7 +358,7 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a128())
             {
-                string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data))).ToString("X32", InvariantCulture);
+                string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X32", InvariantCulture);
 
                 return await Task.FromResult("0x" + value.Substring(value.Length - 32)).ConfigureAwait(false);
             }
@@ -374,7 +374,7 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a256())
             {
-                string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data))).ToString("X64", InvariantCulture);
+                string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X64", InvariantCulture);
 
                 return "0x" + value.Substring(value.Length - 64);
             }
@@ -390,8 +390,7 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a256())
             {
-                byte[] hash = alg.ComputeHash(UTF8.GetBytes(data));
-                string value = new BigInteger(hash).ToString("X64", InvariantCulture);
+                string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X64", InvariantCulture);
 
                 return await Task.FromResult("0x" + value.Substring(value.Length - 64)).ConfigureAwait(false);
             }
@@ -407,7 +406,7 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a512())
             {
-                BigInteger hash = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)));
+                BigInteger hash = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero());
                 string value1 = (hash >> 256).ToString("X64", InvariantCulture);
                 string value2 = (hash & _Bottom64Bytes).ToString("X64", InvariantCulture);
 
@@ -425,7 +424,7 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a512())
             {
-                BigInteger hash = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)));
+                BigInteger hash = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero());
                 string value1 = (hash >> 256).ToString("X64", InvariantCulture);
                 string value2 = (hash & _Bottom64Bytes).ToString("X64", InvariantCulture);
 
@@ -443,7 +442,7 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a1024())
             {
-                BigInteger hash = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)));
+                BigInteger hash = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero());
                 string value1 = (hash >> 768).ToString("X64", InvariantCulture);
                 string value2 = ((hash & _Second64Bytes) >> 512).ToString("X64", InvariantCulture);
                 string value3 = ((hash & _Third64Bytes) >> 256).ToString("X64", InvariantCulture);
@@ -467,7 +466,7 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a1024())
             {
-                BigInteger hash = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)));
+                BigInteger hash = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero());
                 string value1 = (hash >> 768).ToString("X64", InvariantCulture);
                 string value2 = ((hash & _Second64Bytes) >> 512).ToString("X64", InvariantCulture);
                 string value3 = ((hash & _Third64Bytes) >> 256).ToString("X64", InvariantCulture);
@@ -479,6 +478,19 @@ namespace Fnv1aTestVectorGenerator
                     + value3.Substring(value3.Length - 64)
                     + value4.Substring(value4.Length - 64)).ConfigureAwait(false);
             }
+        }
+
+        /// <summary>
+        /// Adds a zero byte on to the end of the byte array.
+        /// </summary>
+        /// <param name="bytes">The bytes.</param>
+        /// <returns>The new array with a zero byte on the end.</returns>
+        private static byte[] AddZero(this byte[] bytes)
+        {
+            byte[] temp = new byte[bytes.Length + 1];
+
+            System.Array.Copy(bytes, temp, bytes.Length);
+            return temp;
         }
     }
 }
