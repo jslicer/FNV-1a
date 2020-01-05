@@ -10,6 +10,7 @@
 namespace Fnv1aTestVectorGenerator
 {
     using System.IO;
+    using System.Threading.Tasks;
 
     /// <inheritdoc />
     /// <summary>
@@ -49,6 +50,31 @@ namespace Fnv1aTestVectorGenerator
             this.WriteLine("chongo was here".Test0());
             this.WriteLine("chongo was here!".Test0());
             this.WriteLine("chongo was here!\n".Test0());
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// Asynchronously performs the test vector set 3 generation.
+        /// </summary>
+        /// <returns>An asynchronous <see cref="Task"/>.</returns>
+        public override async Task PerformAsync()
+        {
+            await this.WriteLineAsync(await "ch".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "cho".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "chon".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "chong".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "chongo".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "chongo ".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "chongo w".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "chongo wa".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "chongo was".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "chongo was ".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "chongo was h".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "chongo was he".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "chongo was her".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "chongo was here".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "chongo was here!".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "chongo was here!\n".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
         }
     }
 }

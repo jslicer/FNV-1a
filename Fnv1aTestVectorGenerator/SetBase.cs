@@ -10,6 +10,7 @@
 namespace Fnv1aTestVectorGenerator
 {
     using System.IO;
+    using System.Threading.Tasks;
 
     /// <inheritdoc />
     /// <summary>
@@ -31,14 +32,29 @@ namespace Fnv1aTestVectorGenerator
 
         /// <inheritdoc />
         /// <summary>
-        /// Defines the test vector set generation.
+        /// Performs the test vector set generation.
         /// </summary>
         public abstract void Perform();
+
+        /// <inheritdoc />
+        /// <summary>
+        /// Asynchronously performs the test vector set generation.
+        /// </summary>
+        /// <returns>An asynchronous <see cref="Task"/>.</returns>
+        public abstract Task PerformAsync();
 
         /// <summary>
         /// Writes the line to the <see cref="TextWriter"/>.
         /// </summary>
         /// <param name="value">The value to write.</param>
         protected void WriteLine(string value) => this._writer.WriteLine(value);
+
+        /// <summary>
+        /// Asynchronously writes the line to the <see cref="TextWriter"/>.
+        /// </summary>
+        /// <param name="value">The value to write.</param>
+        /// <returns>An asynchronous <see cref="Task"/></returns>
+        protected async Task WriteLineAsync(string value) =>
+            await this._writer.WriteLineAsync(value).ConfigureAwait(false);
     }
 }

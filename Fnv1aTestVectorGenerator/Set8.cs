@@ -10,6 +10,7 @@
 namespace Fnv1aTestVectorGenerator
 {
     using System.IO;
+    using System.Threading.Tasks;
 
     /// <inheritdoc />
     /// <summary>
@@ -39,6 +40,21 @@ namespace Fnv1aTestVectorGenerator
             this.WriteLine("127.0.0.2".Test0());
             this.WriteLine("127.0.0.3".Test());
             this.WriteLine("127.0.0.3".Test0());
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// Asynchronously performs the test vector set 8 generation.
+        /// </summary>
+        /// <returns>An asynchronous <see cref="Task"/>.</returns>
+        public override async Task PerformAsync()
+        {
+            await this.WriteLineAsync(await "127.0.0.1".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "127.0.0.1".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "127.0.0.2".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "127.0.0.2".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "127.0.0.3".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "127.0.0.3".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
         }
     }
 }

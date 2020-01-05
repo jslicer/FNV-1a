@@ -10,6 +10,7 @@
 namespace Fnv1aTestVectorGenerator
 {
     using System.IO;
+    using System.Threading.Tasks;
 
     /// <inheritdoc />
     /// <summary>
@@ -47,6 +48,29 @@ namespace Fnv1aTestVectorGenerator
             this.WriteLine("curds and whe".Test0());
             this.WriteLine("curds and whey".Test0());
             this.WriteLine("curds and whey\n".Test0());
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// Asynchronously performs the test vector set 5 generation.
+        /// </summary>
+        /// <returns>An asynchronous <see cref="Task"/>.</returns>
+        public override async Task PerformAsync()
+        {
+            await this.WriteLineAsync(await "cu".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "cur".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "curd".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "curds".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "curds ".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "curds a".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "curds an".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "curds and".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "curds and ".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "curds and w".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "curds and wh".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "curds and whe".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "curds and whey".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "curds and whey\n".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
         }
     }
 }

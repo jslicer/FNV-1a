@@ -10,6 +10,7 @@
 namespace Fnv1aTestVectorGenerator
 {
     using System.IO;
+    using System.Threading.Tasks;
 
     /// <inheritdoc />
     /// <summary>
@@ -39,6 +40,21 @@ namespace Fnv1aTestVectorGenerator
             this.WriteLine("64.81.78.74".Test0());
             this.WriteLine("64.81.78.84".Test());
             this.WriteLine("64.81.78.84".Test0());
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// Asynchronously performs the test vector set 9 generation.
+        /// </summary>
+        /// <returns>An asynchronous <see cref="Task"/>.</returns>
+        public override async Task PerformAsync()
+        {
+            await this.WriteLineAsync(await "64.81.78.68".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "64.81.78.68".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "64.81.78.74".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "64.81.78.74".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "64.81.78.84".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "64.81.78.84".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
         }
     }
 }

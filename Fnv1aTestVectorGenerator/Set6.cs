@@ -10,6 +10,7 @@
 namespace Fnv1aTestVectorGenerator
 {
     using System.IO;
+    using System.Threading.Tasks;
 
     /// <inheritdoc />
     /// <summary>
@@ -37,6 +38,19 @@ namespace Fnv1aTestVectorGenerator
             this.WriteLine("hi".Test0());
             this.WriteLine("hello".Test());
             this.WriteLine("hello".Test0());
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// Asynchronously performs the test vector set 6 generation.
+        /// </summary>
+        /// <returns>An asynchronous <see cref="Task"/>.</returns>
+        public override async Task PerformAsync()
+        {
+            await this.WriteLineAsync(await "hi".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "hi".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "hello".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "hello".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
         }
     }
 }

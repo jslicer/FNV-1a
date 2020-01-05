@@ -10,6 +10,7 @@
 namespace Fnv1aTestVectorGenerator
 {
     using System.IO;
+    using System.Threading.Tasks;
 
     /// <inheritdoc />
     /// <summary>
@@ -47,6 +48,29 @@ namespace Fnv1aTestVectorGenerator
             this.WriteLine("\x4a\x4e\x51\x40".Test());
             this.WriteLine("\x40\x51\x4e\x54".Test());
             this.WriteLine("\x54\x4e\x51\x40".Test());
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// Asynchronously performs the test vector set 7 generation.
+        /// </summary>
+        /// <returns>An asynchronous <see cref="Task"/>.</returns>
+        public override async Task PerformAsync()
+        {
+            await this.WriteLineAsync(await "\xff\x00\x00\x01".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "\x01\x00\x00\xff".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "\xff\x00\x00\x02".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "\x02\x00\x00\xff".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "\xff\x00\x00\x03".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "\x03\x00\x00\xff".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "\xff\x00\x00\x04".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "\x04\x00\x00\xff".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "\x40\x51\x4e\x44".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "\x44\x4e\x51\x40".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "\x40\x51\x4e\x4a".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "\x4a\x4e\x51\x40".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "\x40\x51\x4e\x54".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "\x54\x4e\x51\x40".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
         }
     }
 }

@@ -10,6 +10,7 @@
 namespace Fnv1aTestVectorGenerator
 {
     using System.IO;
+    using System.Threading.Tasks;
 
     using static System.Console;
     using static System.Text.Encoding;
@@ -22,7 +23,8 @@ namespace Fnv1aTestVectorGenerator
         /// <summary>
         /// Defines the entry point of the application.
         /// </summary>
-        private static void Main()
+        /// <returns>An asynchronous <see cref="Task"/>.</returns>
+        private static async Task Main()
         {
             TextWriter writer = TextWriter.Null; ////Out;
             TextReader reader = TextReader.Null; ////In;
@@ -55,7 +57,15 @@ namespace Fnv1aTestVectorGenerator
                 }
             }
 
-            reader.ReadLine();
+            for (int loop = 0; loop < 1000; loop++)
+            {
+                foreach (ISet set in sets)
+                {
+                    await set.PerformAsync().ConfigureAwait(false);
+                }
+            }
+
+            await reader.ReadLineAsync().ConfigureAwait(false);
         }
     }
 }

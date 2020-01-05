@@ -17,7 +17,9 @@ namespace Fnv1a
     /// Implements the FNV-1a 32-bit variant hashing algorithm.
     /// </summary>
     // ReSharper disable once InconsistentNaming
+#pragma warning disable S101 // Types should be named in PascalCase
     public sealed class Fnv1a32 : System.Security.Cryptography.HashAlgorithm
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         /// <summary>
         /// The prime.
@@ -61,7 +63,7 @@ namespace Fnv1a
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         protected override void HashCore(byte[] array, int ibStart, int cbSize)
         {
-            if (array == null)
+            if (array is null)
             {
                 throw new ArgumentNullException(nameof(array));
             }

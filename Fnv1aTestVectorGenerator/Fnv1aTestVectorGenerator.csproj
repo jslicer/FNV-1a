@@ -6,6 +6,7 @@
     <RootNamespace>Fnv1aTestVectorGenerator</RootNamespace>
     <AssemblyName>Fnv1aTestVectorGenerator</AssemblyName>
     <StartupObject>Fnv1aTestVectorGenerator.Program</StartupObject>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

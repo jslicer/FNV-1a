@@ -17,7 +17,9 @@ namespace Fnv1a
     /// Implements the FNV-1a variant hashing algorithm for subtypes using the BigInteger class.
     /// </summary>
     // ReSharper disable once InconsistentNaming
+#pragma warning disable S101 // Types should be named in PascalCase
     public abstract class Fnv1aBigBase : System.Security.Cryptography.HashAlgorithm
+#pragma warning restore S101 // Types should be named in PascalCase
     {
         /// <summary>
         /// The "wrap-around" modulo value for keeping multiplication within the number of bits.
@@ -47,12 +49,14 @@ namespace Fnv1a
         /// bits.</param>
         /// <param name="prime">The FNV-1a prime.</param>
         /// <param name="offsetBasis">The FNV-1a offset basis.</param>
-        protected Fnv1aBigBase(BigInteger modValue, BigInteger prime, BigInteger offsetBasis)
+        /// <param name="hashSizeValue">The size, in bits, of the computed hash code.</param>
+        protected Fnv1aBigBase(BigInteger modValue, BigInteger prime, BigInteger offsetBasis, int hashSizeValue)
         {
             this._modValue = modValue;
             this._prime = prime;
             this._offsetBasis = offsetBasis;
             this.Init();
+            this.HashSizeValue = hashSizeValue;
         }
 
         /// <inheritdoc />
@@ -72,7 +76,7 @@ namespace Fnv1a
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         protected override void HashCore(byte[] array, int ibStart, int cbSize)
         {
-            if (array == null)
+            if (array is null)
             {
                 throw new System.ArgumentNullException(nameof(array));
             }

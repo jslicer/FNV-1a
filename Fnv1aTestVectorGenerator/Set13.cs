@@ -10,6 +10,7 @@
 namespace Fnv1aTestVectorGenerator
 {
     using System.IO;
+    using System.Threading.Tasks;
 
     /// <inheritdoc />
     /// <summary>
@@ -86,6 +87,68 @@ namespace Fnv1aTestVectorGenerator
             this.WriteLine("http://www.tq-international.com/phpBB3/index.php".Test());
             this.WriteLine("http://www.travelquesttours.com/index.htm".Test());
             this.WriteLine("http://www.wunderground.com/global/stations/89606.html".Test());
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        /// Asynchronously performs the test vector set 13 generation.
+        /// </summary>
+        /// <returns>An asynchronous <see cref="Task"/>.</returns>
+        public override async Task PerformAsync()
+        {
+            await this.WriteLineAsync(await "http://antwrp.gsfc.nasa.gov/apod/astropix.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://en.wikipedia.org/wiki/Fowler_Noll_Vo_hash".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://epod.usra.edu/".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://exoplanet.eu/".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://hvo.wr.usgs.gov/cam3/".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://hvo.wr.usgs.gov/cams/HMcam/".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://hvo.wr.usgs.gov/kilauea/update/deformation.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://hvo.wr.usgs.gov/kilauea/update/images.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://hvo.wr.usgs.gov/kilauea/update/maps.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://hvo.wr.usgs.gov/volcanowatch/current_issue.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://neo.jpl.nasa.gov/risk/".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://norvig.com/21-days.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://primes.utm.edu/curios/home.php".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://slashdot.org/".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://tux.wr.usgs.gov/Maps/155.25-19.5.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://volcano.wr.usgs.gov/kilaueastatus.php".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.avo.alaska.edu/activity/Redoubt.php".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.dilbert.com/fast/".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.fourmilab.ch/gravitation/orbits/".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.fpoa.net/".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.ioccc.org/index.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.isthe.com/cgi-bin/number.cgi".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.isthe.com/chongo/bio.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.isthe.com/chongo/index.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.isthe.com/chongo/src/calc/lucas-calc".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.isthe.com/chongo/tech/astro/venus2004.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.isthe.com/chongo/tech/astro/vita.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.isthe.com/chongo/tech/comp/c/expert.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.isthe.com/chongo/tech/comp/calc/index.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.isthe.com/chongo/tech/comp/fnv/index.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.isthe.com/chongo/tech/math/number/howhigh.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.isthe.com/chongo/tech/math/number/number.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.isthe.com/chongo/tech/math/prime/mersenne.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.isthe.com/chongo/tech/math/prime/mersenne.html#largest".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.lavarnd.org/cgi-bin/corpspeak.cgi".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.lavarnd.org/cgi-bin/haiku.cgi".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.lavarnd.org/cgi-bin/rand-none.cgi".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.lavarnd.org/cgi-bin/randdist.cgi".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.lavarnd.org/index.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.lavarnd.org/what/nist-test.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.macosxhints.com/".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.mellis.com/".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.nature.nps.gov/air/webcams/parks/havoso2alert/havoalert.cfm".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.nature.nps.gov/air/webcams/parks/havoso2alert/timelines_24.cfm".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.paulnoll.com/".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.pepysdiary.com/".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.sciencenews.org/index/home/activity/view".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.skyandtelescope.com/".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.sput.nl/~rob/sirius.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.systemexperts.com/".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.tq-international.com/phpBB3/index.php".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.travelquesttours.com/index.htm".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "http://www.wunderground.com/global/stations/89606.html".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
         }
     }
 }
