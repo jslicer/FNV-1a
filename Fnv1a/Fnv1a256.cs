@@ -27,9 +27,9 @@ namespace Fnv1a
         /// Initializes a new instance of the <see cref="Fnv1a256"/> class.
         /// </summary>
         public Fnv1a256() : base(
-            Parse("1000000000000000000000000000000000000000000000000000000000000000", AllowHexSpecifier, InvariantCulture),
+            Parse("10000000000000000000000000000000000000000000000000000000000000000", AllowHexSpecifier, InvariantCulture),
             Parse("0000000000000000000001000000000000000000000000000000000000000163", AllowHexSpecifier, InvariantCulture),
-            Parse("0DD268DBCAAC550362D98C384C4E576CCC8B1536847B6BBB31023B4C8CAEE0535", AllowHexSpecifier, InvariantCulture),
+            Parse("DD268DBCAAC550362D98C384C4E576CCC8B1536847B6BBB31023B4C8CAEE0535", AllowHexSpecifier, InvariantCulture),
             256)
         {
         }

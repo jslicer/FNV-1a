@@ -32,7 +32,7 @@ namespace Fnv1aTestVectorGenerator
         /// The bottom 64 bytes.
         /// </summary>
         private static readonly BigInteger _Bottom64Bytes = Parse(
-            "0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+            "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
             AllowHexSpecifier,
             InvariantCulture);
 
@@ -40,7 +40,7 @@ namespace Fnv1aTestVectorGenerator
         /// The third 64 bytes.
         /// </summary>
         private static readonly BigInteger _Third64Bytes = Parse(
-            "0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000000000000000000000000000000000000000000000000000000000000000",
+            "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000000000000000000000000000000000000000000000000000000000000000",
             AllowHexSpecifier,
             InvariantCulture);
 
@@ -48,7 +48,7 @@ namespace Fnv1aTestVectorGenerator
         /// The second 64 bytes.
         /// </summary>
         private static readonly BigInteger _Second64Bytes = Parse(
-            "0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             AllowHexSpecifier,
             InvariantCulture);
 
@@ -390,7 +390,8 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a256())
             {
-                string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data))).ToString("X64", InvariantCulture);
+                byte[] hash = alg.ComputeHash(UTF8.GetBytes(data));
+                string value = new BigInteger(hash).ToString("X64", InvariantCulture);
 
                 return await Task.FromResult("0x" + value.Substring(value.Length - 64)).ConfigureAwait(false);
             }

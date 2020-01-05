@@ -67,6 +67,7 @@ namespace Fnv1aTestVectorGenerator
             await this.WriteLineAsync(await "foob".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
             await this.WriteLineAsync(await "fooba".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
             await this.WriteLineAsync(await "foobar".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            await this.WriteLineAsync(await "foobarfoobar".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
         }
     }
 }
