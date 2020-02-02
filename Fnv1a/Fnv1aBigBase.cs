@@ -50,6 +50,7 @@ namespace Fnv1a
         /// <param name="prime">The FNV-1a prime.</param>
         /// <param name="offsetBasis">The FNV-1a offset basis.</param>
         /// <param name="hashSizeValue">The size, in bits, of the computed hash code.</param>
+        // ReSharper disable once TooManyDependencies
         protected Fnv1aBigBase(BigInteger modValue, BigInteger prime, BigInteger offsetBasis, int hashSizeValue)
         {
             this._modValue = modValue;
@@ -76,11 +77,6 @@ namespace Fnv1a
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         protected override void HashCore(byte[] array, int ibStart, int cbSize)
         {
-            if (array is null)
-            {
-                throw new System.ArgumentNullException(nameof(array));
-            }
-
             for (int i = ibStart; i < cbSize; i++)
             {
                 unchecked

@@ -26,6 +26,13 @@ namespace Fnv1a
         /// <summary>
         /// Initializes a new instance of the <see cref="Fnv1a512"/> class.
         /// </summary>
+        /// <exception cref="System.ArgumentException">style is not a
+        /// <see cref="System.Globalization.NumberStyles"></see> value.   -or-  style includes the
+        /// <see cref="AllowHexSpecifier"></see> or <see cref="HexNumber"></see> flag along with another
+        /// value.</exception>
+        /// <exception cref="System.ArgumentNullException">value is null.</exception>
+        /// <exception cref="System.FormatException">value does not comply with the input pattern specified by
+        /// style.</exception>
         public Fnv1a512() : base(
             Parse("100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000", AllowHexSpecifier, InvariantCulture),
             Parse("00000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000157", AllowHexSpecifier, InvariantCulture),

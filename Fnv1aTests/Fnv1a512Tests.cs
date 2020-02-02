@@ -56,27 +56,54 @@ namespace Fnv1aTests
         /// <summary>
         /// Tests the empty string against the known vector result.
         /// </summary>
+        /// <exception cref="System.ArgumentException">style is not a
+        /// <see cref="System.Globalization.NumberStyles"></see> value.   -or-  style includes the
+        /// <see cref="AllowHexSpecifier"></see> or <see cref="HexNumber"></see> flag along with another
+        /// value.</exception>
+        /// <exception cref="System.ArgumentNullException">value is null.</exception>
+        /// <exception cref="System.FormatException">value does not comply with the input pattern specified by
+        /// style.</exception>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
         public void TestVector1() => AreEqual(
+            // ReSharper disable once StringLiteralTypo
             Parse("0B86DB0B1171F4416DCA1E50F309990ACAC87D059C90000000000000000000D21E948F68A34C192F62EA79BC942DBE7CE182036415F56E34BAC982AAC4AFE9FD9", AllowHexSpecifier, InvariantCulture),
             this.Fnv1a512(string.Empty));
 
         /// <summary>
         /// Tests the string "a" against the known vector result.
         /// </summary>
+        /// <exception cref="System.ArgumentException">style is not a
+        /// <see cref="System.Globalization.NumberStyles"></see> value.   -or-  style includes the
+        /// <see cref="AllowHexSpecifier"></see> or <see cref="HexNumber"></see> flag along with another
+        /// value.</exception>
+        /// <exception cref="System.ArgumentNullException">value is null.</exception>
+        /// <exception cref="System.FormatException">value does not comply with the input pattern specified by
+        /// style.</exception>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
         public void TestVector2() => AreEqual(
+            // ReSharper disable once StringLiteralTypo
             Parse("0E43A992DC8FC5AD7DE493E3D696D6F85D64326EC07000000000000000011986F90C2532CAF5BE7D88291BAA894A395225328B196BD6A8A643FE12CD87B27FF88", AllowHexSpecifier, InvariantCulture),
             this.Fnv1a512("a"));
 
         /// <summary>
         /// Tests the string against the known vector result.
         /// </summary>
+        /// <exception cref="System.ArgumentException">style is not a
+        /// <see cref="System.Globalization.NumberStyles"></see> value.   -or-  style includes the
+        /// <see cref="AllowHexSpecifier"></see> or <see cref="HexNumber"></see> flag along with another
+        /// value.</exception>
+        /// <exception cref="System.ArgumentNullException">value is null.</exception>
+        /// <exception cref="System.FormatException">value does not comply with the input pattern specified by
+        /// style.</exception>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
         public void TestVector3() => AreEqual(
+            // ReSharper disable once StringLiteralTypo
             Parse("0B0EC738D9C6FD969D05F0B35F6C0ED53ADCACCCD8E0000004BF99F58EE4196AFB9700E20110830FEA5396B76280E47FD022B6E81331CA1A9CED729C364BE7788", AllowHexSpecifier, InvariantCulture),
             this.Fnv1a512("foobar"));
 
@@ -85,6 +112,7 @@ namespace Fnv1aTests
         /// </summary>
         /// <param name="data">The data.</param>
         /// <returns>The FNV-1a 512-bit hash of the specified data.</returns>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         // ReSharper disable once InconsistentNaming
         private BigInteger Fnv1a512(string data)
         {

@@ -32,8 +32,11 @@ namespace Fnv1aTestVectorGenerator
         /// <summary>
         /// Performs the test vector set 1 generation.
         /// </summary>
+        /// <exception cref="IOException">An I/O error occurs.</exception>
+        /// <exception cref="System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter"></see> is closed.</exception>
         public override void Perform()
         {
+            //// ReSharper disable StringLiteralTypo
             this.WriteLine(string.Empty.Test0());
             this.WriteLine("a".Test0());
             this.WriteLine("b".Test0());
@@ -46,6 +49,7 @@ namespace Fnv1aTestVectorGenerator
             this.WriteLine("foob".Test0());
             this.WriteLine("fooba".Test0());
             this.WriteLine("foobar".Test0());
+            //// ReSharper enable StringLiteralTypo
         }
 
         /// <inheritdoc />
@@ -53,8 +57,11 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously performs the test vector set 1 generation.
         /// </summary>
         /// <returns>An asynchronous <see cref="Task"/>.</returns>
+        /// <exception cref="System.InvalidOperationException">The text writer is currently in use by a previous write operation.</exception>
+        /// <exception cref="System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter"></see> is closed.</exception>
         public override async Task PerformAsync()
         {
+            //// ReSharper disable StringLiteralTypo
             await this.WriteLineAsync(await string.Empty.Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
             await this.WriteLineAsync(await "a".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
             await this.WriteLineAsync(await "b".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
@@ -67,6 +74,7 @@ namespace Fnv1aTestVectorGenerator
             await this.WriteLineAsync(await "foob".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
             await this.WriteLineAsync(await "fooba".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
             await this.WriteLineAsync(await "foobar".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            //// ReSharper enable StringLiteralTypo
         }
     }
 }

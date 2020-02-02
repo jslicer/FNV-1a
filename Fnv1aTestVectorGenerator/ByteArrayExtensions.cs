@@ -1,20 +1,20 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Extensions.cs" company="Always Elucidated Solution Pioneers, LLC">
+// <copyright file="ByteArrayExtensions.cs" company="Always Elucidated Solution Pioneers, LLC">
 //   Copyright © Always Elucidated Solution Pioneers, LLC 2020
 // </copyright>
 // <summary>
-//   Extension methods used by the unit tests.
+//   Extension methods which operate on byte arrays.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Fnv1aTests
+namespace Fnv1aTestVectorGenerator
 {
     using System;
 
     /// <summary>
-    /// Extension methods used by the unit tests.
+    /// Extension methods which operate on byte arrays.
     /// </summary>
-    internal static class Extensions
+    internal static class ByteArrayExtensions
     {
         /// <summary>
         /// Adds a zero byte on to the end of the byte array.
@@ -23,19 +23,18 @@ namespace Fnv1aTests
         /// <returns>The new array with a zero byte on the end.</returns>
         /// <exception cref="OverflowException">The array is multidimensional and contains more than
         /// <see cref="int.MaxValue"></see> elements.</exception>
-        /// <exception cref="RankException">sourceArray and destinationArray have different ranks.</exception>
+        /// <exception cref="InvalidCastException">At least one element in sourceArray cannot be cast to the type of
+        /// destinationArray.</exception>
         /// <exception cref="ArrayTypeMismatchException">sourceArray and destinationArray are of incompatible
         /// types.</exception>
-        /// <exception cref="InvalidCastException">At least one element in sourceArray cannot be cast to the
-        /// type of destinationArray.</exception>
-        /// <exception cref="ArgumentNullException">sourceArray is null.   -or-  destinationArray is
-        /// null.</exception>
+        /// <exception cref="RankException">sourceArray and destinationArray have different ranks.</exception>
+        /// <exception cref="ArgumentException">length is greater than the number of elements in sourceArray.   -or-
+        /// length is greater than the number of elements in destinationArray.</exception>
         /// <exception cref="ArgumentOutOfRangeException">length is less than zero.</exception>
-        /// <exception cref="ArgumentException">length is greater than the number of elements in sourceArray.
-        /// -or-  length is greater than the number of elements in destinationArray.</exception>
+        /// <exception cref="ArgumentNullException">sourceArray is null.   -or-  destinationArray is null.</exception>
         internal static byte[] AddZero(this byte[] bytes)
         {
-            byte[] temp = new byte[bytes.Length + 16];
+            byte[] temp = new byte[bytes.Length + 1];
 
             Array.Copy(bytes, temp, bytes.Length);
             return temp;

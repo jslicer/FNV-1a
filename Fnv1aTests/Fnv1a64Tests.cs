@@ -53,6 +53,7 @@ namespace Fnv1aTests
         /// <summary>
         /// Tests the empty string against the known vector result.
         /// </summary>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
         public void TestVector1() => AreEqual(0xCBF29CE484222325, this.Fnv1a64(string.Empty));
@@ -60,6 +61,7 @@ namespace Fnv1aTests
         /// <summary>
         /// Tests the string "a" against the known vector result.
         /// </summary>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
         public void TestVector2() => AreEqual(0xAF63DC4C8601EC8C, this.Fnv1a64("a"));
@@ -67,6 +69,7 @@ namespace Fnv1aTests
         /// <summary>
         /// Tests the string against the known vector result.
         /// </summary>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
         public void TestVector3() => AreEqual(0x85944171F73967E8, this.Fnv1a64("foobar"));
@@ -76,6 +79,7 @@ namespace Fnv1aTests
         /// </summary>
         /// <param name="data">The data.</param>
         /// <returns>The FNV-1a 64-bit hash of the specified data.</returns>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         // ReSharper disable once InconsistentNaming
         private ulong Fnv1a64(string data)
         {

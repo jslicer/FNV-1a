@@ -63,11 +63,6 @@ namespace Fnv1a
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
         protected override void HashCore(byte[] array, int ibStart, int cbSize)
         {
-            if (array is null)
-            {
-                throw new ArgumentNullException(nameof(array));
-            }
-
             for (int i = ibStart; i < cbSize; i++)
             {
                 unchecked

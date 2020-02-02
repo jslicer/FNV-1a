@@ -56,6 +56,14 @@ namespace Fnv1aTests
         /// <summary>
         /// Tests the empty string against the known vector result.
         /// </summary>
+        /// <exception cref="System.ArgumentException">style is not a
+        /// <see cref="System.Globalization.NumberStyles"></see> value.   -or-  style includes the
+        /// <see cref="AllowHexSpecifier"></see> or <see cref="HexNumber"></see> flag along with another
+        /// value.</exception>
+        /// <exception cref="System.ArgumentNullException">value is null.</exception>
+        /// <exception cref="System.FormatException">value does not comply with the input pattern specified by
+        /// style.</exception>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
         public void TestVector1() => AreEqual(
@@ -65,6 +73,14 @@ namespace Fnv1aTests
         /// <summary>
         /// Tests the string "a" against the known vector result.
         /// </summary>
+        /// <exception cref="System.ArgumentException">style is not a
+        /// <see cref="System.Globalization.NumberStyles"></see> value.   -or-  style includes the
+        /// <see cref="AllowHexSpecifier"></see> or <see cref="HexNumber"></see> flag along with another
+        /// value.</exception>
+        /// <exception cref="System.ArgumentNullException">value is null.</exception>
+        /// <exception cref="System.FormatException">value does not comply with the input pattern specified by
+        /// style.</exception>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
         public void TestVector2() => AreEqual(
@@ -74,6 +90,14 @@ namespace Fnv1aTests
         /// <summary>
         /// Tests the string against the known vector result.
         /// </summary>
+        /// <exception cref="System.ArgumentException">style is not a
+        /// <see cref="System.Globalization.NumberStyles"></see> value.   -or-  style includes the
+        /// <see cref="AllowHexSpecifier"></see> or <see cref="HexNumber"></see> flag along with another
+        /// value.</exception>
+        /// <exception cref="System.ArgumentNullException">value is null.</exception>
+        /// <exception cref="System.FormatException">value does not comply with the input pattern specified by
+        /// style.</exception>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
         public void TestVector3() => AreEqual(
@@ -85,6 +109,7 @@ namespace Fnv1aTests
         /// </summary>
         /// <param name="data">The data.</param>
         /// <returns>The FNV-1a 256-bit hash of the specified data.</returns>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         // ReSharper disable once InconsistentNaming
         private string Fnv1a256(string data)
         {

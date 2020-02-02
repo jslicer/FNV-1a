@@ -18,16 +18,30 @@ namespace Fnv1aTestVectorGenerator
     /// <summary>
     /// Contains the entry point of the application.
     /// </summary>
-    internal static class Program
+    public static class Program
     {
         /// <summary>
         /// Defines the entry point of the application.
         /// </summary>
         /// <returns>An asynchronous <see cref="Task"/>.</returns>
-        private static async Task Main()
+        public static async Task Main()
         {
             TextWriter writer = TextWriter.Null; ////Out;
             TextReader reader = TextReader.Null; ////In;
+
+            await ProcessAsync(writer).ConfigureAwait(false);
+            await reader.ReadLineAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Processes test vectors.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
+        /// <returns>An asynchronous <see cref="Task"/>.</returns>
+        private static async Task ProcessAsync(TextWriter writer = null)
+        {
+            writer = writer ?? TextWriter.Null;
+
             ISet[] sets =
             {
                 new Set0(writer),
@@ -53,6 +67,7 @@ namespace Fnv1aTestVectorGenerator
             {
                 foreach (ISet set in sets)
                 {
+                    // ReSharper disable once AsyncConverter.CanBeUseAsyncMethodHighlighting
                     set.Perform();
                 }
             }
@@ -64,8 +79,6 @@ namespace Fnv1aTestVectorGenerator
                     await set.PerformAsync().ConfigureAwait(false);
                 }
             }
-
-            await reader.ReadLineAsync().ConfigureAwait(false);
         }
     }
 }

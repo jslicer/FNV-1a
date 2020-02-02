@@ -32,6 +32,8 @@ namespace Fnv1aTestVectorGenerator
         /// <summary>
         /// Performs the test vector set 4 generation.
         /// </summary>
+        /// <exception cref="IOException">An I/O error occurs.</exception>
+        /// <exception cref="System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter"></see> is closed.</exception>
         public override void Perform()
         {
             this.WriteLine("cu".Test());
@@ -55,6 +57,8 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously performs the test vector set 4 generation.
         /// </summary>
         /// <returns>An asynchronous <see cref="Task"/>.</returns>
+        /// <exception cref="System.InvalidOperationException">The text writer is currently in use by a previous write operation.</exception>
+        /// <exception cref="System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter"></see> is closed.</exception>
         public override async Task PerformAsync()
         {
             await this.WriteLineAsync(await "cu".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);

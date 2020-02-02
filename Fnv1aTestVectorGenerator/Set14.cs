@@ -32,6 +32,9 @@ namespace Fnv1aTestVectorGenerator
         /// <summary>
         /// Performs the test vector set 14 generation.
         /// </summary>
+        /// <exception cref="IOException">An I/O error occurs.</exception>
+        /// <exception cref="System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter"></see> is closed.</exception>
+        // ReSharper disable once MethodTooLong
         public override void Perform()
         {
             this.WriteLine("21701".R10());
@@ -62,6 +65,9 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously performs the test vector set 14 generation.
         /// </summary>
         /// <returns>An asynchronous <see cref="Task"/>.</returns>
+        /// <exception cref="System.InvalidOperationException">The text writer is currently in use by a previous write operation.</exception>
+        /// <exception cref="System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter"></see> is closed.</exception>
+        // ReSharper disable once MethodTooLong
         public override async Task PerformAsync()
         {
             await this.WriteLineAsync(await "21701".R10Async().ConfigureAwait(false)).ConfigureAwait(false);
