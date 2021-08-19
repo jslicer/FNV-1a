@@ -68,6 +68,7 @@ namespace Fnv1aTestVectorGenerator
                 foreach (ISet set in sets)
                 {
                     // ReSharper disable once AsyncConverter.CanBeUseAsyncMethodHighlighting
+                    // ReSharper disable once MethodHasAsyncOverload
                     set.Perform();
                 }
             }

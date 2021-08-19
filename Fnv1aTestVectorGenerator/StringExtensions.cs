@@ -184,7 +184,7 @@ namespace Fnv1aTestVectorGenerator
             {
                 string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X32", InvariantCulture);
 
-                return "0x" + value.Substring(value.Length - 32);
+                return "0x" + value?.Substring(value.Length - 32);
             }
         }
 
@@ -200,7 +200,7 @@ namespace Fnv1aTestVectorGenerator
             {
                 string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X64", InvariantCulture);
 
-                return "0x" + value.Substring(value.Length - 64);
+                return "0x" + value?.Substring(value.Length - 64);
             }
         }
 
@@ -218,7 +218,7 @@ namespace Fnv1aTestVectorGenerator
                 string value1 = (hash >> 256).ToString("X64", InvariantCulture);
                 string value2 = (hash & Bitmasks.Bottom64Bytes).ToString("X64", InvariantCulture);
 
-                return "0x" + value1.Substring(value1.Length - 64) + value2.Substring(value2.Length - 64);
+                return "0x" + value1?.Substring(value1.Length - 64) + value2?.Substring(value2.Length - 64);
             }
         }
 
@@ -241,10 +241,10 @@ namespace Fnv1aTestVectorGenerator
                 string value4 = (hash & Bitmasks.Bottom64Bytes).ToString("X64", InvariantCulture);
 
                 return "0x"
-                    + value1.Substring(value1.Length - 64)
-                    + value2.Substring(value2.Length - 64)
-                    + value3.Substring(value3.Length - 64)
-                    + value4.Substring(value4.Length - 64);
+                    + value1?.Substring(value1.Length - 64)
+                    + value2?.Substring(value2.Length - 64)
+                    + value3?.Substring(value3.Length - 64)
+                    + value4?.Substring(value4.Length - 64);
             }
         }
     }

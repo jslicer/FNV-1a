@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Fnv1aTestVectorGenerator</RootNamespace>
     <AssemblyName>Fnv1aTestVectorGenerator</AssemblyName>
     <StartupObject>Fnv1aTestVectorGenerator.Program</StartupObject>

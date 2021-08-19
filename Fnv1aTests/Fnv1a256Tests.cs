@@ -26,9 +26,11 @@ namespace Fnv1aTests
     /// </summary>
     [TestClass]
     // ReSharper disable once InconsistentNaming
+#pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable S101 // Types should be named in PascalCase
     public sealed class Fnv1a256Tests : System.IDisposable
 #pragma warning restore S101 // Types should be named in PascalCase
+#pragma warning restore IDE0079 // Remove unnecessary suppression
     {
         /// <summary>
         /// The hash algorithm being tested.
@@ -117,7 +119,7 @@ namespace Fnv1aTests
 
             string value = new BigInteger(this._alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X64", InvariantCulture);
 
-            return value.Substring(value.Length - 64);
+            return value[^64..];
         }
     }
 }

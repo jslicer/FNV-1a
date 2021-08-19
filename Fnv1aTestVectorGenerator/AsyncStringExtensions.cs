@@ -123,6 +123,7 @@ namespace Fnv1aTestVectorGenerator
         /// </summary>
         /// <param name="data">The data.</param>
         /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the printable string.</returns>
+        // ReSharper disable once RedundantAwait
         private static async Task<string> PrintAsync(this string data)
         {
             bool controlCharacter = false;
@@ -142,7 +143,9 @@ namespace Fnv1aTestVectorGenerator
             }
 
             // ReSharper disable once AsyncConverter.AsyncAwaitMayBeElidedHighlighting
+            //// ReSharper disable RedundantAwait
             return await Task.FromResult(sb.ToString()).ConfigureAwait(false);
+            //// ReSharper enable RedundantAwait
         }
 
         /// <summary>
@@ -187,7 +190,7 @@ namespace Fnv1aTestVectorGenerator
             {
                 string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X32", InvariantCulture);
 
-                return await Task.FromResult("0x" + value.Substring(value.Length - 32)).ConfigureAwait(false);
+                return await Task.FromResult("0x" + value?.Substring(value.Length - 32)).ConfigureAwait(false);
             }
         }
 
@@ -203,7 +206,7 @@ namespace Fnv1aTestVectorGenerator
             {
                 string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X64", InvariantCulture);
 
-                return await Task.FromResult("0x" + value.Substring(value.Length - 64)).ConfigureAwait(false);
+                return await Task.FromResult("0x" + value?.Substring(value.Length - 64)).ConfigureAwait(false);
             }
         }
 
@@ -221,7 +224,7 @@ namespace Fnv1aTestVectorGenerator
                 string value1 = (hash >> 256).ToString("X64", InvariantCulture);
                 string value2 = (hash & Bitmasks.Bottom64Bytes).ToString("X64", InvariantCulture);
 
-                return await Task.FromResult("0x" + value1.Substring(value1.Length - 64) + value2.Substring(value2.Length - 64)).ConfigureAwait(false);
+                return await Task.FromResult("0x" + value1?.Substring(value1.Length - 64) + value2?.Substring(value2.Length - 64)).ConfigureAwait(false);
             }
         }
 
@@ -244,10 +247,10 @@ namespace Fnv1aTestVectorGenerator
                 string value4 = (hash & Bitmasks.Bottom64Bytes).ToString("X64", InvariantCulture);
 
                 return await Task.FromResult("0x"
-                    + value1.Substring(value1.Length - 64)
-                    + value2.Substring(value2.Length - 64)
-                    + value3.Substring(value3.Length - 64)
-                    + value4.Substring(value4.Length - 64)).ConfigureAwait(false);
+                    + value1?.Substring(value1.Length - 64)
+                    + value2?.Substring(value2.Length - 64)
+                    + value3?.Substring(value3.Length - 64)
+                    + value4?.Substring(value4.Length - 64)).ConfigureAwait(false);
             }
         }
     }
