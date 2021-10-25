@@ -40,6 +40,13 @@ namespace Fnv1aTests
         /// <summary>
         /// The method to run before each test.
         /// </summary>
+        /// <exception cref="System.ArgumentException">style is not a
+        /// <see cref="System.Globalization.NumberStyles"></see> value.   -or-  style includes the
+        /// <see cref="AllowHexSpecifier"></see> or <see cref="HexNumber"></see> flag along with another
+        /// value.</exception>
+        /// <exception cref="System.ArgumentNullException">value is null.</exception>
+        /// <exception cref="System.FormatException">value does not comply with the input pattern specified by
+        /// style.</exception>
         [TestInitialize]
         public void Initialize() => this._alg = new Fnv1a.Fnv1a256();
 
@@ -119,7 +126,7 @@ namespace Fnv1aTests
 
             string value = new BigInteger(this._alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X64", InvariantCulture);
 
-            return value[^64..];
+            return value?[^64..];
         }
     }
 }

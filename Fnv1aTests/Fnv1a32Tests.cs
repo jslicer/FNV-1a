@@ -23,10 +23,14 @@ namespace Fnv1aTests
     /// </summary>
     [TestClass]
     // ReSharper disable once InconsistentNaming
+#pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable S101 // Types should be named in PascalCase
     public sealed class Fnv1a32Tests : IDisposable
+#pragma warning restore IDE0079 // Remove unnecessary suppression
+#pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning restore S101 // Types should be named in PascalCase
     {
+#pragma warning restore IDE0079 // Remove unnecessary suppression
         /// <summary>
         /// The hash algorithm being tested.
         /// </summary>

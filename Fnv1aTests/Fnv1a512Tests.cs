@@ -26,10 +26,14 @@ namespace Fnv1aTests
     /// </summary>
     [TestClass]
     // ReSharper disable once InconsistentNaming
+#pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable S101 // Types should be named in PascalCase
     public sealed class Fnv1a512Tests : System.IDisposable
+#pragma warning restore IDE0079 // Remove unnecessary suppression
+#pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning restore S101 // Types should be named in PascalCase
     {
+#pragma warning restore IDE0079 // Remove unnecessary suppression
         /// <summary>
         /// The hash algorithm being tested.
         /// </summary>
@@ -38,6 +42,13 @@ namespace Fnv1aTests
         /// <summary>
         /// The method to run before each test.
         /// </summary>
+        /// <exception cref="System.ArgumentException">style is not a
+        /// <see cref="System.Globalization.NumberStyles"></see> value.   -or-  style includes the
+        /// <see cref="AllowHexSpecifier"></see> or <see cref="HexNumber"></see> flag along with another
+        /// value.</exception>
+        /// <exception cref="System.ArgumentNullException">value is null.</exception>
+        /// <exception cref="System.FormatException">value does not comply with the input pattern specified by
+        /// style.</exception>
         [TestInitialize]
         public void Initialize() => this._alg = new Fnv1a.Fnv1a512();
 

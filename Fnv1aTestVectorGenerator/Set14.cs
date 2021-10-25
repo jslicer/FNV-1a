@@ -34,6 +34,9 @@ namespace Fnv1aTestVectorGenerator
         /// </summary>
         /// <exception cref="IOException">An I/O error occurs.</exception>
         /// <exception cref="System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter"></see> is closed.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">capacity is less than zero.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
+        /// <see cref="System.Text.StringBuilder.MaxCapacity"></see>.</exception>
         // ReSharper disable once MethodTooLong
         public override void Perform()
         {
@@ -67,6 +70,9 @@ namespace Fnv1aTestVectorGenerator
         /// <returns>An asynchronous <see cref="Task"/>.</returns>
         /// <exception cref="System.InvalidOperationException">The text writer is currently in use by a previous write operation.</exception>
         /// <exception cref="System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter"></see> is closed.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">capacity is less than zero.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
+        /// <see cref="System.Text.StringBuilder.MaxCapacity"></see>.</exception>
         // ReSharper disable once MethodTooLong
         public override async Task PerformAsync()
         {

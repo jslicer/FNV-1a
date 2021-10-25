@@ -60,7 +60,9 @@ namespace Fnv1a
         /// <param name="array">The input to compute the hash code for.</param>
         /// <param name="ibStart">The offset into the byte array from which to begin using data.</param>
         /// <param name="cbSize">The number of bytes in the byte array to use as data.</param>
+#pragma warning disable IDE0079 // Remove unnecessary suppression
         [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
+#pragma warning restore IDE0079 // Remove unnecessary suppression
         protected override void HashCore(byte[] array, int ibStart, int cbSize)
         {
             for (int i = ibStart; i < cbSize; i++)

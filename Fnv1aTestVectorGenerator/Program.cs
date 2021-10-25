@@ -24,6 +24,11 @@ namespace Fnv1aTestVectorGenerator
         /// Defines the entry point of the application.
         /// </summary>
         /// <returns>An asynchronous <see cref="Task"/>.</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">The number of characters in the next line is larger
+        /// than <see cref="int.MaxValue" />.</exception>
+        /// <exception cref="System.ObjectDisposedException">The text reader has been disposed.</exception>
+        /// <exception cref="System.InvalidOperationException">The reader is currently in use by a previous read
+        /// operation.</exception>
         public static async Task Main()
         {
             TextWriter writer = TextWriter.Null; ////Out;

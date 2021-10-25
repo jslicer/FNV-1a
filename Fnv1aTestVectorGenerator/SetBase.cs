@@ -48,7 +48,8 @@ namespace Fnv1aTestVectorGenerator
         /// </summary>
         /// <param name="value">The value to write.</param>
         /// <exception cref="IOException">An I/O error occurs.</exception>
-        /// <exception cref="System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter"></see> is closed.</exception>
+        /// <exception cref="System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter"></see> is
+        /// closed.</exception>
         protected void WriteLine(string value) => this._writer.WriteLine(value);
 
         /// <summary>
@@ -56,8 +57,10 @@ namespace Fnv1aTestVectorGenerator
         /// </summary>
         /// <param name="value">The value to write.</param>
         /// <returns>An asynchronous <see cref="Task"/></returns>
-        /// <exception cref="System.InvalidOperationException">The text writer is currently in use by a previous write operation.</exception>
-        /// <exception cref="System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter"></see> is closed.</exception>
+        /// <exception cref="System.InvalidOperationException">The text writer is currently in use by a previous write
+        /// operation.</exception>
+        /// <exception cref="System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter"></see> is
+        /// closed.</exception>
         // ReSharper disable once RedundantAwait
         protected async Task WriteLineAsync(string value) =>
             // ReSharper disable once AsyncConverter.AsyncAwaitMayBeElidedHighlighting
