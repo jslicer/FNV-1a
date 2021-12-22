@@ -9,6 +9,7 @@
 
 namespace Fnv1aTestVectorGenerator
 {
+    using System;
     using System.Numerics;
     using System.Security.Cryptography;
     using System.Text;
@@ -62,8 +63,8 @@ namespace Fnv1aTestVectorGenerator
         /// </summary>
         /// <param name="data">The data.</param>
         /// <returns>The test result string.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">capacity is less than zero.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
+        /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
         /// <see cref="StringBuilder.MaxCapacity"></see>.</exception>
         // ReSharper disable once MethodNameNotMeaningful
         internal static string R10(this string data)
@@ -92,8 +93,8 @@ namespace Fnv1aTestVectorGenerator
         /// </summary>
         /// <param name="data">The data.</param>
         /// <returns>The test result string.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">capacity is less than zero.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
+        /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
         /// <see cref="StringBuilder.MaxCapacity"></see>.</exception>
         internal static string R500(this string data)
         {
@@ -182,9 +183,10 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a128())
             {
-                string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X32", InvariantCulture);
+                string value =
+                    new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X32", InvariantCulture);
 
-                return "0x" + value?.Substring(value.Length - 32);
+                return value is null ? null : string.Concat("0x", value.AsSpan(value.Length - 32));
             }
         }
 
@@ -198,9 +200,10 @@ namespace Fnv1aTestVectorGenerator
         {
             using (HashAlgorithm alg = new Fnv1a256())
             {
-                string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X64", InvariantCulture);
+                string value =
+                    new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X64", InvariantCulture);
 
-                return "0x" + value?.Substring(value.Length - 64);
+                return value is null ? null : string.Concat("0x", value.AsSpan(value.Length - 64));
             }
         }
 
@@ -218,7 +221,10 @@ namespace Fnv1aTestVectorGenerator
                 string value1 = (hash >> 256).ToString("X64", InvariantCulture);
                 string value2 = (hash & Bitmasks.Bottom64Bytes).ToString("X64", InvariantCulture);
 
-                return "0x" + value1?.Substring(value1.Length - 64) + value2?.Substring(value2.Length - 64);
+                return value1 is null || value2 is null ? null : string.Concat(
+                    "0x",
+                    value1.AsSpan(value1.Length - 64),
+                    value2.AsSpan(value2.Length - 64));
             }
         }
 
@@ -228,6 +234,7 @@ namespace Fnv1aTestVectorGenerator
         /// <param name="data">The data.</param>
         /// <returns>The FNV-1a 1024-bit hash of the specified data.</returns>
         // ReSharper disable once InconsistentNaming
+        // ReSharper disable once TooManyDeclarations
         private static string Fnv1a1024s(this string data)
         {
             using (HashAlgorithm alg = new Fnv1a1024())
@@ -239,12 +246,13 @@ namespace Fnv1aTestVectorGenerator
                 string value3 = ((hash & Bitmasks.Third64Bytes) >> 256).ToString("X64", InvariantCulture);
                 //// ReSharper enable ComplexConditionExpression
                 string value4 = (hash & Bitmasks.Bottom64Bytes).ToString("X64", InvariantCulture);
+                string allValues = value1 is null || value2 is null || value3 is null || value4 is null ? null : string.Concat(
+                    value1.AsSpan(value1.Length - 64),
+                    value2.AsSpan(value2.Length - 64),
+                    value3.AsSpan(value3.Length - 64),
+                    value4.AsSpan(value4.Length - 64));
 
-                return "0x"
-                    + value1?.Substring(value1.Length - 64)
-                    + value2?.Substring(value2.Length - 64)
-                    + value3?.Substring(value3.Length - 64)
-                    + value4?.Substring(value4.Length - 64);
+                return "0x" + allValues;
             }
         }
     }

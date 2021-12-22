@@ -9,6 +9,7 @@
 
 namespace Fnv1aTestVectorGenerator
 {
+    using System;
     using System.Numerics;
     using System.Security.Cryptography;
     using System.Text;
@@ -63,8 +64,8 @@ namespace Fnv1aTestVectorGenerator
         /// </summary>
         /// <param name="data">The data.</param>
         /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the test result string.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">capacity is less than zero.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
+        /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
         /// <see cref="StringBuilder.MaxCapacity"></see>.</exception>
         internal static async Task<string> R10Async(this string data)
         {
@@ -94,8 +95,8 @@ namespace Fnv1aTestVectorGenerator
         /// </summary>
         /// <param name="data">The data.</param>
         /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the test result string.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">capacity is less than zero.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
+        /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
         /// <see cref="StringBuilder.MaxCapacity"></see>.</exception>
         internal static async Task<string> R500Async(this string data)
         {
@@ -152,7 +153,8 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously computes the FNV-1a 32-bit hash for the specified data.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 32-bit hash of the specified data.</returns>
+        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 32-bit hash of the specified
+        /// data.</returns>
         // ReSharper disable once InconsistentNaming
         private static async Task<string> Fnv1a32sAsync(this string data)
         {
@@ -167,14 +169,16 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously computes the FNV-1a 64-bit hash for the specified data.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 64-bit hash of the specified data.</returns>
+        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 64-bit hash of the specified
+        /// data.</returns>
         // ReSharper disable once InconsistentNaming
         private static async Task<string> Fnv1a64sAsync(this string data)
         {
             using (HashAlgorithm alg = new Fnv1a64())
             {
-                return await Task.FromResult("0x"
-                    + ((ulong)ToInt64(alg.ComputeHash(UTF8.GetBytes(data)), 0)).ToString("X16", InvariantCulture)).ConfigureAwait(false);
+                return await Task.FromResult(string.Concat(
+                   "0x",
+                   ((ulong)ToInt64(alg.ComputeHash(UTF8.GetBytes(data)), 0)).ToString("X16", InvariantCulture))).ConfigureAwait(false);
             }
         }
 
@@ -182,15 +186,19 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously computes the FNV-1a 128-bit hash for the specified data.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 128-bit hash of the specified data.</returns>
+        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 128-bit hash of the specified
+        /// data.</returns>
         // ReSharper disable once InconsistentNaming
         private static async Task<string> Fnv1a128sAsync(this string data)
         {
             using (HashAlgorithm alg = new Fnv1a128())
             {
-                string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X32", InvariantCulture);
+                string value =
+                    new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X32", InvariantCulture);
 
-                return await Task.FromResult("0x" + value?.Substring(value.Length - 32)).ConfigureAwait(false);
+                return await Task.FromResult(value is null ? null : string.Concat(
+                    "0x",
+                    value.AsSpan(value.Length - 32))).ConfigureAwait(false);
             }
         }
 
@@ -198,15 +206,19 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously computes the FNV-1a 256-bit hash for the specified data.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 256-bit hash of the specified data.</returns>
+        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 256-bit hash of the specified
+        /// data.</returns>
         // ReSharper disable once InconsistentNaming
         private static async Task<string> Fnv1a256sAsync(this string data)
         {
             using (HashAlgorithm alg = new Fnv1a256())
             {
-                string value = new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X64", InvariantCulture);
+                string value =
+                    new BigInteger(alg.ComputeHash(UTF8.GetBytes(data)).AddZero()).ToString("X64", InvariantCulture);
 
-                return await Task.FromResult("0x" + value?.Substring(value.Length - 64)).ConfigureAwait(false);
+                return await Task.FromResult(value is null ? null : string.Concat(
+                    "0x",
+                    value.AsSpan(value.Length - 64))).ConfigureAwait(false);
             }
         }
 
@@ -214,7 +226,8 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously computes the FNV-1a 512-bit hash for the specified data.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 512-bit hash of the specified data.</returns>
+        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 512-bit hash of the specified
+        /// data.</returns>
         // ReSharper disable once InconsistentNaming
         private static async Task<string> Fnv1a512sAsync(this string data)
         {
@@ -224,7 +237,10 @@ namespace Fnv1aTestVectorGenerator
                 string value1 = (hash >> 256).ToString("X64", InvariantCulture);
                 string value2 = (hash & Bitmasks.Bottom64Bytes).ToString("X64", InvariantCulture);
 
-                return await Task.FromResult("0x" + value1?.Substring(value1.Length - 64) + value2?.Substring(value2.Length - 64)).ConfigureAwait(false);
+                return await Task.FromResult(value1 is null || value2 is null ? null : string.Concat(
+                    "0x",
+                    value1.AsSpan(value1.Length - 64),
+                    value2.AsSpan(value2.Length - 64))).ConfigureAwait(false);
             }
         }
 
@@ -232,8 +248,10 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously computes the FNV-1a 1024-bit hash for the specified data.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 1024-bit hash of the specified data.</returns>
+        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 1024-bit hash of the specified
+        /// data.</returns>
         // ReSharper disable once InconsistentNaming
+        // ReSharper disable once TooManyDeclarations
         private static async Task<string> Fnv1a1024sAsync(this string data)
         {
             using (HashAlgorithm alg = new Fnv1a1024())
@@ -245,12 +263,13 @@ namespace Fnv1aTestVectorGenerator
                 string value3 = ((hash & Bitmasks.Third64Bytes) >> 256).ToString("X64", InvariantCulture);
                 //// ReSharper enable ComplexConditionExpression
                 string value4 = (hash & Bitmasks.Bottom64Bytes).ToString("X64", InvariantCulture);
+                string allValues = value1 is null || value2 is null || value3 is null || value4 is null ? null : string.Concat(
+                    value1.AsSpan(value1.Length - 64),
+                    value2.AsSpan(value2.Length - 64),
+                    value3.AsSpan(value3.Length - 64),
+                    value4.AsSpan(value4.Length - 64));
 
-                return await Task.FromResult("0x"
-                    + value1?.Substring(value1.Length - 64)
-                    + value2?.Substring(value2.Length - 64)
-                    + value3?.Substring(value3.Length - 64)
-                    + value4?.Substring(value4.Length - 64)).ConfigureAwait(false);
+                return await Task.FromResult("0x" + allValues).ConfigureAwait(false);
             }
         }
     }
