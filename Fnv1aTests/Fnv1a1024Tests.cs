@@ -130,7 +130,7 @@ namespace Fnv1aTests
         /// <returns>The FNV-1a 1024-bit hash of the specified data.</returns>
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         // ReSharper disable once InconsistentNaming
-        private BigInteger Fnv1a1024(string data)
+        private BigInteger Fnv1a1024(in string data)
         {
             AreEqual(1024, this._alg.HashSize);
             return new BigInteger(this._alg.ComputeHash(UTF8.GetBytes(data)).AddZero());

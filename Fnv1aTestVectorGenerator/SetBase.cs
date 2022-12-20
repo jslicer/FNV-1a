@@ -50,7 +50,7 @@ namespace Fnv1aTestVectorGenerator
         /// <exception cref="IOException">An I/O error occurs.</exception>
         /// <exception cref="System.ObjectDisposedException">The <see cref="T:System.IO.TextWriter"></see> is
         /// closed.</exception>
-        protected void WriteLine(string value) => this._writer.WriteLine(value);
+        protected void WriteLine(in string value) => this._writer.WriteLine(value);
 
         /// <summary>
         /// Asynchronously writes the line to the <see cref="TextWriter"/>.

@@ -85,7 +85,7 @@ namespace Fnv1aTests
         /// <returns>The FNV-1a 32-bit hash of the specified data.</returns>
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         // ReSharper disable once InconsistentNaming
-        private uint Fnv1a32(string data)
+        private uint Fnv1a32(in string data)
         {
             AreEqual(32, this._alg.HashSize);
             return (uint)BitConverter.ToInt32(this._alg.ComputeHash(UTF8.GetBytes(data)), 0);

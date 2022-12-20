@@ -51,7 +51,11 @@ namespace Fnv1a
         /// <param name="offsetBasis">The FNV-1a offset basis.</param>
         /// <param name="hashSizeValue">The size, in bits, of the computed hash code.</param>
         // ReSharper disable once TooManyDependencies
-        protected Fnv1aBigBase(BigInteger modValue, BigInteger prime, BigInteger offsetBasis, int hashSizeValue)
+        protected Fnv1aBigBase(
+            in BigInteger modValue,
+            in BigInteger prime,
+            in BigInteger offsetBasis,
+            in int hashSizeValue)
         {
             this._modValue = modValue;
             this._prime = prime;

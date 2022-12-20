@@ -120,7 +120,7 @@ namespace Fnv1aTests
         /// <returns>The FNV-1a 256-bit hash of the specified data.</returns>
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         // ReSharper disable once InconsistentNaming
-        private string Fnv1a256(string data)
+        private string Fnv1a256(in string data)
         {
             AreEqual(256, this._alg.HashSize);
 

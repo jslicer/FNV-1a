@@ -85,7 +85,7 @@ namespace Fnv1aTests
         /// <returns>The FNV-1a 64-bit hash of the specified data.</returns>
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         // ReSharper disable once InconsistentNaming
-        private ulong Fnv1a64(string data)
+        private ulong Fnv1a64(in string data)
         {
             AreEqual(64, this._alg.HashSize);
             return (ulong)BitConverter.ToInt64(this._alg.ComputeHash(UTF8.GetBytes(data)), 0);
