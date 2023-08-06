@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+// Ignore Spelling: Fnv
 namespace Fnv1aTestVectorGenerator
 {
     using System.IO;
@@ -45,7 +46,7 @@ namespace Fnv1aTestVectorGenerator
         /// <returns>An asynchronous <see cref="Task"/>.</returns>
         private static async Task ProcessAsync(TextWriter writer = null)
         {
-            writer = writer ?? TextWriter.Null;
+            writer ??= TextWriter.Null;
 
             ISet[] sets =
             {

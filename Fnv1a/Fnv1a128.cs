@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+// Ignore Spelling: Fnv
 namespace Fnv1a
 {
     using static System.Globalization.CultureInfo;
@@ -39,6 +40,7 @@ namespace Fnv1a
             Parse("6C62272E07BB014262B821756295C58D", AllowHexSpecifier, InvariantCulture),
             128)
         {
+            // Intentionally empty.
         }
     }
 }

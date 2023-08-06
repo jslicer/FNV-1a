@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+// Ignore Spelling: Fnv
 namespace Fnv1aTestVectorGenerator
 {
     using System.IO;
@@ -64,6 +65,7 @@ namespace Fnv1aTestVectorGenerator
         // ReSharper disable once RedundantAwait
         protected async Task WriteLineAsync(string value) =>
             // ReSharper disable once AsyncConverter.AsyncAwaitMayBeElidedHighlighting
+            // ReSharper disable once AsyncApostle.AsyncAwaitMayBeElidedHighlighting
             //// ReSharper disable RedundantAwait
             await this._writer.WriteLineAsync(value).ConfigureAwait(false);
             //// ReSharper enable RedundantAwait

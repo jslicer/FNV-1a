@@ -7,9 +7,12 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+// Ignore Spelling: Fnv
 namespace Fnv1aTests
 {
+    using System;
     using System.Numerics;
+    using System.Security.Cryptography;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -28,7 +31,7 @@ namespace Fnv1aTests
     // ReSharper disable once InconsistentNaming
 #pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable S101 // Types should be named in PascalCase
-    public sealed class Fnv1a128Tests : System.IDisposable
+    public sealed class Fnv1a128Tests : IDisposable
 #pragma warning restore IDE0079 // Remove unnecessary suppression
 #pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning restore S101 // Types should be named in PascalCase
@@ -37,7 +40,7 @@ namespace Fnv1aTests
         /// <summary>
         /// The hash algorithm being tested.
         /// </summary>
-        private System.Security.Cryptography.HashAlgorithm _alg;
+        private HashAlgorithm _alg;
 
         /// <summary>
         /// The method to run before each test.
@@ -82,6 +85,23 @@ namespace Fnv1aTests
             this.Fnv1a128(string.Empty));
 
         /// <summary>
+        /// Tests the empty string against the known vector result.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">style is not a
+        /// <see cref="System.Globalization.NumberStyles"></see> value.   -or-  style includes the
+        /// <see cref="AllowHexSpecifier"></see> or <see cref="HexNumber"></see> flag along with another
+        /// value.</exception>
+        /// <exception cref="System.ArgumentNullException">value is null.</exception>
+        /// <exception cref="System.FormatException">value does not comply with the input pattern specified by
+        /// style.</exception>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+        [TestMethod]
+        // ReSharper disable once InconsistentNaming
+        public void TestVector1Try() => AreEqual(
+            Parse("6C62272E07BB014262B821756295C58D", AllowHexSpecifier, InvariantCulture),
+            this.Fnv1a128Try(string.Empty));
+
+        /// <summary>
         /// Tests the string "a" against the known vector result.
         /// </summary>
         /// <exception cref="System.ArgumentException">style is not a
@@ -97,6 +117,23 @@ namespace Fnv1aTests
         public void TestVector2() => AreEqual(
             Parse("0D228CB696F1A8CAF78912B704E4A8964", AllowHexSpecifier, InvariantCulture),
             this.Fnv1a128("a"));
+
+        /// <summary>
+        /// Tests the string "a" against the known vector result.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">style is not a
+        /// <see cref="System.Globalization.NumberStyles"></see> value.   -or-  style includes the
+        /// <see cref="AllowHexSpecifier"></see> or <see cref="HexNumber"></see> flag along with another
+        /// value.</exception>
+        /// <exception cref="System.ArgumentNullException">value is null.</exception>
+        /// <exception cref="System.FormatException">value does not comply with the input pattern specified by
+        /// style.</exception>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+        [TestMethod]
+        // ReSharper disable once InconsistentNaming
+        public void TestVector2Try() => AreEqual(
+            Parse("0D228CB696F1A8CAF78912B704E4A8964", AllowHexSpecifier, InvariantCulture),
+            this.Fnv1a128Try("a"));
 
         /// <summary>
         /// Tests the string against the known vector result.
@@ -116,7 +153,25 @@ namespace Fnv1aTests
             this.Fnv1a128("foobar"));
 
         /// <summary>
-        /// Computes the FNV-1a 128-bit hash for the specified data.
+        /// Tests the string against the known vector result.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">style is not a
+        /// <see cref="System.Globalization.NumberStyles"></see> value.   -or-  style includes the
+        /// <see cref="AllowHexSpecifier"></see> or <see cref="HexNumber"></see> flag along with another
+        /// value.</exception>
+        /// <exception cref="System.ArgumentNullException">value is null.</exception>
+        /// <exception cref="System.FormatException">value does not comply with the input pattern specified by
+        /// style.</exception>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+        [TestMethod]
+        // ReSharper disable once InconsistentNaming
+        public void TestVector3Try() => AreEqual(
+            Parse("343E1662793C64BF6F0D3597BA446F18", AllowHexSpecifier, InvariantCulture),
+            this.Fnv1a128Try("foobar"));
+
+        /// <summary>
+        /// Computes the FNV-1a 128-bit hash for the specified data using
+        /// <see cref="HashAlgorithm.ComputeHash(byte[])" />.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <returns>The FNV-1a 128-bit hash of the specified data.</returns>
@@ -125,7 +180,34 @@ namespace Fnv1aTests
         private BigInteger Fnv1a128(in string data)
         {
             AreEqual(128, this._alg.HashSize);
-            return new BigInteger(this._alg.ComputeHash(UTF8.GetBytes(data)).AddZero());
+            return new(this._alg.ComputeHash(UTF8.GetBytes(data)).AddZero());
+        }
+
+        /// <summary>
+        /// Computes the FNV-1a 128-bit hash for the specified data using <see cref="HashAlgorithm.TryComputeHash" />.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns>The FNV-1a 128-bit hash of the specified data.</returns>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+        // ReSharper disable once InconsistentNaming
+        private BigInteger Fnv1a128Try(in string data)
+        {
+            AreEqual(128, this._alg.HashSize);
+
+            int inputByteCount = UTF8.GetByteCount(data);
+            Span<byte> bytes = inputByteCount < 1024
+                ? stackalloc byte[inputByteCount]
+                : new byte[inputByteCount];
+
+            UTF8.GetBytes(data, bytes);
+
+            // ReSharper disable once ComplexConditionExpression
+            Span<byte> destination = stackalloc byte[1 + this._alg.HashSize / 8];
+            bool result = this._alg.TryComputeHash(bytes, destination, out int bytesWritten);
+
+            IsTrue(result);
+            IsTrue(destination.Length >= bytesWritten);
+            return new(destination);
         }
     }
 }

@@ -7,9 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+// Ignore Spelling: Fnv
 namespace Fnv1aTests
 {
     using System;
+    using System.Security.Cryptography;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -34,7 +36,7 @@ namespace Fnv1aTests
         /// <summary>
         /// The hash algorithm being tested.
         /// </summary>
-        private System.Security.Cryptography.HashAlgorithm _alg;
+        private HashAlgorithm _alg;
 
         /// <summary>
         /// The method to run before each test.
@@ -63,12 +65,28 @@ namespace Fnv1aTests
         public void TestVector1() => AreEqual(0xCBF29CE484222325, this.Fnv1a64(string.Empty));
 
         /// <summary>
+        /// Tests the empty string against the known vector result.
+        /// </summary>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+        [TestMethod]
+        // ReSharper disable once InconsistentNaming
+        public void TestVector1Try() => AreEqual(0xCBF29CE484222325, this.Fnv1a64Try(string.Empty));
+
+        /// <summary>
         /// Tests the string "a" against the known vector result.
         /// </summary>
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         // ReSharper disable once InconsistentNaming
         public void TestVector2() => AreEqual(0xAF63DC4C8601EC8C, this.Fnv1a64("a"));
+
+        /// <summary>
+        /// Tests the string "a" against the known vector result.
+        /// </summary>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+        [TestMethod]
+        // ReSharper disable once InconsistentNaming
+        public void TestVector2Try() => AreEqual(0xAF63DC4C8601EC8C, this.Fnv1a64Try("a"));
 
         /// <summary>
         /// Tests the string against the known vector result.
@@ -79,7 +97,16 @@ namespace Fnv1aTests
         public void TestVector3() => AreEqual(0x85944171F73967E8, this.Fnv1a64("foobar"));
 
         /// <summary>
-        /// Computes the FNV-1a 64-bit hash for the specified data.
+        /// Tests the string against the known vector result.
+        /// </summary>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+        [TestMethod]
+        // ReSharper disable once InconsistentNaming
+        public void TestVector3Try() => AreEqual(0x85944171F73967E8, this.Fnv1a64Try("foobar"));
+
+        /// <summary>
+        /// Computes the FNV-1a 64-bit hash for the specified data using
+        /// <see cref="HashAlgorithm.ComputeHash(byte[])" />.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <returns>The FNV-1a 64-bit hash of the specified data.</returns>
@@ -89,6 +116,33 @@ namespace Fnv1aTests
         {
             AreEqual(64, this._alg.HashSize);
             return (ulong)BitConverter.ToInt64(this._alg.ComputeHash(UTF8.GetBytes(data)), 0);
+        }
+
+        /// <summary>
+        /// Computes the FNV-1a 64-bit hash for the specified data using <see cref="HashAlgorithm.TryComputeHash" />.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns>The FNV-1a 64-bit hash of the specified data.</returns>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+        // ReSharper disable once InconsistentNaming
+        private ulong Fnv1a64Try(in string data)
+        {
+            AreEqual(64, this._alg.HashSize);
+
+            int inputByteCount = UTF8.GetByteCount(data);
+            Span<byte> bytes = inputByteCount < 1024
+                ? stackalloc byte[inputByteCount]
+                : new byte[inputByteCount];
+
+            UTF8.GetBytes(data, bytes);
+
+            // ReSharper disable once ComplexConditionExpression
+            Span<byte> destination = stackalloc byte[1 + this._alg.HashSize / 8];
+            bool result = this._alg.TryComputeHash(bytes, destination, out int bytesWritten);
+
+            IsTrue(result);
+            IsTrue(destination.Length >= bytesWritten);
+            return (ulong)BitConverter.ToInt64(destination);
         }
     }
 }

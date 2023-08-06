@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+// Ignore Spelling: Fnv ib
 namespace Fnv1a
 {
     using System;
@@ -75,6 +76,22 @@ namespace Fnv1a
             }
         }
 
+        /// <summary>
+        /// Routes data written to the object into the hash algorithm for computing the hash.
+        /// </summary>
+        /// <param name="source">The input to compute the hash code for.</param>
+        protected override void HashCore(ReadOnlySpan<byte> source)
+        {
+            foreach (byte b in source)
+            {
+                unchecked
+                {
+                    this._hash ^= b;
+                    this._hash *= FnvPrime;
+                }
+            }
+        }
+
         /// <inheritdoc />
         /// <summary>
         /// When overridden in a derived class, finalizes the hash computation after the last data is processed by the
@@ -84,5 +101,22 @@ namespace Fnv1a
         /// The computed hash code.
         /// </returns>
         protected override byte[] HashFinal() => BitConverter.GetBytes(this._hash);
+
+        /// <summary>
+        /// Attempts to finalize the hash computation after the last data is processed by the hash algorithm.
+        /// </summary>
+        /// <param name="destination">The buffer to receive the hash value.</param>
+        /// <param name="bytesWritten">When this method returns, the total number of bytes written into
+        /// <paramref name="destination" />. This parameter is treated as uninitialized.</param>
+        /// <returns><see langword="true" /> if <paramref name="destination" /> is long enough to receive the hash
+        /// value; otherwise, <see langword="false" />.</returns>
+        protected override bool TryHashFinal(Span<byte> destination, out int bytesWritten)
+        {
+            byte[] bytes = BitConverter.GetBytes(this._hash);
+
+            bytes.CopyTo(destination);
+            bytesWritten = bytes.Length;
+            return true;
+        }
     }
 }
