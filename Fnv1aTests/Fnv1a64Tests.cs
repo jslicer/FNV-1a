@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Fnv1a64Tests.cs" company="Always Elucidated Solution Pioneers, LLC">
-//   Copyright © Always Elucidated Solution Pioneers, LLC 2014
+//   Copyright (c) Always Elucidated Solution Pioneers, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Tests the FNV-1a 64-bit algorithm.
@@ -24,7 +24,7 @@ namespace Fnv1aTests
     /// Tests the FNV-1a 64-bit algorithm.
     /// </summary>
     [TestClass]
-    // ReSharper disable once InconsistentNaming
+    //// ReSharper disable once InconsistentNaming
 #pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable S101 // Types should be named in PascalCase
     public sealed class Fnv1a64Tests : IDisposable
@@ -61,7 +61,7 @@ namespace Fnv1aTests
         /// </summary>
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
-        // ReSharper disable once InconsistentNaming
+        //// ReSharper disable once InconsistentNaming
         public void TestVector1() => AreEqual(0xCBF29CE484222325, this.Fnv1a64(string.Empty));
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Fnv1aTests
         /// </summary>
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
-        // ReSharper disable once InconsistentNaming
+        //// ReSharper disable once InconsistentNaming
         public void TestVector1Try() => AreEqual(0xCBF29CE484222325, this.Fnv1a64Try(string.Empty));
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Fnv1aTests
         /// </summary>
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
-        // ReSharper disable once InconsistentNaming
+        //// ReSharper disable once InconsistentNaming
         public void TestVector2() => AreEqual(0xAF63DC4C8601EC8C, this.Fnv1a64("a"));
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Fnv1aTests
         /// </summary>
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
-        // ReSharper disable once InconsistentNaming
+        //// ReSharper disable once InconsistentNaming
         public void TestVector2Try() => AreEqual(0xAF63DC4C8601EC8C, this.Fnv1a64Try("a"));
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Fnv1aTests
         /// </summary>
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
-        // ReSharper disable once InconsistentNaming
+        //// ReSharper disable once InconsistentNaming
         public void TestVector3() => AreEqual(0x85944171F73967E8, this.Fnv1a64("foobar"));
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Fnv1aTests
         /// </summary>
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
-        // ReSharper disable once InconsistentNaming
+        //// ReSharper disable once InconsistentNaming
         public void TestVector3Try() => AreEqual(0x85944171F73967E8, this.Fnv1a64Try("foobar"));
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Fnv1aTests
         /// <param name="data">The data.</param>
         /// <returns>The FNV-1a 64-bit hash of the specified data.</returns>
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
-        // ReSharper disable once InconsistentNaming
+        //// ReSharper disable once InconsistentNaming
         private ulong Fnv1a64(in string data)
         {
             AreEqual(64, this._alg.HashSize);
@@ -124,7 +124,7 @@ namespace Fnv1aTests
         /// <param name="data">The data.</param>
         /// <returns>The FNV-1a 64-bit hash of the specified data.</returns>
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
-        // ReSharper disable once InconsistentNaming
+        //// ReSharper disable once InconsistentNaming
         private ulong Fnv1a64Try(in string data)
         {
             AreEqual(64, this._alg.HashSize);
@@ -137,7 +137,7 @@ namespace Fnv1aTests
             UTF8.GetBytes(data, bytes);
 
             // ReSharper disable once ComplexConditionExpression
-            Span<byte> destination = stackalloc byte[1 + this._alg.HashSize / 8];
+            Span<byte> destination = stackalloc byte[1 + (this._alg.HashSize / 8)];
             bool result = this._alg.TryComputeHash(bytes, destination, out int bytesWritten);
 
             IsTrue(result);

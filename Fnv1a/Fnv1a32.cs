@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Fnv1a32.cs" company="Always Elucidated Solution Pioneers, LLC">
-//   Copyright © Always Elucidated Solution Pioneers, LLC 2014
+//   Copyright (c) Always Elucidated Solution Pioneers, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Implements the FNV-1a 32-bit variant hashing algorithm.
@@ -12,14 +12,15 @@ namespace Fnv1a
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.Security.Cryptography;
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="HashAlgorithm" />
     /// <summary>
     /// Implements the FNV-1a 32-bit variant hashing algorithm.
     /// </summary>
     // ReSharper disable once InconsistentNaming
 #pragma warning disable S101 // Types should be named in PascalCase
-    public sealed class Fnv1a32 : System.Security.Cryptography.HashAlgorithm
+    public sealed class Fnv1a32 : HashAlgorithm
 #pragma warning restore S101 // Types should be named in PascalCase
     {
         /// <summary>
@@ -37,9 +38,9 @@ namespace Fnv1a
         /// </summary>
         private uint _hash;
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="HashAlgorithm" />
         /// <summary>
-        /// Initializes a new instance of the <see cref="Fnv1a32"/> class.
+        /// Initializes a new instance of the <see cref="Fnv1a32" /> class.
         /// </summary>
         public Fnv1a32()
         {
@@ -49,7 +50,7 @@ namespace Fnv1a
 
         /// <inheritdoc />
         /// <summary>
-        /// Initializes an implementation of the <see cref="T:System.Security.Cryptography.HashAlgorithm" /> class.
+        /// Initializes an implementation of the <see cref="HashAlgorithm" /> class.
         /// </summary>
         public override void Initialize() => this._hash = FnvOffsetBasis;
 

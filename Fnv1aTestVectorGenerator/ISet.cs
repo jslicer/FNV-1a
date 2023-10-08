@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ISet.cs" company="Always Elucidated Solution Pioneers, LLC">
-//   Copyright © Always Elucidated Solution Pioneers, LLC 2017
+//   Copyright (c) Always Elucidated Solution Pioneers, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Provides an definition for performing test vector set generation.
@@ -25,7 +25,7 @@ namespace Fnv1aTestVectorGenerator
         /// <summary>
         /// Asynchronously performs the test vector set generation.
         /// </summary>
-        /// <returns>An asynchronous <see cref="Task"/>.</returns>
+        /// <returns>An asynchronous <see cref="Task" />.</returns>
         Task PerformAsync();
     }
 }

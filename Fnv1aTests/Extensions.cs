@@ -1,12 +1,13 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Extensions.cs" company="Always Elucidated Solution Pioneers, LLC">
-//   Copyright © Always Elucidated Solution Pioneers, LLC 2020
+//   Copyright (c) Always Elucidated Solution Pioneers, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Extension methods used by the unit tests.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+// Ignore Spelling: Fnv
 namespace Fnv1aTests
 {
     using System;
@@ -35,7 +36,7 @@ namespace Fnv1aTests
         /// -or-  length is greater than the number of elements in destinationArray.</exception>
         internal static byte[] AddZero(this byte[] bytes)
         {
-            byte[] temp = new byte[bytes.Length + 16];
+            byte[] temp = new byte[bytes.Length + 1];
 
             Array.Copy(bytes, temp, bytes.Length);
             return temp;

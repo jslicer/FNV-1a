@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Program.cs" company="Always Elucidated Solution Pioneers, LLC">
-//   Copyright © Always Elucidated Solution Pioneers, LLC 2014
+//   Copyright (c) Always Elucidated Solution Pioneers, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Contains the entry point of the application.
@@ -10,6 +10,7 @@
 // Ignore Spelling: Fnv
 namespace Fnv1aTestVectorGenerator
 {
+    using System;
     using System.IO;
     using System.Threading.Tasks;
 
@@ -24,11 +25,11 @@ namespace Fnv1aTestVectorGenerator
         /// <summary>
         /// Defines the entry point of the application.
         /// </summary>
-        /// <returns>An asynchronous <see cref="Task"/>.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">The number of characters in the next line is larger
+        /// <returns>An asynchronous <see cref="Task" />.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">The number of characters in the next line is larger
         /// than <see cref="int.MaxValue" />.</exception>
-        /// <exception cref="System.ObjectDisposedException">The text reader has been disposed.</exception>
-        /// <exception cref="System.InvalidOperationException">The reader is currently in use by a previous read
+        /// <exception cref="ObjectDisposedException">The text reader has been disposed.</exception>
+        /// <exception cref="InvalidOperationException">The reader is currently in use by a previous read
         /// operation.</exception>
         public static async Task Main()
         {
@@ -43,7 +44,7 @@ namespace Fnv1aTestVectorGenerator
         /// Processes test vectors.
         /// </summary>
         /// <param name="writer">The writer.</param>
-        /// <returns>An asynchronous <see cref="Task"/>.</returns>
+        /// <returns>An asynchronous <see cref="Task" />.</returns>
         private static async Task ProcessAsync(TextWriter writer = null)
         {
             writer ??= TextWriter.Null;
@@ -65,7 +66,7 @@ namespace Fnv1aTestVectorGenerator
                 new Set12(writer),
                 new Set13(writer),
                 new Set14(writer),
-                new Set15(writer)
+                new Set15(writer),
             };
 
             OutputEncoding = UTF8;

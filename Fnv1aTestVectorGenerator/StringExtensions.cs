@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="StringExtensions.cs" company="Always Elucidated Solution Pioneers, LLC">
-//   Copyright © Always Elucidated Solution Pioneers, LLC 2017
+//   Copyright (c) Always Elucidated Solution Pioneers, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Extension methods for strings in order to generate test vectors.
@@ -70,7 +70,7 @@ namespace Fnv1aTestVectorGenerator
         // ReSharper disable once MethodNameNotMeaningful
         internal static string R10(this string data)
         {
-            StringBuilder sb = new(10 * data.Length);
+            StringBuilder sb = new (10 * data.Length);
 
             for (int i = 0; i < 10; i++)
             {
@@ -99,7 +99,7 @@ namespace Fnv1aTestVectorGenerator
         /// <see cref="StringBuilder.MaxCapacity"></see>.</exception>
         internal static string R500(this string data)
         {
-            StringBuilder sb = new(500 * data.Length);
+            StringBuilder sb = new (500 * data.Length);
 
             for (int i = 0; i < 500; i++)
             {
@@ -126,7 +126,7 @@ namespace Fnv1aTestVectorGenerator
         private static string Print(this string data)
         {
             bool controlCharacter = false;
-            StringBuilder sb = new(data.Length);
+            StringBuilder sb = new (data.Length);
 
             foreach (char c in data)
             {
@@ -155,7 +155,7 @@ namespace Fnv1aTestVectorGenerator
             using HashAlgorithm alg = new Fnv1a32();
 
             // ReSharper disable once ComplexConditionExpression
-            Span<byte> destination = stackalloc byte[1 + alg.HashSize / 8];
+            Span<byte> destination = stackalloc byte[1 + (alg.HashSize / 8)];
 
             data.CalculateHash(alg, destination);
             return "0x"
@@ -173,7 +173,7 @@ namespace Fnv1aTestVectorGenerator
             using HashAlgorithm alg = new Fnv1a64();
 
             // ReSharper disable once ComplexConditionExpression
-            Span<byte> destination = stackalloc byte[1 + alg.HashSize / 8];
+            Span<byte> destination = stackalloc byte[1 + (alg.HashSize / 8)];
 
             data.CalculateHash(alg, destination);
             return "0x"
@@ -191,7 +191,7 @@ namespace Fnv1aTestVectorGenerator
             using HashAlgorithm alg = new Fnv1a128();
 
             // ReSharper disable once ComplexConditionExpression
-            Span<byte> destination = stackalloc byte[1 + alg.HashSize / 8];
+            Span<byte> destination = stackalloc byte[1 + (alg.HashSize / 8)];
 
             data.CalculateHash(alg, destination);
 
@@ -211,7 +211,7 @@ namespace Fnv1aTestVectorGenerator
             using HashAlgorithm alg = new Fnv1a256();
 
             // ReSharper disable once ComplexConditionExpression
-            Span<byte> destination = stackalloc byte[1 + alg.HashSize / 8];
+            Span<byte> destination = stackalloc byte[1 + (alg.HashSize / 8)];
 
             data.CalculateHash(alg, destination);
 
@@ -231,11 +231,11 @@ namespace Fnv1aTestVectorGenerator
             using HashAlgorithm alg = new Fnv1a512();
 
             // ReSharper disable once ComplexConditionExpression
-            Span<byte> destination = stackalloc byte[1 + alg.HashSize / 8];
+            Span<byte> destination = stackalloc byte[1 + (alg.HashSize / 8)];
 
             data.CalculateHash(alg, destination);
 
-            BigInteger hash = new(destination);
+            BigInteger hash = new (destination);
             string value1 = (hash >> 256).ToString("X64", InvariantCulture);
             string value2 = (hash & Bitmasks.Bottom64Bytes).ToString("X64", InvariantCulture);
 
@@ -257,11 +257,11 @@ namespace Fnv1aTestVectorGenerator
             using HashAlgorithm alg = new Fnv1a1024();
 
             // ReSharper disable once ComplexConditionExpression
-            Span<byte> destination = stackalloc byte[1 + alg.HashSize / 8];
+            Span<byte> destination = stackalloc byte[1 + (alg.HashSize / 8)];
 
             data.CalculateHash(alg, destination);
 
-            BigInteger hash = new(destination);
+            BigInteger hash = new (destination);
             string value1 = (hash >> 768).ToString("X64", InvariantCulture);
             //// ReSharper disable ComplexConditionExpression
             string value2 = ((hash & Bitmasks.Second64Bytes) >> 512).ToString("X64", InvariantCulture);

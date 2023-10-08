@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Fnv1aBigBase.cs" company="Always Elucidated Solution Pioneers, LLC">
-//   Copyright © Always Elucidated Solution Pioneers, LLC 2014
+//   Copyright (c) Always Elucidated Solution Pioneers, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Implements the FNV-1a variant hashing algorithm for subtypes using the BigInteger class.
@@ -12,21 +12,23 @@ namespace Fnv1a
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using System.Numerics;
+    using System.Security.Cryptography;
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="HashAlgorithm" />
     /// <summary>
     /// Implements the FNV-1a variant hashing algorithm for subtypes using the BigInteger class.
     /// </summary>
     // ReSharper disable once InconsistentNaming
 #pragma warning disable S101 // Types should be named in PascalCase
-    public abstract class Fnv1aBigBase : System.Security.Cryptography.HashAlgorithm
+    public abstract class Fnv1aBigBase : HashAlgorithm
 #pragma warning restore S101 // Types should be named in PascalCase
     {
         /// <summary>
-        /// The "wrap-around" modulo value for keeping multiplication within the number of bits.
+        /// The bit mask value for keeping multiplication within the number of bits.
         /// </summary>
-        private readonly BigInteger _modValue;
+        private readonly BigInteger _bitMask;
 
         /// <summary>
         /// The prime.
@@ -43,23 +45,22 @@ namespace Fnv1a
         /// </summary>
         private BigInteger _hash;
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="HashAlgorithm" />
         /// <summary>
-        /// Initializes a new instance of the <see cref="Fnv1aBigBase"/> class.
+        /// Initializes a new instance of the <see cref="Fnv1aBigBase" /> class.
         /// </summary>
-        /// <param name="modValue">The "wrap-around" modulo value for keeping multiplication within the number of
-        /// bits.</param>
+        /// <param name="bitMask">The bit mask value for keeping multiplication within the number of bits.</param>
         /// <param name="prime">The FNV-1a prime.</param>
         /// <param name="offsetBasis">The FNV-1a offset basis.</param>
         /// <param name="hashSizeValue">The size, in bits, of the computed hash code.</param>
         // ReSharper disable once TooManyDependencies
         protected Fnv1aBigBase(
-            in BigInteger modValue,
+            in BigInteger bitMask,
             in BigInteger prime,
             in BigInteger offsetBasis,
             in int hashSizeValue)
         {
-            this._modValue = modValue;
+            this._bitMask = bitMask;
             this._prime = prime;
             this._offsetBasis = offsetBasis;
             this.Init();
@@ -68,7 +69,7 @@ namespace Fnv1a
 
         /// <inheritdoc />
         /// <summary>
-        /// Initializes an implementation of the <see cref="T:System.Security.Cryptography.HashAlgorithm" /> class.
+        /// Initializes an implementation of the <see cref="HashAlgorithm" /> class.
         /// </summary>
         public override sealed void Initialize() => this.Init();
 
@@ -90,7 +91,7 @@ namespace Fnv1a
                 unchecked
                 {
                     this._hash ^= array[i];
-                    this._hash = (this._hash * this._prime) % this._modValue;
+                    this._hash = (this._hash * this._prime) & this._bitMask;
                 }
             }
         }
@@ -106,7 +107,7 @@ namespace Fnv1a
                 unchecked
                 {
                     this._hash ^= b;
-                    this._hash = (this._hash * this._prime) % this._modValue;
+                    this._hash = (this._hash * this._prime) & this._bitMask;
                 }
             }
         }
@@ -119,7 +120,7 @@ namespace Fnv1a
         /// <returns>
         /// The computed hash code.
         /// </returns>
-        protected override byte[] HashFinal() => this._hash.ToByteArray();
+        protected override byte[] HashFinal() => this.GetHashByteArray();
 
         /// <summary>
         /// Attempts to finalize the hash computation after the last data is processed by the hash algorithm.
@@ -131,7 +132,7 @@ namespace Fnv1a
         /// value; otherwise, <see langword="false" />.</returns>
         protected override bool TryHashFinal(Span<byte> destination, out int bytesWritten)
         {
-            byte[] bytes = this._hash.ToByteArray();
+            byte[] bytes = this.GetHashByteArray();
 
             bytes.CopyTo(destination);
             bytesWritten = bytes.Length;
@@ -142,5 +143,7 @@ namespace Fnv1a
         /// Initializes the hash for this instance.
         /// </summary>
         private void Init() => this._hash = this._offsetBasis;
+
+        private byte[] GetHashByteArray() => this._hash.ToByteArray().Take(this.HashSize / 8).ToArray();
     }
 }

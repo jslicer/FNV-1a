@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Fnv1aTestVectorGenerator/bin/Debug/net7.0/Fnv1aTestVectorGenerator.dll",
+            "program": "${workspaceFolder}/Fnv1aTestVectorGenerator/bin/Debug/net8.0/Fnv1aTestVectorGenerator.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Fnv1aTestVectorGenerator",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="AsyncStringExtensions.cs" company="Copyright © Always Elucidated Solution Pioneers, LLC">
-//   Copyright © Always Elucidated Solution Pioneers, LLC 2020
+// <copyright file="AsyncStringExtensions.cs" company="Always Elucidated Solution Pioneers, LLC">
+//   Copyright (c) Always Elucidated Solution Pioneers, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Asynchronous extension methods for strings in order to generate test vectors.
@@ -33,7 +33,7 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously tests the specified data.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the test result string.</returns>
+        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
         internal static async Task<string> TestAsync(this string data) => "Test:" + NewLine
             + data + " 32: " + await data.Fnv1a32sAsync().ConfigureAwait(false) + NewLine
             + data + " 64: " + await data.Fnv1a64sAsync().ConfigureAwait(false) + NewLine
@@ -46,7 +46,7 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously tests the specified data adding a trailing NULL byte.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the test result string.</returns>
+        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
         internal static async Task<string> Test0Async(this string data)
         {
             string newData = data + '\0';
@@ -65,13 +65,13 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously tests the specified data repeated ten times.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the test result string.</returns>
+        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
         /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
-        /// <see cref="StringBuilder.MaxCapacity"></see>.</exception>
+        /// <see cref="StringBuilder.MaxCapacity" />.</exception>
         internal static async Task<string> R10Async(this string data)
         {
-            StringBuilder sb = new(10 * data.Length);
+            StringBuilder sb = new (10 * data.Length);
 
             for (int i = 0; i < 10; i++)
             {
@@ -96,13 +96,13 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously tests the specified data repeated five hundred times.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the test result string.</returns>
+        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
         /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
-        /// <see cref="StringBuilder.MaxCapacity"></see>.</exception>
+        /// <see cref="StringBuilder.MaxCapacity" />.</exception>
         internal static async Task<string> R500Async(this string data)
         {
-            StringBuilder sb = new(500 * data.Length);
+            StringBuilder sb = new (500 * data.Length);
 
             for (int i = 0; i < 500; i++)
             {
@@ -125,12 +125,12 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously returns a printable string (hex encodes any control characters).
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the printable string.</returns>
+        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the printable string.</returns>
         // ReSharper disable once RedundantAwait
         private static async Task<string> PrintAsync(this string data)
         {
             bool controlCharacter = false;
-            StringBuilder sb = new(data.Length);
+            StringBuilder sb = new (data.Length);
 
             foreach (char c in data)
             {
@@ -156,7 +156,7 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously computes the FNV-1a 32-bit hash for the specified data.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 32-bit hash of the specified
+        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 32-bit hash of the specified
         /// data.</returns>
         // ReSharper disable once InconsistentNaming
         private static async Task<string> Fnv1a32sAsync(this string data)
@@ -171,7 +171,7 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously computes the FNV-1a 64-bit hash for the specified data.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 64-bit hash of the specified
+        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 64-bit hash of the specified
         /// data.</returns>
         // ReSharper disable once InconsistentNaming
         private static async Task<string> Fnv1a64sAsync(this string data)
@@ -186,7 +186,7 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously computes the FNV-1a 128-bit hash for the specified data.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 128-bit hash of the specified
+        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 128-bit hash of the specified
         /// data.</returns>
         // ReSharper disable once InconsistentNaming
         private static async Task<string> Fnv1a128sAsync(this string data)
@@ -204,7 +204,7 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously computes the FNV-1a 256-bit hash for the specified data.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 256-bit hash of the specified
+        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 256-bit hash of the specified
         /// data.</returns>
         // ReSharper disable once InconsistentNaming
         private static async Task<string> Fnv1a256sAsync(this string data)
@@ -222,7 +222,7 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously computes the FNV-1a 512-bit hash for the specified data.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 512-bit hash of the specified
+        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 512-bit hash of the specified
         /// data.</returns>
         // ReSharper disable once InconsistentNaming
         private static async Task<string> Fnv1a512sAsync(this string data)
@@ -230,7 +230,7 @@ namespace Fnv1aTestVectorGenerator
             using HashAlgorithm alg = new Fnv1a512();
             await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
 
-            BigInteger hash = new((await alg.ComputeHashAsync(stream).ConfigureAwait(false)).AddZero());
+            BigInteger hash = new ((await alg.ComputeHashAsync(stream).ConfigureAwait(false)).AddZero());
             string value1 = (hash >> 256).ToString("X64", InvariantCulture);
             string value2 = (hash & Bitmasks.Bottom64Bytes).ToString("X64", InvariantCulture);
 
@@ -244,7 +244,7 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously computes the FNV-1a 1024-bit hash for the specified data.
         /// </summary>
         /// <param name="data">The data.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}"/> containing the FNV-1a 1024-bit hash of the specified
+        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 1024-bit hash of the specified
         /// data.</returns>
         // ReSharper disable once InconsistentNaming
         // ReSharper disable once TooManyDeclarations
@@ -253,7 +253,7 @@ namespace Fnv1aTestVectorGenerator
             using HashAlgorithm alg = new Fnv1a1024();
             await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
 
-            BigInteger hash = new((await alg.ComputeHashAsync(stream).ConfigureAwait(false)).AddZero());
+            BigInteger hash = new ((await alg.ComputeHashAsync(stream).ConfigureAwait(false)).AddZero());
             string value1 = (hash >> 768).ToString("X64", InvariantCulture);
             //// ReSharper disable ComplexConditionExpression
             string value2 = ((hash & Bitmasks.Second64Bytes) >> 512).ToString("X64", InvariantCulture);

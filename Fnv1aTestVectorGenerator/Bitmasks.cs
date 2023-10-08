@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="Bitmasks.cs" company="Always Elucidated Solution Pioneers, LLC">
-//   Copyright © Always Elucidated Solution Pioneers, LLC 2020
+//   Copyright (c) Always Elucidated Solution Pioneers, LLC. All rights reserved.
 // </copyright>
 // <summary>
 //   Byte bitmasks used for the larger bit-sized test vectors.
@@ -26,7 +26,6 @@ namespace Fnv1aTestVectorGenerator
         /// </summary>
         // ReSharper disable once ExceptionNotDocumentedOptional
         internal static BigInteger Bottom64Bytes { get; } = Parse(
-            // ReSharper disable once StringLiteralTypo
             "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
             AllowHexSpecifier,
             InvariantCulture);

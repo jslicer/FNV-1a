@@ -1,13 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fnv1a", "Fnv1a\Fnv1a.csproj", "{096231AD-D8C9-4EE4-843D-D3123E5FE4ED}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fnv1aTestVectorGenerator", "Fnv1aTestVectorGenerator\Fnv1aTestVectorGenerator.csproj", "{49717984-EDC8-4EFA-AEA5-747AEE9949E6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fnv1aTests", "Fnv1aTests\Fnv1aTests.csproj", "{2BF71F9A-9F59-4250-8478-654E64977D51}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F410D813-9026-4CD3-9878-20DC7DB4AB26}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
