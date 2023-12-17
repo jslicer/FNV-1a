@@ -12,8 +12,8 @@ namespace Fnv1a
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
     using System.Numerics;
+    using System.Runtime.CompilerServices;
     using System.Security.Cryptography;
 
     /// <inheritdoc cref="HashAlgorithm" />
@@ -71,7 +71,7 @@ namespace Fnv1a
         /// <summary>
         /// Initializes an implementation of the <see cref="HashAlgorithm" /> class.
         /// </summary>
-        public override sealed void Initialize() => this.Init();
+        public sealed override void Initialize() => this.Init();
 
         /// <inheritdoc />
         /// <summary>
@@ -120,7 +120,14 @@ namespace Fnv1a
         /// <returns>
         /// The computed hash code.
         /// </returns>
-        protected override byte[] HashFinal() => this.GetHashByteArray();
+        protected override byte[] HashFinal()
+        {
+            // ReSharper disable once ComplexConditionExpression
+            Span<byte> bytes = stackalloc byte[(this.HashSize / 8) + 1];
+
+            this.GetHashByteSpan(bytes, out _);
+            return bytes.ToArray();
+        }
 
         /// <summary>
         /// Attempts to finalize the hash computation after the last data is processed by the hash algorithm.
@@ -130,20 +137,24 @@ namespace Fnv1a
         /// <paramref name="destination" />. This parameter is treated as uninitialized.</param>
         /// <returns><see langword="true" /> if <paramref name="destination" /> is long enough to receive the hash
         /// value; otherwise, <see langword="false" />.</returns>
-        protected override bool TryHashFinal(Span<byte> destination, out int bytesWritten)
-        {
-            byte[] bytes = this.GetHashByteArray();
-
-            bytes.CopyTo(destination);
-            bytesWritten = bytes.Length;
-            return true;
-        }
+        protected override bool TryHashFinal(Span<byte> destination, out int bytesWritten) =>
+            this.GetHashByteSpan(destination, out bytesWritten);
 
         /// <summary>
         /// Initializes the hash for this instance.
         /// </summary>
         private void Init() => this._hash = this._offsetBasis;
 
-        private byte[] GetHashByteArray() => this._hash.ToByteArray().Take(this.HashSize / 8).ToArray();
+        /// <summary>
+        /// Gets the span of bytes representing the hash value.
+        /// </summary>
+        /// <param name="destination">The buffer to receive the hash value.</param>
+        /// <param name="bytesWritten">When this method returns, the total number of bytes written into
+        /// <paramref name="destination" />. This parameter is treated as uninitialized.</param>
+        /// <returns><see langword="true" /> if <paramref name="destination" /> is long enough to receive the hash
+        /// value; otherwise, <see langword="false" />.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool GetHashByteSpan(Span<byte> destination, out int bytesWritten) =>
+            this._hash.TryWriteBytes(destination, out bytesWritten);
     }
 }
