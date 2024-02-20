@@ -24,14 +24,14 @@ namespace Fnv1a
 #pragma warning restore S101 // Types should be named in PascalCase
     {
         /// <summary>
-        /// The prime.
+        /// The default prime.
         /// </summary>
-        private const ulong FnvPrime = 0x00000100000001B3;
+        private const ulong FnvDefaultPrime = 0x00000100000001B3UL;
 
         /// <summary>
-        /// The non-zero offset basis.
+        /// The default non-zero offset basis.
         /// </summary>
-        private const ulong FnvOffsetBasis = 0xCBF29CE484222325;
+        private const ulong FnvDefaultOffsetBasis = 0xCBF29CE484222325UL;
 
         /// <summary>
         /// The hash.
@@ -43,16 +43,54 @@ namespace Fnv1a
         /// Initializes a new instance of the <see cref="Fnv1a64" /> class.
         /// </summary>
         public Fnv1a64()
+            : this(FnvDefaultPrime, FnvDefaultOffsetBasis)
         {
-            this.Initialize();
-            this.HashSizeValue = 64;
+            // Intentionally empty.
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Fnv1a64" /> class.
+        /// </summary>
+        /// <param name="prime">The prime.</param>
+        /// <param name="offsetBasis">The non-zero offset basis.</param>
+        /// <inheritdoc cref="HashAlgorithm" />
+        public Fnv1a64(ulong prime, ulong offsetBasis)
+        {
+            if (offsetBasis == 0UL)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(offsetBasis),
+                    offsetBasis,
+                    "The offset basis must be non-zero.");
+            }
+
+            this.HashSizeValue = 64;
+            this.FnvPrime = prime;
+            this.FnvOffsetBasis = offsetBasis;
+            this.Initialize();
+        }
+
+        /// <summary>
+        /// Gets the prime.
+        /// </summary>
+        /// <value>
+        /// The prime.
+        /// </value>
+        public ulong FnvPrime { get; }
+
+        /// <summary>
+        /// Gets the non-zero offset basis.
+        /// </summary>
+        /// <value>
+        /// The non-zero offset basis.
+        /// </value>
+        public ulong FnvOffsetBasis { get; }
 
         /// <inheritdoc />
         /// <summary>
         /// Initializes an implementation of the <see cref="HashAlgorithm" /> class.
         /// </summary>
-        public override void Initialize() => this._hash = FnvOffsetBasis;
+        public override void Initialize() => this._hash = this.FnvOffsetBasis;
 
         /// <inheritdoc />
         /// <summary>
@@ -72,7 +110,7 @@ namespace Fnv1a
                 unchecked
                 {
                     this._hash ^= array[i];
-                    this._hash *= FnvPrime;
+                    this._hash *= this.FnvPrime;
                 }
             }
         }
@@ -88,7 +126,7 @@ namespace Fnv1a
                 unchecked
                 {
                     this._hash ^= b;
-                    this._hash *= FnvPrime;
+                    this._hash *= this.FnvPrime;
                 }
             }
         }

@@ -15,13 +15,14 @@ namespace Fnv1aTests
     using System.Numerics;
     using System.Security.Cryptography;
 
+    using Fnv1a;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using static System.Globalization.CultureInfo;
     using static System.Globalization.NumberStyles;
     using static System.Numerics.BigInteger;
     using static System.Text.Encoding;
-
     using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
     /// <inheritdoc />
@@ -53,7 +54,7 @@ namespace Fnv1aTests
         /// <exception cref="FormatException">value does not comply with the input pattern specified by
         /// style.</exception>
         [TestInitialize]
-        public void Initialize() => this._alg = new Fnv1a.Fnv1a1024();
+        public void Initialize() => this._alg = new Fnv1a1024();
 
         /// <summary>
         /// The method to run after each test.
@@ -162,6 +163,37 @@ namespace Fnv1aTests
         public void TestVector3Try() => AreEqual(
             Parse("00000631175FA7AE643AD08723D312C9FD024ADB91F77F6B19587197A22BCDF23727166C4572D0B985D5AE00000000000000000000000000000000000000000000000000000000000000000000000000000000000000004270D11EF418EF08B8A49E1E825E547EB39937F819222F3B7FC92A0E4707900888847A554BACEC98B0", AllowHexSpecifier, InvariantCulture),
             this.Fnv1a1024Try("foobar"));
+
+        /// <summary>
+        /// Tests the alternate prime and zero offset.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestAlternatePrimeAndZeroOffset()
+        {
+            using Fnv1a1024 _ = new (
+                Parse("000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000018D", AllowHexSpecifier, InvariantCulture),
+                BigInteger.Zero);
+        }
+
+        /// <summary>
+        /// Tests the alternate prime and non-zero offset.
+        /// </summary>
+        ////[TestMethod]
+        public void TestAlternatePrimeAndOffset()
+        {
+            // TODO: implement the test.
+        }
+
+        /// <summary>
+        /// Tests the alternate prime and non-zero offset.
+        /// </summary>
+        ////[TestMethod]
+        //// ReSharper disable once TooManyDeclarations
+        public void TestAlternatePrimeAndOffsetTry()
+        {
+            // TODO: implement the test.
+        }
 
         /// <summary>
         /// Computes the FNV-1a 1024-bit hash for the specified data using

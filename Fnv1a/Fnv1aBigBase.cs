@@ -31,16 +31,6 @@ namespace Fnv1a
         private readonly BigInteger _bitMask;
 
         /// <summary>
-        /// The prime.
-        /// </summary>
-        private readonly BigInteger _prime;
-
-        /// <summary>
-        /// The non-zero offset basis.
-        /// </summary>
-        private readonly BigInteger _offsetBasis;
-
-        /// <summary>
         /// The hash.
         /// </summary>
         private BigInteger _hash;
@@ -60,18 +50,42 @@ namespace Fnv1a
             in BigInteger offsetBasis,
             in int hashSizeValue)
         {
+            if (offsetBasis.IsZero)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(offsetBasis),
+                    offsetBasis,
+                    "The offset basis must be non-zero.");
+            }
+
             this._bitMask = bitMask;
-            this._prime = prime;
-            this._offsetBasis = offsetBasis;
-            this.Init();
+            this.FnvPrime = prime;
+            this.FnvOffsetBasis = offsetBasis;
             this.HashSizeValue = hashSizeValue;
+            this.Init();
         }
+
+        /// <summary>
+        /// Gets the prime.
+        /// </summary>
+        /// <value>
+        /// The prime.
+        /// </value>
+        public BigInteger FnvPrime { get; }
+
+        /// <summary>
+        /// Gets the non-zero offset basis.
+        /// </summary>
+        /// <value>
+        /// The non-zero offset basis.
+        /// </value>
+        public BigInteger FnvOffsetBasis { get; }
 
         /// <inheritdoc />
         /// <summary>
         /// Initializes an implementation of the <see cref="HashAlgorithm" /> class.
         /// </summary>
-        public sealed override void Initialize() => this.Init();
+        public override sealed void Initialize() => this.Init();
 
         /// <inheritdoc />
         /// <summary>
@@ -91,7 +105,7 @@ namespace Fnv1a
                 unchecked
                 {
                     this._hash ^= array[i];
-                    this._hash = (this._hash * this._prime) & this._bitMask;
+                    this._hash = (this._hash * this.FnvPrime) & this._bitMask;
                 }
             }
         }
@@ -107,7 +121,7 @@ namespace Fnv1a
                 unchecked
                 {
                     this._hash ^= b;
-                    this._hash = (this._hash * this._prime) & this._bitMask;
+                    this._hash = (this._hash * this.FnvPrime) & this._bitMask;
                 }
             }
         }
@@ -143,7 +157,7 @@ namespace Fnv1a
         /// <summary>
         /// Initializes the hash for this instance.
         /// </summary>
-        private void Init() => this._hash = this._offsetBasis;
+        private void Init() => this._hash = this.FnvOffsetBasis;
 
         /// <summary>
         /// Gets the span of bytes representing the hash value.

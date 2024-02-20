@@ -15,13 +15,14 @@ namespace Fnv1aTests
     using System.Numerics;
     using System.Security.Cryptography;
 
+    using Fnv1a;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using static System.Globalization.CultureInfo;
     using static System.Globalization.NumberStyles;
     using static System.Numerics.BigInteger;
     using static System.Text.Encoding;
-
     using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
     /// <inheritdoc />
@@ -53,7 +54,7 @@ namespace Fnv1aTests
         /// <exception cref="FormatException">value does not comply with the input pattern specified by
         /// style.</exception>
         [TestInitialize]
-        public void Initialize() => this._alg = new Fnv1a.Fnv1a128();
+        public void Initialize() => this._alg = new Fnv1a128();
 
         /// <summary>
         /// The method to run after each test.
@@ -192,6 +193,37 @@ namespace Fnv1aTests
         public void TestHelloWorldTry() => AreEqual(
             Parse("0CD7FECF582839515F3E6ECF66B967B77", AllowHexSpecifier, InvariantCulture),
             this.Fnv1a128Try("Hello World"));
+
+        /// <summary>
+        /// Tests the alternate prime and zero offset.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestAlternatePrimeAndZeroOffset()
+        {
+            using Fnv1a128 _ = new (
+                Parse("0000000001000000000000000000013B", AllowHexSpecifier, InvariantCulture),
+                BigInteger.Zero);
+        }
+
+        /// <summary>
+        /// Tests the alternate prime and non-zero offset.
+        /// </summary>
+        ////[TestMethod]
+        public void TestAlternatePrimeAndOffset()
+        {
+            // TODO: implement the test.
+        }
+
+        /// <summary>
+        /// Tests the alternate prime and non-zero offset.
+        /// </summary>
+        ////[TestMethod]
+        //// ReSharper disable once TooManyDeclarations
+        public void TestAlternatePrimeAndOffsetTry()
+        {
+            // TODO: implement the test.
+        }
 
         /// <summary>
         /// Computes the FNV-1a 128-bit hash for the specified data using

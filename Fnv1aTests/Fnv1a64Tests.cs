@@ -13,10 +13,11 @@ namespace Fnv1aTests
     using System;
     using System.Security.Cryptography;
 
+    using Fnv1a;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using static System.Text.Encoding;
-
     using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
     /// <inheritdoc />
@@ -42,7 +43,7 @@ namespace Fnv1aTests
         /// The method to run before each test.
         /// </summary>
         [TestInitialize]
-        public void Initialize() => this._alg = new Fnv1a.Fnv1a64();
+        public void Initialize() => this._alg = new Fnv1a64();
 
         /// <summary>
         /// The method to run after each test.
@@ -62,7 +63,7 @@ namespace Fnv1aTests
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         //// ReSharper disable once InconsistentNaming
-        public void TestVector1() => AreEqual(0xCBF29CE484222325, this.Fnv1a64(string.Empty));
+        public void TestVector1() => AreEqual(0xCBF29CE484222325UL, this.Fnv1a64(string.Empty));
 
         /// <summary>
         /// Tests the empty string against the known vector result.
@@ -70,7 +71,7 @@ namespace Fnv1aTests
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         //// ReSharper disable once InconsistentNaming
-        public void TestVector1Try() => AreEqual(0xCBF29CE484222325, this.Fnv1a64Try(string.Empty));
+        public void TestVector1Try() => AreEqual(0xCBF29CE484222325UL, this.Fnv1a64Try(string.Empty));
 
         /// <summary>
         /// Tests the string "a" against the known vector result.
@@ -78,7 +79,7 @@ namespace Fnv1aTests
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         //// ReSharper disable once InconsistentNaming
-        public void TestVector2() => AreEqual(0xAF63DC4C8601EC8C, this.Fnv1a64("a"));
+        public void TestVector2() => AreEqual(0xAF63DC4C8601EC8CUL, this.Fnv1a64("a"));
 
         /// <summary>
         /// Tests the string "a" against the known vector result.
@@ -86,7 +87,7 @@ namespace Fnv1aTests
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         //// ReSharper disable once InconsistentNaming
-        public void TestVector2Try() => AreEqual(0xAF63DC4C8601EC8C, this.Fnv1a64Try("a"));
+        public void TestVector2Try() => AreEqual(0xAF63DC4C8601EC8CUL, this.Fnv1a64Try("a"));
 
         /// <summary>
         /// Tests the string against the known vector result.
@@ -94,7 +95,7 @@ namespace Fnv1aTests
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         //// ReSharper disable once InconsistentNaming
-        public void TestVector3() => AreEqual(0x85944171F73967E8, this.Fnv1a64("foobar"));
+        public void TestVector3() => AreEqual(0x85944171F73967E8UL, this.Fnv1a64("foobar"));
 
         /// <summary>
         /// Tests the string against the known vector result.
@@ -102,7 +103,36 @@ namespace Fnv1aTests
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         //// ReSharper disable once InconsistentNaming
-        public void TestVector3Try() => AreEqual(0x85944171F73967E8, this.Fnv1a64Try("foobar"));
+        public void TestVector3Try() => AreEqual(0x85944171F73967E8UL, this.Fnv1a64Try("foobar"));
+
+        /// <summary>
+        /// Tests the alternate prime and zero offset.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestAlternatePrimeAndZeroOffset()
+        {
+            using Fnv1a64 _ = new (0x00000100000001B3UL, 0x0UL);
+        }
+
+        /// <summary>
+        /// Tests the alternate prime and non-zero offset.
+        /// </summary>
+        ////[TestMethod]
+        public void TestAlternatePrimeAndOffset()
+        {
+            // TODO: implement the test.
+        }
+
+        /// <summary>
+        /// Tests the alternate prime and non-zero offset.
+        /// </summary>
+        ////[TestMethod]
+        //// ReSharper disable once TooManyDeclarations
+        public void TestAlternatePrimeAndOffsetTry()
+        {
+            // TODO: implement the test.
+        }
 
         /// <summary>
         /// Computes the FNV-1a 64-bit hash for the specified data using

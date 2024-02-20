@@ -15,13 +15,14 @@ namespace Fnv1aTests
     using System.Numerics;
     using System.Security.Cryptography;
 
+    using Fnv1a;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using static System.Globalization.CultureInfo;
     using static System.Globalization.NumberStyles;
     using static System.Numerics.BigInteger;
     using static System.Text.Encoding;
-
     using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
     /// <inheritdoc />
@@ -51,7 +52,7 @@ namespace Fnv1aTests
         /// <exception cref="FormatException">value does not comply with the input pattern specified by
         /// style.</exception>
         [TestInitialize]
-        public void Initialize() => this._alg = new Fnv1a.Fnv1a256();
+        public void Initialize() => this._alg = new Fnv1a256();
 
         /// <summary>
         /// The method to run after each test.
@@ -160,6 +161,37 @@ namespace Fnv1aTests
         public void TestVector3Try() => AreEqual(
             Parse("B055EA2F306CADAD4F0F81C02D3889DC32453DAD5AE35B753BA1A91084AF3428", AllowHexSpecifier, InvariantCulture).ToString("X64", InvariantCulture),
             this.Fnv1a256Try("foobar"));
+
+        /// <summary>
+        /// Tests the alternate prime and zero offset.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestAlternatePrimeAndZeroOffset()
+        {
+            using Fnv1a256 _ = new (
+                Parse("0000000000000000000001000000000000000000000000000000000000000163", AllowHexSpecifier, InvariantCulture),
+                BigInteger.Zero);
+        }
+
+        /// <summary>
+        /// Tests the alternate prime and non-zero offset.
+        /// </summary>
+        ////[TestMethod]
+        public void TestAlternatePrimeAndOffset()
+        {
+            // TODO: implement the test.
+        }
+
+        /// <summary>
+        /// Tests the alternate prime and non-zero offset.
+        /// </summary>
+        ////[TestMethod]
+        //// ReSharper disable once TooManyDeclarations
+        public void TestAlternatePrimeAndOffsetTry()
+        {
+            // TODO: implement the test.
+        }
 
         /// <summary>
         /// Computes the FNV-1a 256-bit hash for the specified data using

@@ -11,6 +11,7 @@
 namespace Fnv1a
 {
     using System;
+    using System.Numerics;
 
     using static System.Globalization.CultureInfo;
     using static System.Globalization.NumberStyles;
@@ -37,10 +38,31 @@ namespace Fnv1a
         /// <exception cref="FormatException">value does not comply with the input pattern specified by
         /// style.</exception>
         public Fnv1a128()
+            : this(
+                Parse("0000000001000000000000000000013B", AllowHexSpecifier, InvariantCulture),
+                Parse("6C62272E07BB014262B821756295C58D", AllowHexSpecifier, InvariantCulture))
+        {
+            // Intentionally empty.
+        }
+
+        /// <inheritdoc cref="Fnv1aBigBase" />
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Fnv1a128" /> class.
+        /// </summary>
+        /// <param name="prime">The prime.</param>
+        /// <param name="offsetBasis">The non-zero offset basis.</param>
+        /// <exception cref="ArgumentException">style is not a
+        /// <see cref="System.Globalization.NumberStyles" /> value.   -or-  style includes the
+        /// <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
+        /// value.</exception>
+        /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
+        /// <exception cref="FormatException">value does not comply with the input pattern specified by
+        /// style.</exception>
+        public Fnv1a128(BigInteger prime, BigInteger offsetBasis)
             : base(
                 Parse("0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", AllowHexSpecifier, InvariantCulture),
-                Parse("0000000001000000000000000000013B", AllowHexSpecifier, InvariantCulture),
-                Parse("6C62272E07BB014262B821756295C58D", AllowHexSpecifier, InvariantCulture),
+                prime,
+                offsetBasis,
                 128)
         {
             // Intentionally empty.
