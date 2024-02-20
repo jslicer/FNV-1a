@@ -26,12 +26,12 @@ namespace Fnv1a
         /// <summary>
         /// The prime.
         /// </summary>
-        private const uint FnvPrime = 0x01000193;
+        internal uint FnvPrime = 0x01000193;
 
         /// <summary>
         /// The non-zero offset basis.
         /// </summary>
-        private const uint FnvOffsetBasis = 0x811C9DC5;
+        internal uint FnvOffsetBasis = 0x811C9DC5;
 
         /// <summary>
         /// The hash.
@@ -42,8 +42,10 @@ namespace Fnv1a
         /// <summary>
         /// Initializes a new instance of the <see cref="Fnv1a32" /> class.
         /// </summary>
-        public Fnv1a32()
+        public Fnv1a32(uint fnvPrime = null, uint fnvOffsetBasis = null)
         {
+            if (fnvPrime != null) this.FnvPrime = fnvPrime;
+            if (fnvOffsetBasis != null) this.FnvOffsetBasis = fnvOffsetBasis;
             this.Initialize();
             this.HashSizeValue = 32;
         }
