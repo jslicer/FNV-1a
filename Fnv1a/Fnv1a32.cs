@@ -42,10 +42,9 @@ namespace Fnv1a
         /// <summary>
         /// Initializes a new instance of the <see cref="Fnv1a32" /> class.
         /// </summary>
-        public Fnv1a32(uint fnvPrime = null, uint fnvOffsetBasis = null)
-        {
-            if (fnvPrime != null) this.FnvPrime = fnvPrime;
-            if (fnvOffsetBasis != null) this.FnvOffsetBasis = fnvOffsetBasis;
+        public Fnv1a32(uint fnvPrime = uint.MinValue, uint fnvOffsetBasis = uint.MinValue) {
+            if (fnvPrime != uint.MinValue) { this.FnvPrime = fnvPrime; }
+            if (fnvOffsetBasis != uint.MinValue) { this.FnvOffsetBasis = fnvOffsetBasis; }
             this.Initialize();
             this.HashSizeValue = 32;
         }
