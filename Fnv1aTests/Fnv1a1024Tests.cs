@@ -133,7 +133,7 @@ namespace Fnv1aTests
             this.Fnv1a1024Try("a"));
 
         /// <summary>
-        /// Tests the string "against the known vector result.
+        /// Tests the string "foobar" against the known vector result.
         /// </summary>
         /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
         /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
@@ -149,7 +149,7 @@ namespace Fnv1aTests
             this.Fnv1a1024("foobar"));
 
         /// <summary>
-        /// Tests the string "against the known vector result.
+        /// Tests the string "foobar" against the known vector result.
         /// </summary>
         /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
         /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
@@ -167,6 +167,14 @@ namespace Fnv1aTests
         /// <summary>
         /// Tests the alternate prime and zero offset.
         /// </summary>
+        /// <exception cref="ArgumentException">style is not a
+        /// <see cref="NumberStyles" /> value.   -or-  style includes the
+        /// <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
+        /// value.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
+        /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
+        /// <exception cref="FormatException">value does not comply with the input pattern specified by
+        /// style.</exception>
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestAlternatePrimeAndZeroOffset()

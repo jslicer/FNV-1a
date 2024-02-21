@@ -43,6 +43,7 @@ namespace Fnv1a
         /// <param name="prime">The FNV-1a prime.</param>
         /// <param name="offsetBasis">The FNV-1a offset basis.</param>
         /// <param name="hashSizeValue">The size, in bits, of the computed hash code.</param>
+        /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
         // ReSharper disable once TooManyDependencies
         protected Fnv1aBigBase(
             in BigInteger bitMask,

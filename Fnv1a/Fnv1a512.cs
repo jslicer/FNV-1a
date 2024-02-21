@@ -37,6 +37,7 @@ namespace Fnv1a
         /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
         /// <exception cref="FormatException">value does not comply with the input pattern specified by
         /// style.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
         public Fnv1a512()
             : this(
                 Parse("00000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000157", AllowHexSpecifier, InvariantCulture),
@@ -58,6 +59,7 @@ namespace Fnv1a
         /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
         /// <exception cref="FormatException">value does not comply with the input pattern specified by
         /// style.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
         public Fnv1a512(BigInteger prime, BigInteger offsetBasis)
             : base(
                 Parse("0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", AllowHexSpecifier, InvariantCulture),

@@ -37,6 +37,7 @@ namespace Fnv1a
         /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
         /// <exception cref="FormatException">value does not comply with the input pattern specified by
         /// style.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
         public Fnv1a256()
             : this(
                 Parse("0000000000000000000001000000000000000000000000000000000000000163", AllowHexSpecifier, InvariantCulture),
@@ -45,6 +46,7 @@ namespace Fnv1a
             // Intentionally empty.
         }
 
+        /// <inheritdoc cref="Fnv1aBigBase" />
         /// <summary>
         /// Initializes a new instance of the <see cref="Fnv1a256" /> class.
         /// </summary>
@@ -57,7 +59,7 @@ namespace Fnv1a
         /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
         /// <exception cref="FormatException">value does not comply with the input pattern specified by
         /// style.</exception>
-        /// <inheritdoc cref="Fnv1aBigBase" />
+        /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
         public Fnv1a256(BigInteger prime, BigInteger offsetBasis)
             : base(
                 Parse("0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", AllowHexSpecifier, InvariantCulture),

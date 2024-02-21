@@ -12,6 +12,7 @@ namespace Fnv1aTests
 {
     using System;
     using System.Security.Cryptography;
+    using System.Text;
 
     using Fnv1a;
 
@@ -108,6 +109,7 @@ namespace Fnv1aTests
         /// <summary>
         /// Tests the alternate prime and zero offset.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestAlternatePrimeAndZeroOffset()
@@ -118,6 +120,11 @@ namespace Fnv1aTests
         /// <summary>
         /// Tests the alternate prime and non-zero offset.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+        /// <exception cref="ArgumentException">startIndex is greater than or equal to the length of value minus 3, and
+        /// is less than or equal to the length of value minus 1.</exception>
+        /// <exception cref="ArgumentNullException">buffer is <see langword="null" />.</exception>
         [TestMethod]
         public void TestAlternatePrimeAndOffset()
         {
@@ -131,6 +138,13 @@ namespace Fnv1aTests
         /// <summary>
         /// Tests the alternate prime and non-zero offset.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+        /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
+        /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character
+        /// Encoding in .NET)
+        ///  -and-
+        ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
         [TestMethod]
         //// ReSharper disable once TooManyDeclarations
         public void TestAlternatePrimeAndOffsetTry()

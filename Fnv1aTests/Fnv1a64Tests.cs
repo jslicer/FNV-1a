@@ -108,6 +108,7 @@ namespace Fnv1aTests
         /// <summary>
         /// Tests the alternate prime and zero offset.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestAlternatePrimeAndZeroOffset()

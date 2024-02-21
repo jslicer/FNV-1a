@@ -42,18 +42,20 @@ namespace Fnv1a
         /// <summary>
         /// Initializes a new instance of the <see cref="Fnv1a64" /> class.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
         public Fnv1a64()
             : this(FnvDefaultPrime, FnvDefaultOffsetBasis)
         {
             // Intentionally empty.
         }
 
+        /// <inheritdoc cref="HashAlgorithm" />
         /// <summary>
         /// Initializes a new instance of the <see cref="Fnv1a64" /> class.
         /// </summary>
         /// <param name="prime">The prime.</param>
         /// <param name="offsetBasis">The non-zero offset basis.</param>
-        /// <inheritdoc cref="HashAlgorithm" />
+        /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
         public Fnv1a64(ulong prime, ulong offsetBasis)
         {
             if (offsetBasis == 0UL)
@@ -149,6 +151,8 @@ namespace Fnv1a
         /// <paramref name="destination" />. This parameter is treated as uninitialized.</param>
         /// <returns><see langword="true" /> if <paramref name="destination" /> is long enough to receive the hash
         /// value; otherwise, <see langword="false" />.</returns>
+        /// <exception cref="ArgumentException">The destination Span is shorter than the source array.</exception>
+        /// <exception cref="OverflowException">The array is multidimensional and contains more than <see cref="System.Int32.MaxValue" /> elements.</exception>
         protected override bool TryHashFinal(Span<byte> destination, out int bytesWritten)
         {
             byte[] bytes = BitConverter.GetBytes(this._hash);
