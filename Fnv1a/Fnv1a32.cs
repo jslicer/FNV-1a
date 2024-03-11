@@ -152,7 +152,7 @@ namespace Fnv1a
         /// <returns><see langword="true" /> if <paramref name="destination" /> is long enough to receive the hash
         /// value; otherwise, <see langword="false" />.</returns>
         /// <exception cref="ArgumentException">The destination Span is shorter than the source array.</exception>
-        /// <exception cref="OverflowException">The array is multidimensional and contains more than <see cref="System.Int32.MaxValue" /> elements.</exception>
+        /// <exception cref="OverflowException">The array is multidimensional and contains more than <see cref="int.MaxValue" /> elements.</exception>
         protected override bool TryHashFinal(Span<byte> destination, out int bytesWritten)
         {
             byte[] bytes = BitConverter.GetBytes(this._hash);
