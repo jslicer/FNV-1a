@@ -36,6 +36,7 @@ namespace Fnv1aTestVectorGenerator
         /// <param name="data">The data.</param>
         /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         internal static async Task<string> TestAsync(this string data, CancellationToken token = default) => "Test:" + NewLine
             + data + " 32: " + await data.Fnv1a32sAsync(token).ConfigureAwait(false) + NewLine
             + data + " 64: " + await data.Fnv1a64sAsync(token).ConfigureAwait(false) + NewLine
@@ -50,6 +51,7 @@ namespace Fnv1aTestVectorGenerator
         /// <param name="data">The data.</param>
         /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         internal static async Task<string> Test0Async(this string data, CancellationToken token = default)
         {
             string newData = data + '\0';
@@ -73,9 +75,10 @@ namespace Fnv1aTestVectorGenerator
         /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
         /// <see cref="StringBuilder.MaxCapacity" />.</exception>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         internal static async Task<string> R10Async(this string data, CancellationToken token = default)
         {
-            StringBuilder sb = new (10 * data.Length);
+            StringBuilder sb = new(10 * data.Length);
 
             for (int i = 0; i < 10; i++)
             {
@@ -105,9 +108,10 @@ namespace Fnv1aTestVectorGenerator
         /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
         /// <see cref="StringBuilder.MaxCapacity" />.</exception>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         internal static async Task<string> R500Async(this string data, CancellationToken token = default)
         {
-            StringBuilder sb = new (500 * data.Length);
+            StringBuilder sb = new(500 * data.Length);
 
             for (int i = 0; i < 500; i++)
             {
@@ -132,14 +136,16 @@ namespace Fnv1aTestVectorGenerator
         /// <param name="data">The data.</param>
         /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the printable string.</returns>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         // ReSharper disable once RedundantAwait
         private static async Task<string> PrintAsync(this string data, CancellationToken token = default)
         {
             bool controlCharacter = false;
-            StringBuilder sb = new (data.Length);
+            StringBuilder sb = new(data.Length);
 
             foreach (char c in data)
             {
+                token.ThrowIfCancellationRequested();
                 if (controlCharacter || char.IsControl(c))
                 {
                     sb.Append(InvariantCulture, $"\\x{(uint)c:x2}");
@@ -165,13 +171,14 @@ namespace Fnv1aTestVectorGenerator
         /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 32-bit hash of the specified
         /// data.</returns>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         // ReSharper disable once InconsistentNaming
         private static async Task<string> Fnv1a32sAsync(this string data, CancellationToken token = default)
         {
             using HashAlgorithm alg = new Fnv1a32();
             await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
             return "0x"
-                + ((uint)ToInt32(await alg.ComputeHashAsync(stream, token).ConfigureAwait(false), 0)).ToString("X8", InvariantCulture);
+                + ((uint)ToInt32(await alg.ComputeHashAsync(stream, token).ConfigureAwait(true), 0)).ToString("X8", InvariantCulture);
         }
 
         /// <summary>
@@ -181,13 +188,14 @@ namespace Fnv1aTestVectorGenerator
         /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 64-bit hash of the specified
         /// data.</returns>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         // ReSharper disable once InconsistentNaming
         private static async Task<string> Fnv1a64sAsync(this string data, CancellationToken token = default)
         {
             using HashAlgorithm alg = new Fnv1a64();
             await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
             return "0x"
-                + ((ulong)ToInt64(await alg.ComputeHashAsync(stream, token).ConfigureAwait(false), 0)).ToString("X16", InvariantCulture);
+                + ((ulong)ToInt64(await alg.ComputeHashAsync(stream, token).ConfigureAwait(true), 0)).ToString("X16", InvariantCulture);
         }
 
         /// <summary>
@@ -197,16 +205,17 @@ namespace Fnv1aTestVectorGenerator
         /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 128-bit hash of the specified
         /// data.</returns>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         // ReSharper disable once InconsistentNaming
         private static async Task<string> Fnv1a128sAsync(this string data, CancellationToken token = default)
         {
             using HashAlgorithm alg = new Fnv1a128();
             await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
 
-            string value = new BigInteger((await alg.ComputeHashAsync(stream, token).ConfigureAwait(false)).AddZero())
+            string value = new BigInteger((await alg.ComputeHashAsync(stream, token).ConfigureAwait(true)).AddZero())
                 .ToString("X32", InvariantCulture);
 
-            return value is null ? null : string.Concat("0x", value.AsSpan(value.Length - 32));
+            return value is null ? null : $"0x{value.AsSpan(value.Length - 32)}";
         }
 
         /// <summary>
@@ -216,16 +225,17 @@ namespace Fnv1aTestVectorGenerator
         /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 256-bit hash of the specified
         /// data.</returns>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         // ReSharper disable once InconsistentNaming
         private static async Task<string> Fnv1a256sAsync(this string data, CancellationToken token = default)
         {
             using HashAlgorithm alg = new Fnv1a256();
             await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
 
-            string value = new BigInteger((await alg.ComputeHashAsync(stream, token).ConfigureAwait(false)).AddZero())
+            string value = new BigInteger((await alg.ComputeHashAsync(stream, token).ConfigureAwait(true)).AddZero())
                 .ToString("X64", InvariantCulture);
 
-            return value is null ? null : string.Concat("0x", value.AsSpan(value.Length - 64));
+            return value is null ? null : $"0x{value.AsSpan(value.Length - 64)}";
         }
 
         /// <summary>
@@ -235,13 +245,14 @@ namespace Fnv1aTestVectorGenerator
         /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 512-bit hash of the specified
         /// data.</returns>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         // ReSharper disable once InconsistentNaming
         private static async Task<string> Fnv1a512sAsync(this string data, CancellationToken token = default)
         {
             using HashAlgorithm alg = new Fnv1a512();
             await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
 
-            BigInteger hash = new ((await alg.ComputeHashAsync(stream, token).ConfigureAwait(false)).AddZero());
+            BigInteger hash = new((await alg.ComputeHashAsync(stream, token).ConfigureAwait(true)).AddZero());
             string value1 = (hash >> 256).ToString("X64", InvariantCulture);
             string value2 = (hash & Bitmasks.Bottom64Bytes).ToString("X64", InvariantCulture);
 
@@ -258,6 +269,7 @@ namespace Fnv1aTestVectorGenerator
         /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 1024-bit hash of the specified
         /// data.</returns>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         // ReSharper disable once InconsistentNaming
         // ReSharper disable once TooManyDeclarations
         private static async Task<string> Fnv1a1024sAsync(this string data, CancellationToken token = default)
@@ -265,7 +277,7 @@ namespace Fnv1aTestVectorGenerator
             using HashAlgorithm alg = new Fnv1a1024();
             await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
 
-            BigInteger hash = new ((await alg.ComputeHashAsync(stream, token).ConfigureAwait(false)).AddZero());
+            BigInteger hash = new((await alg.ComputeHashAsync(stream, token).ConfigureAwait(true)).AddZero());
             string value1 = (hash >> 768).ToString("X64", InvariantCulture);
             //// ReSharper disable ComplexConditionExpression
             string value2 = ((hash & Bitmasks.Second64Bytes) >> 512).ToString("X64", InvariantCulture);

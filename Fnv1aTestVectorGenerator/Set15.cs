@@ -62,12 +62,17 @@ namespace Fnv1aTestVectorGenerator
         /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
         /// <see cref="StringBuilder.MaxCapacity" />.</exception>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         public override async Task PerformAsync(CancellationToken token = default)
         {
-            await this.WriteLineAsync(await "\x00".R500Async().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "\x07".R500Async().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "~".R500Async().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "\x7f".R500Async().ConfigureAwait(false)).ConfigureAwait(false);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "\x00".R500Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "\x07".R500Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "~".R500Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "\x7f".R500Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
         }
     }
 }

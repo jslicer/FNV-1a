@@ -65,35 +65,37 @@ namespace Fnv1aTestVectorGenerator
         /// <returns>An asynchronous <see cref="Task" />.</returns>
         /// <exception cref="InvalidOperationException">The text writer is currently in use by a previous write operation.</exception>
         /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+        // ReSharper disable once MethodTooLong
         public override async Task PerformAsync(CancellationToken token = default)
         {
             //// ReSharper disable StringLiteralTypo
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await string.Empty.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(false);
+            await this.WriteLineAsync(await string.Empty.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "a".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(false);
+            await this.WriteLineAsync(await "a".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "b".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(false);
+            await this.WriteLineAsync(await "b".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "c".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(false);
+            await this.WriteLineAsync(await "c".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "d".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(false);
+            await this.WriteLineAsync(await "d".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "e".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(false);
+            await this.WriteLineAsync(await "e".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "f".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(false);
+            await this.WriteLineAsync(await "f".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "fo".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(false);
+            await this.WriteLineAsync(await "fo".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "foo".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(false);
+            await this.WriteLineAsync(await "foo".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "foob".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(false);
+            await this.WriteLineAsync(await "foob".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "fooba".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(false);
+            await this.WriteLineAsync(await "fooba".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "foobar".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(false);
+            await this.WriteLineAsync(await "foobar".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "foobarfoobar".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(false);
+            await this.WriteLineAsync(await "foobarfoobar".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             //// ReSharper enable StringLiteralTypo
         }
     }

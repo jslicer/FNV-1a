@@ -3,7 +3,7 @@
 //   Copyright (c) Always Elucidated Solution Pioneers, LLC. All rights reserved.
 // </copyright>
 // <summary>
-//   Provides an base class for performing test vector generation.
+//   Provides a base class for performing test vector generation.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -17,7 +17,7 @@ namespace Fnv1aTestVectorGenerator
 
     /// <inheritdoc cref="ISet" />
     /// <summary>
-    /// Provides an base class for performing test vector generation.
+    /// Provides a base class for performing test vector generation.
     /// </summary>
     /// <seealso cref="ISet" />
     internal abstract class SetBase : ISet
@@ -45,6 +45,7 @@ namespace Fnv1aTestVectorGenerator
         /// </summary>
         /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task" />.</returns>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         public abstract Task PerformAsync(CancellationToken token = default);
 
         /// <summary>
@@ -64,6 +65,7 @@ namespace Fnv1aTestVectorGenerator
         /// <exception cref="InvalidOperationException">The text writer is currently in use by a previous write
         /// operation.</exception>
         /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         // ReSharper disable once RedundantAwait
         protected async Task WriteLineAsync(string value, CancellationToken token = default)
         {

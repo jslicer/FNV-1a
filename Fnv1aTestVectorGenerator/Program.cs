@@ -32,14 +32,17 @@ namespace Fnv1aTestVectorGenerator
         /// <exception cref="ObjectDisposedException">The text reader has been disposed.</exception>
         /// <exception cref="InvalidOperationException">The reader is currently in use by a previous read
         /// operation.</exception>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         public static async Task Main()
         {
             TextWriter writer = TextWriter.Null; ////Out;
             TextReader reader = TextReader.Null; ////In;
 
-            using CancellationTokenSource cts = new ();
-            await ProcessAsync(writer, cts.Token).ConfigureAwait(false);
-            await reader.ReadLineAsync(cts.Token).ConfigureAwait(false);
+            using CancellationTokenSource cts = new();
+            cts.Token.ThrowIfCancellationRequested();
+            await ProcessAsync(writer, cts.Token).ConfigureAwait(true);
+            cts.Token.ThrowIfCancellationRequested();
+            await reader.ReadLineAsync(cts.Token).ConfigureAwait(true);
         }
 
         /// <summary>
@@ -48,6 +51,8 @@ namespace Fnv1aTestVectorGenerator
         /// <param name="writer">The writer.</param>
         /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task" />.</returns>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+        // ReSharper disable once MethodTooLong
         private static async Task ProcessAsync(TextWriter writer = null, CancellationToken token = default)
         {
             writer ??= TextWriter.Null;
@@ -79,6 +84,7 @@ namespace Fnv1aTestVectorGenerator
                 {
                     // ReSharper disable once AsyncConverter.CanBeUseAsyncMethodHighlighting
                     // ReSharper disable once MethodHasAsyncOverload
+                    // ReSharper disable once MethodHasAsyncOverloadWithCancellation
                     set.Perform();
                 }
             }
@@ -89,7 +95,7 @@ namespace Fnv1aTestVectorGenerator
                 foreach (ISet set in sets)
                 {
                     token.ThrowIfCancellationRequested();
-                    await set.PerformAsync(token).ConfigureAwait(false);
+                    await set.PerformAsync(token).ConfigureAwait(true);
                 }
             }
         }

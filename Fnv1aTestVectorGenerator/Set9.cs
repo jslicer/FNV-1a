@@ -57,14 +57,21 @@ namespace Fnv1aTestVectorGenerator
         /// <returns>An asynchronous <see cref="Task" />.</returns>
         /// <exception cref="InvalidOperationException">The text writer is currently in use by a previous write operation.</exception>
         /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         public override async Task PerformAsync(CancellationToken token = default)
         {
-            await this.WriteLineAsync(await "64.81.78.68".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "64.81.78.68".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "64.81.78.74".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "64.81.78.74".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "64.81.78.84".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "64.81.78.84".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "64.81.78.68".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "64.81.78.68".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "64.81.78.74".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "64.81.78.74".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "64.81.78.84".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "64.81.78.84".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
         }
     }
 }

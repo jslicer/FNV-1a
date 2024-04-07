@@ -57,13 +57,18 @@ namespace Fnv1aTestVectorGenerator
         /// <returns>An asynchronous <see cref="Task" />.</returns>
         /// <exception cref="InvalidOperationException">The text writer is currently in use by a previous write operation.</exception>
         /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         public override async Task PerformAsync(CancellationToken token = default)
         {
             //// ReSharper disable StringLiteralTypo
-            await this.WriteLineAsync(await "chongo <Landon Curt Noll> /\\../\\".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "chongo <Landon Curt Noll> /\\../\\".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "chongo (Landon Curt Noll) /\\../\\".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "chongo (Landon Curt Noll) /\\../\\".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "chongo <Landon Curt Noll> /\\../\\".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "chongo <Landon Curt Noll> /\\../\\".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "chongo (Landon Curt Noll) /\\../\\".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "chongo (Landon Curt Noll) /\\../\\".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             //// ReSharper enable StringLiteralTypo
         }
     }

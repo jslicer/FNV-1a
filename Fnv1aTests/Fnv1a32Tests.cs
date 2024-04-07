@@ -11,8 +11,11 @@
 namespace Fnv1aTests
 {
     using System;
+    using System.IO;
     using System.Security.Cryptography;
     using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     using Fnv1a;
 
@@ -69,6 +72,20 @@ namespace Fnv1aTests
         /// <summary>
         /// Tests the empty string against the known vector result.
         /// </summary>
+        /// <returns>An asynchronous <see cref="Task" />.</returns>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+        [TestMethod]
+        //// ReSharper disable once InconsistentNaming
+        public async Task TestVector1Async()
+        {
+            using CancellationTokenSource cts = new();
+            AreEqual(0x811C9DC5U, await this.Fnv1a32Async(string.Empty, cts.Token).ConfigureAwait(true));
+        }
+
+        /// <summary>
+        /// Tests the empty string against the known vector result.
+        /// </summary>
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         //// ReSharper disable once InconsistentNaming
@@ -81,6 +98,20 @@ namespace Fnv1aTests
         [TestMethod]
         //// ReSharper disable once InconsistentNaming
         public void TestVector2() => AreEqual(0xE40C292CU, this.Fnv1a32("a"));
+
+        /// <summary>
+        /// Tests the string "a" against the known vector result.
+        /// </summary>
+        /// <returns>An asynchronous <see cref="Task" />.</returns>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+        [TestMethod]
+        //// ReSharper disable once InconsistentNaming
+        public async Task TestVector2Async()
+        {
+            using CancellationTokenSource cts = new();
+            AreEqual(0xE40C292CU, await this.Fnv1a32Async("a", cts.Token).ConfigureAwait(true));
+        }
 
         /// <summary>
         /// Tests the string "a" against the known vector result.
@@ -101,6 +132,20 @@ namespace Fnv1aTests
         /// <summary>
         /// Tests the string against the known vector result.
         /// </summary>
+        /// <returns>An asynchronous <see cref="Task" />.</returns>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+        [TestMethod]
+        //// ReSharper disable once InconsistentNaming
+        public async Task TestVector3Async()
+        {
+            using CancellationTokenSource cts = new();
+            AreEqual(0xBF9CF968U, await this.Fnv1a32Async("foobar", cts.Token).ConfigureAwait(true));
+        }
+
+        /// <summary>
+        /// Tests the string against the known vector result.
+        /// </summary>
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         //// ReSharper disable once InconsistentNaming
@@ -114,7 +159,7 @@ namespace Fnv1aTests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestAlternatePrimeAndZeroOffset()
         {
-            using Fnv1a32 _ = new (0xB3CB2E29U, 0x0U);
+            using Fnv1a32 _ = new(0xB3CB2E29U, 0x0U);
         }
 
         /// <summary>
@@ -128,11 +173,37 @@ namespace Fnv1aTests
         [TestMethod]
         public void TestAlternatePrimeAndOffset()
         {
-            using Fnv1a32 alg = new (0xB3CB2E29U, 0x319712C3U);
+            using Fnv1a32 alg = new(0xB3CB2E29U, 0x319712C3U);
             AreEqual(32, alg.HashSize);
             AreEqual(0xB3CB2E29U, alg.FnvPrime);
             AreEqual(0x319712C3U, alg.FnvOffsetBasis);
             AreEqual(0xBF9CF968U, (uint)BitConverter.ToInt32(this._alg.ComputeHash("foobar"u8.ToArray()), 0));
+        }
+
+        /// <summary>
+        /// Tests the alternate prime and non-zero offset.
+        /// </summary>
+        /// <returns>An asynchronous <see cref="Task" />.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+        /// <exception cref="ArgumentException">startIndex is greater than or equal to the length of value minus 3, and
+        /// is less than or equal to the length of value minus 1.</exception>
+        /// <exception cref="ArgumentNullException">buffer is <see langword="null" />.</exception>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+        [TestMethod]
+        public async Task TestAlternatePrimeAndOffsetAsync()
+        {
+            using Fnv1a32 alg = new(0xB3CB2E29U, 0x319712C3U);
+            AreEqual(32, alg.HashSize);
+            AreEqual(0xB3CB2E29U, alg.FnvPrime);
+            AreEqual(0x319712C3U, alg.FnvOffsetBasis);
+            using CancellationTokenSource cts = new();
+            await using Stream stream = new MemoryStream("foobar"u8.ToArray());
+
+            uint actual = (uint)BitConverter.ToInt32(
+                await this._alg.ComputeHashAsync(stream, cts.Token).ConfigureAwait(false), 0);
+
+            AreEqual(0xBF9CF968U, actual);
         }
 
         /// <summary>
@@ -149,7 +220,7 @@ namespace Fnv1aTests
         //// ReSharper disable once TooManyDeclarations
         public void TestAlternatePrimeAndOffsetTry()
         {
-            using Fnv1a32 alg = new (0xB3CB2E29U, 0x319712C3U);
+            using Fnv1a32 alg = new(0xB3CB2E29U, 0x319712C3U);
             AreEqual(32, alg.HashSize);
             AreEqual(0xB3CB2E29U, alg.FnvPrime);
             AreEqual(0x319712C3U, alg.FnvOffsetBasis);
@@ -183,6 +254,24 @@ namespace Fnv1aTests
         {
             AreEqual(32, this._alg.HashSize);
             return (uint)BitConverter.ToInt32(this._alg.ComputeHash(UTF8.GetBytes(data)), 0);
+        }
+
+        /// <summary>
+        /// Asynchronously computes the FNV-1a 32-bit hash for the specified data using
+        /// <see cref="HashAlgorithm.ComputeHashAsync(Stream, CancellationToken)" />.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <param name="token">The optional cancellation token.</param>
+        /// <returns>The FNV-1a 32-bit hash of the specified data.</returns>
+        /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+        //// ReSharper disable once InconsistentNaming
+        private async Task<uint> Fnv1a32Async(string data, CancellationToken token = default)
+        {
+            AreEqual(32, this._alg.HashSize);
+            await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+            return (uint)BitConverter.ToInt32(
+                await this._alg.ComputeHashAsync(stream, token).ConfigureAwait(false), 0);
         }
 
         /// <summary>

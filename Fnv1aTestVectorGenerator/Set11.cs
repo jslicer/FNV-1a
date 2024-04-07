@@ -49,7 +49,11 @@ namespace Fnv1aTestVectorGenerator
         /// <returns>An asynchronous <see cref="Task" />.</returns>
         /// <exception cref="InvalidOperationException">The text writer is currently in use by a previous write operation.</exception>
         /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
-        public override async Task PerformAsync(CancellationToken token = default) =>
-            await this.WriteLineAsync(await "line 1\nline 2\nline 3".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+        public override async Task PerformAsync(CancellationToken token = default)
+        {
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "line 1\nline 2\nline 3".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        }
     }
 }
