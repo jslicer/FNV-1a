@@ -12,6 +12,7 @@ namespace Fnv1aTestVectorGenerator
 {
     using System;
     using System.IO;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using static System.Console;
@@ -36,16 +37,18 @@ namespace Fnv1aTestVectorGenerator
             TextWriter writer = TextWriter.Null; ////Out;
             TextReader reader = TextReader.Null; ////In;
 
-            await ProcessAsync(writer).ConfigureAwait(false);
-            await reader.ReadLineAsync().ConfigureAwait(false);
+            using CancellationTokenSource cts = new ();
+            await ProcessAsync(writer, cts.Token).ConfigureAwait(false);
+            await reader.ReadLineAsync(cts.Token).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Processes test vectors.
         /// </summary>
         /// <param name="writer">The writer.</param>
+        /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task" />.</returns>
-        private static async Task ProcessAsync(TextWriter writer = null)
+        private static async Task ProcessAsync(TextWriter writer = null, CancellationToken token = default)
         {
             writer ??= TextWriter.Null;
 
@@ -82,9 +85,11 @@ namespace Fnv1aTestVectorGenerator
 
             for (int loop = 0; loop < 1000; loop++)
             {
+                token.ThrowIfCancellationRequested();
                 foreach (ISet set in sets)
                 {
-                    await set.PerformAsync().ConfigureAwait(false);
+                    token.ThrowIfCancellationRequested();
+                    await set.PerformAsync(token).ConfigureAwait(false);
                 }
             }
         }

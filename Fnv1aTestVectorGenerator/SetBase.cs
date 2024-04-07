@@ -12,6 +12,7 @@ namespace Fnv1aTestVectorGenerator
 {
     using System;
     using System.IO;
+    using System.Threading;
     using System.Threading.Tasks;
 
     /// <inheritdoc cref="ISet" />
@@ -42,8 +43,9 @@ namespace Fnv1aTestVectorGenerator
         /// <summary>
         /// Asynchronously performs the test vector set generation.
         /// </summary>
+        /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task" />.</returns>
-        public abstract Task PerformAsync();
+        public abstract Task PerformAsync(CancellationToken token = default);
 
         /// <summary>
         /// Writes the line to the <see cref="TextWriter" />.
@@ -57,16 +59,20 @@ namespace Fnv1aTestVectorGenerator
         /// Asynchronously writes the line to the <see cref="TextWriter" />.
         /// </summary>
         /// <param name="value">The value to write.</param>
+        /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task" />.</returns>
         /// <exception cref="InvalidOperationException">The text writer is currently in use by a previous write
         /// operation.</exception>
         /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
         // ReSharper disable once RedundantAwait
-        protected async Task WriteLineAsync(string value) =>
+        protected async Task WriteLineAsync(string value, CancellationToken token = default)
+        {
+            token.ThrowIfCancellationRequested();
             //// ReSharper disable once AsyncConverter.AsyncAwaitMayBeElidedHighlighting
             //// ReSharper disable once AsyncApostle.AsyncAwaitMayBeElidedHighlighting
             //// ReSharper disable RedundantAwait
             await this._writer.WriteLineAsync(value).ConfigureAwait(false);
             //// ReSharper enable RedundantAwait
+        }
     }
 }

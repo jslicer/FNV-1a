@@ -12,6 +12,7 @@ namespace Fnv1aTestVectorGenerator
 {
     using System;
     using System.IO;
+    using System.Threading;
     using System.Threading.Tasks;
 
     /// <inheritdoc cref="SetBase" />
@@ -50,10 +51,11 @@ namespace Fnv1aTestVectorGenerator
         /// <summary>
         /// Asynchronously performs the test vector set 6 generation.
         /// </summary>
+        /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task" />.</returns>
         /// <exception cref="InvalidOperationException">The text writer is currently in use by a previous write operation.</exception>
         /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
-        public override async Task PerformAsync()
+        public override async Task PerformAsync(CancellationToken token = default)
         {
             await this.WriteLineAsync(await "hi".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
             await this.WriteLineAsync(await "hi".Test0Async().ConfigureAwait(false)).ConfigureAwait(false);
