@@ -12,6 +12,7 @@ namespace Fnv1aTestVectorGenerator
 {
     using System;
     using System.IO;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using static System.Console;
@@ -31,21 +32,28 @@ namespace Fnv1aTestVectorGenerator
         /// <exception cref="ObjectDisposedException">The text reader has been disposed.</exception>
         /// <exception cref="InvalidOperationException">The reader is currently in use by a previous read
         /// operation.</exception>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         public static async Task Main()
         {
             TextWriter writer = TextWriter.Null; ////Out;
             TextReader reader = TextReader.Null; ////In;
 
-            await ProcessAsync(writer).ConfigureAwait(false);
-            await reader.ReadLineAsync().ConfigureAwait(false);
+            using CancellationTokenSource cts = new();
+            cts.Token.ThrowIfCancellationRequested();
+            await ProcessAsync(writer, cts.Token).ConfigureAwait(true);
+            cts.Token.ThrowIfCancellationRequested();
+            await reader.ReadLineAsync(cts.Token).ConfigureAwait(true);
         }
 
         /// <summary>
         /// Processes test vectors.
         /// </summary>
         /// <param name="writer">The writer.</param>
+        /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task" />.</returns>
-        private static async Task ProcessAsync(TextWriter writer = null)
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+        // ReSharper disable once MethodTooLong
+        private static async Task ProcessAsync(TextWriter writer = null, CancellationToken token = default)
         {
             writer ??= TextWriter.Null;
 
@@ -76,15 +84,18 @@ namespace Fnv1aTestVectorGenerator
                 {
                     // ReSharper disable once AsyncConverter.CanBeUseAsyncMethodHighlighting
                     // ReSharper disable once MethodHasAsyncOverload
+                    // ReSharper disable once MethodHasAsyncOverloadWithCancellation
                     set.Perform();
                 }
             }
 
             for (int loop = 0; loop < 1000; loop++)
             {
+                token.ThrowIfCancellationRequested();
                 foreach (ISet set in sets)
                 {
-                    await set.PerformAsync().ConfigureAwait(false);
+                    token.ThrowIfCancellationRequested();
+                    await set.PerformAsync(token).ConfigureAwait(true);
                 }
             }
         }

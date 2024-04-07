@@ -10,6 +10,7 @@
 // Ignore Spelling: Fnv
 namespace Fnv1aTestVectorGenerator
 {
+    using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -25,7 +26,8 @@ namespace Fnv1aTestVectorGenerator
         /// <summary>
         /// Asynchronously performs the test vector set generation.
         /// </summary>
+        /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task" />.</returns>
-        Task PerformAsync();
+        Task PerformAsync(CancellationToken token = default);
     }
 }

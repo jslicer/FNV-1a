@@ -12,6 +12,7 @@ namespace Fnv1aTestVectorGenerator
 {
     using System;
     using System.IO;
+    using System.Threading;
     using System.Threading.Tasks;
 
     /// <inheritdoc cref="SetBase" />
@@ -60,25 +61,42 @@ namespace Fnv1aTestVectorGenerator
         /// <summary>
         /// Asynchronously performs the test vector set 4 generation.
         /// </summary>
+        /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task" />.</returns>
         /// <exception cref="InvalidOperationException">The text writer is currently in use by a previous write operation.</exception>
         /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
-        public override async Task PerformAsync()
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+        // ReSharper disable once MethodTooLong
+        public override async Task PerformAsync(CancellationToken token = default)
         {
-            await this.WriteLineAsync(await "cu".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "cur".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "curd".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "curds".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "curds ".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "curds a".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "curds an".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "curds and".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "curds and ".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "curds and w".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "curds and wh".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "curds and whe".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "curds and whey".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
-            await this.WriteLineAsync(await "curds and whey\n".TestAsync().ConfigureAwait(false)).ConfigureAwait(false);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "cu".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "cur".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "curd".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "curds".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "curds ".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "curds a".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "curds an".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "curds and".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "curds and ".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "curds and w".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "curds and wh".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "curds and whe".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "curds and whey".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            token.ThrowIfCancellationRequested();
+            await this.WriteLineAsync(await "curds and whey\n".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
         }
     }
 }
