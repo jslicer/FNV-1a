@@ -22,6 +22,15 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard2.0\Fnv1a.xml</DocumentationFile>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <NoWarn />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <NoWarn />
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0-beta1.24122.1">
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

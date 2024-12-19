@@ -1,13 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
 
     <RootNamespace>Fnv1aTests</RootNamespace>
 
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>9999</WarningLevel>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <NoWarn />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>9999</WarningLevel>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <NoWarn />
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,13 +31,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0-beta1.24122.1">
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0-release-24177-07" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.3.1" />
-    <PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.6.4" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.6.4" />
     <PackageReference Include="SecurityCodeScan.VS2019" Version="5.6.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

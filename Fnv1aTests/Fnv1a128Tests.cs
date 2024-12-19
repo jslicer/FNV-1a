@@ -59,19 +59,19 @@ namespace Fnv1aTests
         /// <exception cref="FormatException">value does not comply with the input pattern specified by
         /// style.</exception>
         [TestInitialize]
-        public void Initialize() => this._alg = new Fnv1a128();
+        public void Initialize() => _alg = new Fnv1a128();
 
         /// <summary>
         /// The method to run after each test.
         /// </summary>
         [TestCleanup]
-        public void Cleanup() => this.Dispose();
+        public void Cleanup() => Dispose();
 
         /// <inheritdoc />
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose() => this._alg.Dispose();
+        public void Dispose() => _alg.Dispose();
 
         /// <summary>
         /// Tests the empty string against the known vector result.
@@ -87,7 +87,7 @@ namespace Fnv1aTests
         //// ReSharper disable once InconsistentNaming
         public void TestVector1() => AreEqual(
             Parse("6C62272E07BB014262B821756295C58D", AllowHexSpecifier, InvariantCulture),
-            this.Fnv1a128(string.Empty));
+            Fnv1a128(string.Empty));
 
         /// <summary>
         /// Tests the empty string against the known vector result.
@@ -108,7 +108,7 @@ namespace Fnv1aTests
             using CancellationTokenSource cts = new();
             AreEqual(
                 Parse("6C62272E07BB014262B821756295C58D", AllowHexSpecifier, InvariantCulture),
-                await this.Fnv1a128Async(string.Empty, cts.Token).ConfigureAwait(true));
+                await Fnv1a128Async(string.Empty, cts.Token).ConfigureAwait(true));
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Fnv1aTests
         //// ReSharper disable once InconsistentNaming
         public void TestVector1Try() => AreEqual(
             Parse("6C62272E07BB014262B821756295C58D", AllowHexSpecifier, InvariantCulture),
-            this.Fnv1a128Try(string.Empty));
+            Fnv1a128Try(string.Empty));
 
         /// <summary>
         /// Tests the string "a" against the known vector result.
@@ -141,7 +141,7 @@ namespace Fnv1aTests
         //// ReSharper disable once InconsistentNaming
         public void TestVector2() => AreEqual(
             Parse("0D228CB696F1A8CAF78912B704E4A8964", AllowHexSpecifier, InvariantCulture),
-            this.Fnv1a128("a"));
+            Fnv1a128("a"));
 
         /// <summary>
         /// Tests the string "a" against the known vector result.
@@ -162,7 +162,7 @@ namespace Fnv1aTests
             using CancellationTokenSource cts = new();
             AreEqual(
                 Parse("0D228CB696F1A8CAF78912B704E4A8964", AllowHexSpecifier, InvariantCulture),
-                await this.Fnv1a128Async("a", cts.Token).ConfigureAwait(true));
+                await Fnv1a128Async("a", cts.Token).ConfigureAwait(true));
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Fnv1aTests
         //// ReSharper disable once InconsistentNaming
         public void TestVector2Try() => AreEqual(
             Parse("0D228CB696F1A8CAF78912B704E4A8964", AllowHexSpecifier, InvariantCulture),
-            this.Fnv1a128Try("a"));
+            Fnv1a128Try("a"));
 
         /// <summary>
         /// Tests the string against the known vector result.
@@ -195,7 +195,7 @@ namespace Fnv1aTests
         //// ReSharper disable once InconsistentNaming
         public void TestVector3() => AreEqual(
             Parse("343E1662793C64BF6F0D3597BA446F18", AllowHexSpecifier, InvariantCulture),
-            this.Fnv1a128("foobar"));
+            Fnv1a128("foobar"));
 
         /// <summary>
         /// Tests the string against the known vector result.
@@ -216,7 +216,7 @@ namespace Fnv1aTests
             using CancellationTokenSource cts = new();
             AreEqual(
                 Parse("343E1662793C64BF6F0D3597BA446F18", AllowHexSpecifier, InvariantCulture),
-                await this.Fnv1a128Async("foobar", cts.Token).ConfigureAwait(true));
+                await Fnv1a128Async("foobar", cts.Token).ConfigureAwait(true));
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Fnv1aTests
         //// ReSharper disable once InconsistentNaming
         public void TestVector3Try() => AreEqual(
             Parse("343E1662793C64BF6F0D3597BA446F18", AllowHexSpecifier, InvariantCulture),
-            this.Fnv1a128Try("foobar"));
+            Fnv1a128Try("foobar"));
 
         /// <summary>
         /// Tests the "Hello World" string against the known vector result.
@@ -248,7 +248,7 @@ namespace Fnv1aTests
         [TestMethod]
         public void TestHelloWorld() => AreEqual(
             Parse("0CD7FECF582839515F3E6ECF66B967B77", AllowHexSpecifier, InvariantCulture),
-            this.Fnv1a128("Hello World"));
+            Fnv1a128("Hello World"));
 
         /// <summary>
         /// Tests the "Hello World" string against the known vector result.
@@ -268,7 +268,7 @@ namespace Fnv1aTests
             using CancellationTokenSource cts = new();
             AreEqual(
                 Parse("0CD7FECF582839515F3E6ECF66B967B77", AllowHexSpecifier, InvariantCulture),
-                await this.Fnv1a128Async("Hello World", cts.Token).ConfigureAwait(true));
+                await Fnv1a128Async("Hello World", cts.Token).ConfigureAwait(true));
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace Fnv1aTests
         [TestMethod]
         public void TestHelloWorldTry() => AreEqual(
             Parse("0CD7FECF582839515F3E6ECF66B967B77", AllowHexSpecifier, InvariantCulture),
-            this.Fnv1a128Try("Hello World"));
+            Fnv1a128Try("Hello World"));
 
         /// <summary>
         /// Tests the alternate prime and zero offset.
@@ -407,8 +407,8 @@ namespace Fnv1aTests
         //// ReSharper disable once InconsistentNaming
         private BigInteger Fnv1a128(in string data)
         {
-            AreEqual(128, this._alg.HashSize);
-            return new(this._alg.ComputeHash(UTF8.GetBytes(data)).AddZero());
+            AreEqual(128, _alg.HashSize);
+            return new(_alg.ComputeHash(UTF8.GetBytes(data)).AddZero());
         }
 
         /// <summary>
@@ -423,9 +423,9 @@ namespace Fnv1aTests
         //// ReSharper disable once InconsistentNaming
         private async Task<BigInteger> Fnv1a128Async(string data, CancellationToken token = default)
         {
-            AreEqual(128, this._alg.HashSize);
+            AreEqual(128, _alg.HashSize);
             await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
-            return new((await this._alg.ComputeHashAsync(stream, token).ConfigureAwait(false)).AddZero());
+            return new((await _alg.ComputeHashAsync(stream, token).ConfigureAwait(false)).AddZero());
         }
 
         /// <summary>
@@ -437,7 +437,7 @@ namespace Fnv1aTests
         //// ReSharper disable once InconsistentNaming
         private BigInteger Fnv1a128Try(in string data)
         {
-            AreEqual(128, this._alg.HashSize);
+            AreEqual(128, _alg.HashSize);
 
             int inputByteCount = UTF8.GetByteCount(data);
             Span<byte> bytes = inputByteCount < 1024
@@ -447,8 +447,8 @@ namespace Fnv1aTests
             UTF8.GetBytes(data, bytes);
 
             // ReSharper disable once ComplexConditionExpression
-            Span<byte> destination = stackalloc byte[1 + (this._alg.HashSize / 8)];
-            bool result = this._alg.TryComputeHash(bytes, destination, out int bytesWritten);
+            Span<byte> destination = stackalloc byte[1 + (_alg.HashSize / 8)];
+            bool result = _alg.TryComputeHash(bytes, destination, out int bytesWritten);
 
             IsTrue(result);
             IsTrue(destination.Length >= bytesWritten);

@@ -59,11 +59,11 @@ namespace Fnv1a
                     "The offset basis must be non-zero.");
             }
 
-            this._bitMask = bitMask;
-            this.FnvPrime = prime;
-            this.FnvOffsetBasis = offsetBasis;
-            this.HashSizeValue = hashSizeValue;
-            this.Init();
+            _bitMask = bitMask;
+            FnvPrime = prime;
+            FnvOffsetBasis = offsetBasis;
+            HashSizeValue = hashSizeValue;
+            Init();
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Fnv1a
         /// <summary>
         /// Initializes an implementation of the <see cref="HashAlgorithm" /> class.
         /// </summary>
-        public override sealed void Initialize() => this.Init();
+        public override sealed void Initialize() => Init();
 
         /// <inheritdoc />
         /// <summary>
@@ -105,8 +105,8 @@ namespace Fnv1a
             {
                 unchecked
                 {
-                    this._hash ^= array[i];
-                    this._hash = (this._hash * this.FnvPrime) & this._bitMask;
+                    _hash ^= array[i];
+                    _hash = (_hash * FnvPrime) & _bitMask;
                 }
             }
         }
@@ -121,8 +121,8 @@ namespace Fnv1a
             {
                 unchecked
                 {
-                    this._hash ^= b;
-                    this._hash = (this._hash * this.FnvPrime) & this._bitMask;
+                    _hash ^= b;
+                    _hash = (_hash * FnvPrime) & _bitMask;
                 }
             }
         }
@@ -138,9 +138,9 @@ namespace Fnv1a
         protected override byte[] HashFinal()
         {
             // ReSharper disable once ComplexConditionExpression
-            Span<byte> bytes = stackalloc byte[(this.HashSize / 8) + 1];
+            Span<byte> bytes = stackalloc byte[(HashSize / 8) + 1];
 
-            this.GetHashByteSpan(bytes, out _);
+            GetHashByteSpan(bytes, out _);
             return bytes.ToArray();
         }
 
@@ -153,12 +153,12 @@ namespace Fnv1a
         /// <returns><see langword="true" /> if <paramref name="destination" /> is long enough to receive the hash
         /// value; otherwise, <see langword="false" />.</returns>
         protected override bool TryHashFinal(Span<byte> destination, out int bytesWritten) =>
-            this.GetHashByteSpan(destination, out bytesWritten);
+            GetHashByteSpan(destination, out bytesWritten);
 
         /// <summary>
         /// Initializes the hash for this instance.
         /// </summary>
-        private void Init() => this._hash = this.FnvOffsetBasis;
+        private void Init() => _hash = FnvOffsetBasis;
 
         /// <summary>
         /// Gets the span of bytes representing the hash value.
@@ -170,6 +170,6 @@ namespace Fnv1a
         /// value; otherwise, <see langword="false" />.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool GetHashByteSpan(Span<byte> destination, out int bytesWritten) =>
-            this._hash.TryWriteBytes(destination, out bytesWritten);
+            _hash.TryWriteBytes(destination, out bytesWritten);
     }
 }

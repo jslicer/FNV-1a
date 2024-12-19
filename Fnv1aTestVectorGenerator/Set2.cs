@@ -43,22 +43,22 @@ namespace Fnv1aTestVectorGenerator
         public override void Perform()
         {
             //// ReSharper disable StringLiteralTypo
-            this.WriteLine("ch".Test());
-            this.WriteLine("cho".Test());
-            this.WriteLine("chon".Test());
-            this.WriteLine("chong".Test());
-            this.WriteLine("chongo".Test());
-            this.WriteLine("chongo ".Test());
-            this.WriteLine("chongo w".Test());
-            this.WriteLine("chongo wa".Test());
-            this.WriteLine("chongo was".Test());
-            this.WriteLine("chongo was ".Test());
-            this.WriteLine("chongo was h".Test());
-            this.WriteLine("chongo was he".Test());
-            this.WriteLine("chongo was her".Test());
-            this.WriteLine("chongo was here".Test());
-            this.WriteLine("chongo was here!".Test());
-            this.WriteLine("chongo was here!\n".Test());
+            WriteLine("ch".Test());
+            WriteLine("cho".Test());
+            WriteLine("chon".Test());
+            WriteLine("chong".Test());
+            WriteLine("chongo".Test());
+            WriteLine("chongo ".Test());
+            WriteLine("chongo w".Test());
+            WriteLine("chongo wa".Test());
+            WriteLine("chongo was".Test());
+            WriteLine("chongo was ".Test());
+            WriteLine("chongo was h".Test());
+            WriteLine("chongo was he".Test());
+            WriteLine("chongo was her".Test());
+            WriteLine("chongo was here".Test());
+            WriteLine("chongo was here!".Test());
+            WriteLine("chongo was here!\n".Test());
             //// ReSharper enable StringLiteralTypo
         }
 
@@ -76,37 +76,37 @@ namespace Fnv1aTestVectorGenerator
         {
             //// ReSharper disable StringLiteralTypo
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "ch".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "ch".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "cho".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "cho".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "chon".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "chon".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "chong".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "chong".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "chongo".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "chongo".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "chongo ".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "chongo ".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "chongo w".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "chongo w".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "chongo wa".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "chongo wa".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "chongo was".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "chongo was".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "chongo was ".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "chongo was ".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "chongo was h".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "chongo was h".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "chongo was he".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "chongo was he".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "chongo was her".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "chongo was her".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "chongo was here".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "chongo was here".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "chongo was here!".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "chongo was here!".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "chongo was here!\n".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "chongo was here!\n".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             //// ReSharper enable StringLiteralTypo
         }
     }

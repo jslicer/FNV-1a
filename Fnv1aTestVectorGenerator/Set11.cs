@@ -39,7 +39,7 @@ namespace Fnv1aTestVectorGenerator
         /// </summary>
         /// <exception cref="IOException">An I/O error occurs.</exception>
         /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
-        public override void Perform() => this.WriteLine("line 1\nline 2\nline 3".Test());
+        public override void Perform() => WriteLine("line 1\nline 2\nline 3".Test());
 
         /// <inheritdoc cref="SetBase" />
         /// <summary>
@@ -53,7 +53,7 @@ namespace Fnv1aTestVectorGenerator
         public override async Task PerformAsync(CancellationToken token = default)
         {
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "line 1\nline 2\nline 3".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "line 1\nline 2\nline 3".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
         }
     }
 }

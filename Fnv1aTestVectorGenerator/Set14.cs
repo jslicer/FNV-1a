@@ -46,27 +46,27 @@ namespace Fnv1aTestVectorGenerator
         // ReSharper disable once MethodTooLong
         public override void Perform()
         {
-            this.WriteLine("21701".R10());
-            this.WriteLine("M21701".R10());
-            this.WriteLine("2^21701-1".R10());
-            this.WriteLine("\x54\xc5".R10());
-            this.WriteLine("\xc5\x54".R10());
-            this.WriteLine("23209".R10());
-            this.WriteLine("M23209".R10());
-            this.WriteLine("2^23209-1".R10());
-            this.WriteLine("\x5a\xa9".R10());
-            this.WriteLine("\xa9\x5a".R10());
-            this.WriteLine("391581216093".R10());
-            this.WriteLine("391581*2^216093-1".R10());
-            this.WriteLine("\x05\xf9\x9d\x03\x4c\x81".R10());
-            this.WriteLine("FEDCBA9876543210".R10());
-            this.WriteLine("\xfe\xdc\xba\x98\x76\x54\x32\x10".R10());
-            this.WriteLine("EFCDAB8967452301".R10());
-            this.WriteLine("\xef\xcd\xab\x89\x67\x45\x23\x01".R10());
-            this.WriteLine("0123456789ABCDEF".R10());
-            this.WriteLine("\x01\x23\x45\x67\x89\xab\xcd\xef".R10());
-            this.WriteLine("1032547698BADCFE".R10());
-            this.WriteLine("\x10\x32\x54\x76\x98\xba\xdc\xfe".R10());
+            WriteLine("21701".R10());
+            WriteLine("M21701".R10());
+            WriteLine("2^21701-1".R10());
+            WriteLine("\x54\xc5".R10());
+            WriteLine("\xc5\x54".R10());
+            WriteLine("23209".R10());
+            WriteLine("M23209".R10());
+            WriteLine("2^23209-1".R10());
+            WriteLine("\x5a\xa9".R10());
+            WriteLine("\xa9\x5a".R10());
+            WriteLine("391581216093".R10());
+            WriteLine("391581*2^216093-1".R10());
+            WriteLine("\x05\xf9\x9d\x03\x4c\x81".R10());
+            WriteLine("FEDCBA9876543210".R10());
+            WriteLine("\xfe\xdc\xba\x98\x76\x54\x32\x10".R10());
+            WriteLine("EFCDAB8967452301".R10());
+            WriteLine("\xef\xcd\xab\x89\x67\x45\x23\x01".R10());
+            WriteLine("0123456789ABCDEF".R10());
+            WriteLine("\x01\x23\x45\x67\x89\xab\xcd\xef".R10());
+            WriteLine("1032547698BADCFE".R10());
+            WriteLine("\x10\x32\x54\x76\x98\xba\xdc\xfe".R10());
         }
 
         /// <inheritdoc cref="SetBase" />
@@ -85,47 +85,47 @@ namespace Fnv1aTestVectorGenerator
         public override async Task PerformAsync(CancellationToken token = default)
         {
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "21701".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "21701".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "M21701".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "M21701".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "2^21701-1".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "2^21701-1".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x54\xc5".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x54\xc5".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\xc5\x54".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\xc5\x54".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "23209".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "23209".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "M23209".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "M23209".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "2^23209-1".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "2^23209-1".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x5a\xa9".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x5a\xa9".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\xa9\x5a".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\xa9\x5a".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "391581216093".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "391581216093".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "391581*2^216093-1".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "391581*2^216093-1".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x05\xf9\x9d\x03\x4c\x81".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x05\xf9\x9d\x03\x4c\x81".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "FEDCBA9876543210".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "FEDCBA9876543210".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\xfe\xdc\xba\x98\x76\x54\x32\x10".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\xfe\xdc\xba\x98\x76\x54\x32\x10".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "EFCDAB8967452301".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "EFCDAB8967452301".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\xef\xcd\xab\x89\x67\x45\x23\x01".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\xef\xcd\xab\x89\x67\x45\x23\x01".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "0123456789ABCDEF".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "0123456789ABCDEF".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x01\x23\x45\x67\x89\xab\xcd\xef".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x01\x23\x45\x67\x89\xab\xcd\xef".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "1032547698BADCFE".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "1032547698BADCFE".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x10\x32\x54\x76\x98\xba\xdc\xfe".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x10\x32\x54\x76\x98\xba\xdc\xfe".R10Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
         }
     }
 }

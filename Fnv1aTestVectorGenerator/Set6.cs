@@ -41,10 +41,10 @@ namespace Fnv1aTestVectorGenerator
         /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
         public override void Perform()
         {
-            this.WriteLine("hi".Test());
-            this.WriteLine("hi".Test0());
-            this.WriteLine("hello".Test());
-            this.WriteLine("hello".Test0());
+            WriteLine("hi".Test());
+            WriteLine("hi".Test0());
+            WriteLine("hello".Test());
+            WriteLine("hello".Test0());
         }
 
         /// <inheritdoc cref="SetBase" />
@@ -59,13 +59,13 @@ namespace Fnv1aTestVectorGenerator
         public override async Task PerformAsync(CancellationToken token = default)
         {
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "hi".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "hi".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "hi".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "hi".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "hello".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "hello".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "hello".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "hello".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
         }
     }
 }

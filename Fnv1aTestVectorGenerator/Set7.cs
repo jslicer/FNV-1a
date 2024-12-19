@@ -41,20 +41,20 @@ namespace Fnv1aTestVectorGenerator
         /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
         public override void Perform()
         {
-            this.WriteLine("\xff\x00\x00\x01".Test());
-            this.WriteLine("\x01\x00\x00\xff".Test());
-            this.WriteLine("\xff\x00\x00\x02".Test());
-            this.WriteLine("\x02\x00\x00\xff".Test());
-            this.WriteLine("\xff\x00\x00\x03".Test());
-            this.WriteLine("\x03\x00\x00\xff".Test());
-            this.WriteLine("\xff\x00\x00\x04".Test());
-            this.WriteLine("\x04\x00\x00\xff".Test());
-            this.WriteLine("\x40\x51\x4e\x44".Test());
-            this.WriteLine("\x44\x4e\x51\x40".Test());
-            this.WriteLine("\x40\x51\x4e\x4a".Test());
-            this.WriteLine("\x4a\x4e\x51\x40".Test());
-            this.WriteLine("\x40\x51\x4e\x54".Test());
-            this.WriteLine("\x54\x4e\x51\x40".Test());
+            WriteLine("\xff\x00\x00\x01".Test());
+            WriteLine("\x01\x00\x00\xff".Test());
+            WriteLine("\xff\x00\x00\x02".Test());
+            WriteLine("\x02\x00\x00\xff".Test());
+            WriteLine("\xff\x00\x00\x03".Test());
+            WriteLine("\x03\x00\x00\xff".Test());
+            WriteLine("\xff\x00\x00\x04".Test());
+            WriteLine("\x04\x00\x00\xff".Test());
+            WriteLine("\x40\x51\x4e\x44".Test());
+            WriteLine("\x44\x4e\x51\x40".Test());
+            WriteLine("\x40\x51\x4e\x4a".Test());
+            WriteLine("\x4a\x4e\x51\x40".Test());
+            WriteLine("\x40\x51\x4e\x54".Test());
+            WriteLine("\x54\x4e\x51\x40".Test());
         }
 
         /// <inheritdoc cref="SetBase" />
@@ -70,33 +70,33 @@ namespace Fnv1aTestVectorGenerator
         public override async Task PerformAsync(CancellationToken token = default)
         {
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\xff\x00\x00\x01".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\xff\x00\x00\x01".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x01\x00\x00\xff".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x01\x00\x00\xff".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\xff\x00\x00\x02".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\xff\x00\x00\x02".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x02\x00\x00\xff".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x02\x00\x00\xff".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\xff\x00\x00\x03".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\xff\x00\x00\x03".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x03\x00\x00\xff".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x03\x00\x00\xff".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\xff\x00\x00\x04".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\xff\x00\x00\x04".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x04\x00\x00\xff".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x04\x00\x00\xff".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x40\x51\x4e\x44".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x40\x51\x4e\x44".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x44\x4e\x51\x40".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x44\x4e\x51\x40".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x40\x51\x4e\x4a".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x40\x51\x4e\x4a".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x4a\x4e\x51\x40".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x4a\x4e\x51\x40".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x40\x51\x4e\x54".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x40\x51\x4e\x54".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x54\x4e\x51\x40".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x54\x4e\x51\x40".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
         }
     }
 }

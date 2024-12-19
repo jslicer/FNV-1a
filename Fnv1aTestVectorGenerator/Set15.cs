@@ -45,10 +45,10 @@ namespace Fnv1aTestVectorGenerator
         /// <see cref="StringBuilder.MaxCapacity" />.</exception>
         public override void Perform()
         {
-            this.WriteLine("\x00".R500());
-            this.WriteLine("\x07".R500());
-            this.WriteLine("~".R500());
-            this.WriteLine("\x7f".R500());
+            WriteLine("\x00".R500());
+            WriteLine("\x07".R500());
+            WriteLine("~".R500());
+            WriteLine("\x7f".R500());
         }
 
         /// <inheritdoc cref="SetBase" />
@@ -66,13 +66,13 @@ namespace Fnv1aTestVectorGenerator
         public override async Task PerformAsync(CancellationToken token = default)
         {
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x00".R500Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x00".R500Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x07".R500Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x07".R500Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "~".R500Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "~".R500Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "\x7f".R500Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "\x7f".R500Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
         }
     }
 }

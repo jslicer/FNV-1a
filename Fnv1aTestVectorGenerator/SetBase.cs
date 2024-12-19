@@ -31,7 +31,7 @@ namespace Fnv1aTestVectorGenerator
         /// Initializes a new instance of the <see cref="SetBase" /> class.
         /// </summary>
         /// <param name="writer">The writer.</param>
-        protected SetBase(TextWriter writer = null) => this._writer = writer ?? TextWriter.Null;
+        protected SetBase(TextWriter writer = null) => _writer = writer ?? TextWriter.Null;
 
         /// <inheritdoc />
         /// <summary>
@@ -54,7 +54,7 @@ namespace Fnv1aTestVectorGenerator
         /// <param name="value">The value to write.</param>
         /// <exception cref="IOException">An I/O error occurs.</exception>
         /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
-        protected void WriteLine(in string value) => this._writer.WriteLine(value);
+        protected void WriteLine(in string value) => _writer.WriteLine(value);
 
         /// <summary>
         /// Asynchronously writes the line to the <see cref="TextWriter" />.
@@ -73,7 +73,7 @@ namespace Fnv1aTestVectorGenerator
             //// ReSharper disable once AsyncConverter.AsyncAwaitMayBeElidedHighlighting
             //// ReSharper disable once AsyncApostle.AsyncAwaitMayBeElidedHighlighting
             //// ReSharper disable RedundantAwait
-            await this._writer.WriteLineAsync(value).ConfigureAwait(false);
+            await _writer.WriteLineAsync(value).ConfigureAwait(false);
             //// ReSharper enable RedundantAwait
         }
     }

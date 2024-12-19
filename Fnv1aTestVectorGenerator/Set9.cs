@@ -41,12 +41,12 @@ namespace Fnv1aTestVectorGenerator
         /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
         public override void Perform()
         {
-            this.WriteLine("64.81.78.68".Test());
-            this.WriteLine("64.81.78.68".Test0());
-            this.WriteLine("64.81.78.74".Test());
-            this.WriteLine("64.81.78.74".Test0());
-            this.WriteLine("64.81.78.84".Test());
-            this.WriteLine("64.81.78.84".Test0());
+            WriteLine("64.81.78.68".Test());
+            WriteLine("64.81.78.68".Test0());
+            WriteLine("64.81.78.74".Test());
+            WriteLine("64.81.78.74".Test0());
+            WriteLine("64.81.78.84".Test());
+            WriteLine("64.81.78.84".Test0());
         }
 
         /// <inheritdoc cref="SetBase" />
@@ -61,17 +61,17 @@ namespace Fnv1aTestVectorGenerator
         public override async Task PerformAsync(CancellationToken token = default)
         {
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "64.81.78.68".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "64.81.78.68".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "64.81.78.68".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "64.81.78.68".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "64.81.78.74".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "64.81.78.74".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "64.81.78.74".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "64.81.78.74".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "64.81.78.84".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "64.81.78.84".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
             token.ThrowIfCancellationRequested();
-            await this.WriteLineAsync(await "64.81.78.84".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+            await WriteLineAsync(await "64.81.78.84".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
         }
     }
 }

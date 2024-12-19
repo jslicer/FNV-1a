@@ -66,10 +66,10 @@ namespace Fnv1a
                     "The offset basis must be non-zero.");
             }
 
-            this.HashSizeValue = 64;
-            this.FnvPrime = prime;
-            this.FnvOffsetBasis = offsetBasis;
-            this.Initialize();
+            HashSizeValue = 64;
+            FnvPrime = prime;
+            FnvOffsetBasis = offsetBasis;
+            Initialize();
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Fnv1a
         /// <summary>
         /// Initializes an implementation of the <see cref="HashAlgorithm" /> class.
         /// </summary>
-        public override void Initialize() => this._hash = this.FnvOffsetBasis;
+        public override void Initialize() => _hash = FnvOffsetBasis;
 
         /// <inheritdoc />
         /// <summary>
@@ -111,8 +111,8 @@ namespace Fnv1a
             {
                 unchecked
                 {
-                    this._hash ^= array[i];
-                    this._hash *= this.FnvPrime;
+                    _hash ^= array[i];
+                    _hash *= FnvPrime;
                 }
             }
         }
@@ -127,8 +127,8 @@ namespace Fnv1a
             {
                 unchecked
                 {
-                    this._hash ^= b;
-                    this._hash *= this.FnvPrime;
+                    _hash ^= b;
+                    _hash *= FnvPrime;
                 }
             }
         }
@@ -141,7 +141,7 @@ namespace Fnv1a
         /// <returns>
         /// The computed hash code.
         /// </returns>
-        protected override byte[] HashFinal() => BitConverter.GetBytes(this._hash);
+        protected override byte[] HashFinal() => BitConverter.GetBytes(_hash);
 
         /// <summary>
         /// Attempts to finalize the hash computation after the last data is processed by the hash algorithm.
@@ -155,7 +155,7 @@ namespace Fnv1a
         /// <exception cref="OverflowException">The array is multidimensional and contains more than <see cref="int.MaxValue" /> elements.</exception>
         protected override bool TryHashFinal(Span<byte> destination, out int bytesWritten)
         {
-            byte[] bytes = BitConverter.GetBytes(this._hash);
+            byte[] bytes = BitConverter.GetBytes(_hash);
 
             bytes.CopyTo(destination);
             bytesWritten = bytes.Length;

@@ -47,19 +47,19 @@ namespace Fnv1aTests
         /// The method to run before each test.
         /// </summary>
         [TestInitialize]
-        public void Initialize() => this._alg = new Fnv1a32();
+        public void Initialize() => _alg = new Fnv1a32();
 
         /// <summary>
         /// The method to run after each test.
         /// </summary>
         [TestCleanup]
-        public void Cleanup() => this.Dispose();
+        public void Cleanup() => Dispose();
 
         /// <inheritdoc />
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose() => this._alg.Dispose();
+        public void Dispose() => _alg.Dispose();
 
         /// <summary>
         /// Tests the empty string against the known vector result.
@@ -67,7 +67,7 @@ namespace Fnv1aTests
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         //// ReSharper disable once InconsistentNaming
-        public void TestVector1() => AreEqual(0x811C9DC5U, this.Fnv1a32(string.Empty));
+        public void TestVector1() => AreEqual(0x811C9DC5U, Fnv1a32(string.Empty));
 
         /// <summary>
         /// Tests the empty string against the known vector result.
@@ -80,7 +80,7 @@ namespace Fnv1aTests
         public async Task TestVector1Async()
         {
             using CancellationTokenSource cts = new();
-            AreEqual(0x811C9DC5U, await this.Fnv1a32Async(string.Empty, cts.Token).ConfigureAwait(true));
+            AreEqual(0x811C9DC5U, await Fnv1a32Async(string.Empty, cts.Token).ConfigureAwait(true));
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Fnv1aTests
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         //// ReSharper disable once InconsistentNaming
-        public void TestVector1Try() => AreEqual(0x811C9DC5U, this.Fnv1a32Try(string.Empty));
+        public void TestVector1Try() => AreEqual(0x811C9DC5U, Fnv1a32Try(string.Empty));
 
         /// <summary>
         /// Tests the string "a" against the known vector result.
@@ -97,7 +97,7 @@ namespace Fnv1aTests
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         //// ReSharper disable once InconsistentNaming
-        public void TestVector2() => AreEqual(0xE40C292CU, this.Fnv1a32("a"));
+        public void TestVector2() => AreEqual(0xE40C292CU, Fnv1a32("a"));
 
         /// <summary>
         /// Tests the string "a" against the known vector result.
@@ -110,7 +110,7 @@ namespace Fnv1aTests
         public async Task TestVector2Async()
         {
             using CancellationTokenSource cts = new();
-            AreEqual(0xE40C292CU, await this.Fnv1a32Async("a", cts.Token).ConfigureAwait(true));
+            AreEqual(0xE40C292CU, await Fnv1a32Async("a", cts.Token).ConfigureAwait(true));
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Fnv1aTests
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         //// ReSharper disable once InconsistentNaming
-        public void TestVector2Try() => AreEqual(0xE40C292CU, this.Fnv1a32Try("a"));
+        public void TestVector2Try() => AreEqual(0xE40C292CU, Fnv1a32Try("a"));
 
         /// <summary>
         /// Tests the string against the known vector result.
@@ -127,7 +127,7 @@ namespace Fnv1aTests
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         //// ReSharper disable once InconsistentNaming
-        public void TestVector3() => AreEqual(0xBF9CF968U, this.Fnv1a32("foobar"));
+        public void TestVector3() => AreEqual(0xBF9CF968U, Fnv1a32("foobar"));
 
         /// <summary>
         /// Tests the string against the known vector result.
@@ -140,7 +140,7 @@ namespace Fnv1aTests
         public async Task TestVector3Async()
         {
             using CancellationTokenSource cts = new();
-            AreEqual(0xBF9CF968U, await this.Fnv1a32Async("foobar", cts.Token).ConfigureAwait(true));
+            AreEqual(0xBF9CF968U, await Fnv1a32Async("foobar", cts.Token).ConfigureAwait(true));
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace Fnv1aTests
         /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
         [TestMethod]
         //// ReSharper disable once InconsistentNaming
-        public void TestVector3Try() => AreEqual(0xBF9CF968U, this.Fnv1a32Try("foobar"));
+        public void TestVector3Try() => AreEqual(0xBF9CF968U, Fnv1a32Try("foobar"));
 
         /// <summary>
         /// Tests the alternate prime and zero offset.
@@ -177,7 +177,7 @@ namespace Fnv1aTests
             AreEqual(32, alg.HashSize);
             AreEqual(0xB3CB2E29U, alg.FnvPrime);
             AreEqual(0x319712C3U, alg.FnvOffsetBasis);
-            AreEqual(0xBF9CF968U, (uint)BitConverter.ToInt32(this._alg.ComputeHash("foobar"u8.ToArray()), 0));
+            AreEqual(0xBF9CF968U, (uint)BitConverter.ToInt32(_alg.ComputeHash("foobar"u8.ToArray()), 0));
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Fnv1aTests
             await using Stream stream = new MemoryStream("foobar"u8.ToArray());
 
             uint actual = (uint)BitConverter.ToInt32(
-                await this._alg.ComputeHashAsync(stream, cts.Token).ConfigureAwait(false), 0);
+                await _alg.ComputeHashAsync(stream, cts.Token).ConfigureAwait(false), 0);
 
             AreEqual(0xBF9CF968U, actual);
         }
@@ -234,8 +234,8 @@ namespace Fnv1aTests
             UTF8.GetBytes(Data, bytes);
 
             // ReSharper disable once ComplexConditionExpression
-            Span<byte> destination = stackalloc byte[1 + (this._alg.HashSize / 8)];
-            bool result = this._alg.TryComputeHash(bytes, destination, out int bytesWritten);
+            Span<byte> destination = stackalloc byte[1 + (_alg.HashSize / 8)];
+            bool result = _alg.TryComputeHash(bytes, destination, out int bytesWritten);
 
             IsTrue(result);
             IsTrue(destination.Length >= bytesWritten);
@@ -252,8 +252,8 @@ namespace Fnv1aTests
         //// ReSharper disable once InconsistentNaming
         private uint Fnv1a32(in string data)
         {
-            AreEqual(32, this._alg.HashSize);
-            return (uint)BitConverter.ToInt32(this._alg.ComputeHash(UTF8.GetBytes(data)), 0);
+            AreEqual(32, _alg.HashSize);
+            return (uint)BitConverter.ToInt32(_alg.ComputeHash(UTF8.GetBytes(data)), 0);
         }
 
         /// <summary>
@@ -268,10 +268,10 @@ namespace Fnv1aTests
         //// ReSharper disable once InconsistentNaming
         private async Task<uint> Fnv1a32Async(string data, CancellationToken token = default)
         {
-            AreEqual(32, this._alg.HashSize);
+            AreEqual(32, _alg.HashSize);
             await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
             return (uint)BitConverter.ToInt32(
-                await this._alg.ComputeHashAsync(stream, token).ConfigureAwait(false), 0);
+                await _alg.ComputeHashAsync(stream, token).ConfigureAwait(false), 0);
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Fnv1aTests
         //// ReSharper disable once InconsistentNaming
         private uint Fnv1a32Try(in string data)
         {
-            AreEqual(32, this._alg.HashSize);
+            AreEqual(32, _alg.HashSize);
 
             int inputByteCount = UTF8.GetByteCount(data);
             Span<byte> bytes = inputByteCount < 1024
@@ -293,8 +293,8 @@ namespace Fnv1aTests
             UTF8.GetBytes(data, bytes);
 
             // ReSharper disable once ComplexConditionExpression
-            Span<byte> destination = stackalloc byte[1 + (this._alg.HashSize / 8)];
-            bool result = this._alg.TryComputeHash(bytes, destination, out int bytesWritten);
+            Span<byte> destination = stackalloc byte[1 + (_alg.HashSize / 8)];
+            bool result = _alg.TryComputeHash(bytes, destination, out int bytesWritten);
 
             IsTrue(result);
             IsTrue(destination.Length >= bytesWritten);
