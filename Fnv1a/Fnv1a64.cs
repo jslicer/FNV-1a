@@ -8,158 +8,157 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 // Ignore Spelling: Fnv ib
-namespace Fnv1a
+namespace Fnv1a;
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Security.Cryptography;
+
+/// <inheritdoc cref="HashAlgorithm" />
+/// <summary>
+/// Implements the FNV-1a 64-bit variant hashing algorithm.
+/// </summary>
+// ReSharper disable once InconsistentNaming
+#pragma warning disable S101 // Types should be named in PascalCase
+public sealed class Fnv1a64 : HashAlgorithm
+#pragma warning restore S101 // Types should be named in PascalCase
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Security.Cryptography;
+    /// <summary>
+    /// The default prime.
+    /// </summary>
+    private const ulong FnvDefaultPrime = 0x00000100000001B3UL;
+
+    /// <summary>
+    /// The default non-zero offset basis.
+    /// </summary>
+    private const ulong FnvDefaultOffsetBasis = 0xCBF29CE484222325UL;
+
+    /// <summary>
+    /// The hash.
+    /// </summary>
+    private ulong _hash;
 
     /// <inheritdoc cref="HashAlgorithm" />
     /// <summary>
-    /// Implements the FNV-1a 64-bit variant hashing algorithm.
+    /// Initializes a new instance of the <see cref="Fnv1a64" /> class.
     /// </summary>
-    // ReSharper disable once InconsistentNaming
-#pragma warning disable S101 // Types should be named in PascalCase
-    public sealed class Fnv1a64 : HashAlgorithm
-#pragma warning restore S101 // Types should be named in PascalCase
+    /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
+    public Fnv1a64()
+        : this(FnvDefaultPrime, FnvDefaultOffsetBasis)
     {
-        /// <summary>
-        /// The default prime.
-        /// </summary>
-        private const ulong FnvDefaultPrime = 0x00000100000001B3UL;
+        // Intentionally empty.
+    }
 
-        /// <summary>
-        /// The default non-zero offset basis.
-        /// </summary>
-        private const ulong FnvDefaultOffsetBasis = 0xCBF29CE484222325UL;
-
-        /// <summary>
-        /// The hash.
-        /// </summary>
-        private ulong _hash;
-
-        /// <inheritdoc cref="HashAlgorithm" />
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Fnv1a64" /> class.
-        /// </summary>
-        /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
-        public Fnv1a64()
-            : this(FnvDefaultPrime, FnvDefaultOffsetBasis)
+    /// <inheritdoc cref="HashAlgorithm" />
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Fnv1a64" /> class.
+    /// </summary>
+    /// <param name="prime">The prime.</param>
+    /// <param name="offsetBasis">The non-zero offset basis.</param>
+    /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
+    public Fnv1a64(ulong prime, ulong offsetBasis)
+    {
+        if (offsetBasis == 0UL)
         {
-            // Intentionally empty.
+            throw new ArgumentOutOfRangeException(
+                nameof(offsetBasis),
+                offsetBasis,
+                "The offset basis must be non-zero.");
         }
 
-        /// <inheritdoc cref="HashAlgorithm" />
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Fnv1a64" /> class.
-        /// </summary>
-        /// <param name="prime">The prime.</param>
-        /// <param name="offsetBasis">The non-zero offset basis.</param>
-        /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
-        public Fnv1a64(ulong prime, ulong offsetBasis)
-        {
-            if (offsetBasis == 0UL)
-            {
-                throw new ArgumentOutOfRangeException(
-                    nameof(offsetBasis),
-                    offsetBasis,
-                    "The offset basis must be non-zero.");
-            }
+        HashSizeValue = 64;
+        FnvPrime = prime;
+        FnvOffsetBasis = offsetBasis;
+        Initialize();
+    }
 
-            HashSizeValue = 64;
-            FnvPrime = prime;
-            FnvOffsetBasis = offsetBasis;
-            Initialize();
-        }
+    /// <summary>
+    /// Gets the prime.
+    /// </summary>
+    /// <value>
+    /// The prime.
+    /// </value>
+    public ulong FnvPrime { get; }
 
-        /// <summary>
-        /// Gets the prime.
-        /// </summary>
-        /// <value>
-        /// The prime.
-        /// </value>
-        public ulong FnvPrime { get; }
+    /// <summary>
+    /// Gets the non-zero offset basis.
+    /// </summary>
+    /// <value>
+    /// The non-zero offset basis.
+    /// </value>
+    public ulong FnvOffsetBasis { get; }
 
-        /// <summary>
-        /// Gets the non-zero offset basis.
-        /// </summary>
-        /// <value>
-        /// The non-zero offset basis.
-        /// </value>
-        public ulong FnvOffsetBasis { get; }
+    /// <inheritdoc />
+    /// <summary>
+    /// Initializes an implementation of the <see cref="HashAlgorithm" /> class.
+    /// </summary>
+    public override void Initialize() => _hash = FnvOffsetBasis;
 
-        /// <inheritdoc />
-        /// <summary>
-        /// Initializes an implementation of the <see cref="HashAlgorithm" /> class.
-        /// </summary>
-        public override void Initialize() => _hash = FnvOffsetBasis;
-
-        /// <inheritdoc />
-        /// <summary>
-        /// When overridden in a derived class, routes data written to the object into the hash algorithm for computing
-        /// the hash.
-        /// </summary>
-        /// <param name="array">The input to compute the hash code for.</param>
-        /// <param name="ibStart">The offset into the byte array from which to begin using data.</param>
-        /// <param name="cbSize">The number of bytes in the byte array to use as data.</param>
+    /// <inheritdoc />
+    /// <summary>
+    /// When overridden in a derived class, routes data written to the object into the hash algorithm for computing
+    /// the hash.
+    /// </summary>
+    /// <param name="array">The input to compute the hash code for.</param>
+    /// <param name="ibStart">The offset into the byte array from which to begin using data.</param>
+    /// <param name="cbSize">The number of bytes in the byte array to use as data.</param>
 #pragma warning disable IDE0079 // Remove unnecessary suppression
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
 #pragma warning restore IDE0079 // Remove unnecessary suppression
-        protected override void HashCore(byte[] array, int ibStart, int cbSize)
+    protected override void HashCore(byte[] array, int ibStart, int cbSize)
+    {
+        for (int i = ibStart; i < cbSize; i++)
         {
-            for (int i = ibStart; i < cbSize; i++)
+            unchecked
             {
-                unchecked
-                {
-                    _hash ^= array[i];
-                    _hash *= FnvPrime;
-                }
+                _hash ^= array[i];
+                _hash *= FnvPrime;
             }
         }
+    }
 
-        /// <summary>
-        /// Routes data written to the object into the hash algorithm for computing the hash.
-        /// </summary>
-        /// <param name="source">The input to compute the hash code for.</param>
-        protected override void HashCore(ReadOnlySpan<byte> source)
+    /// <summary>
+    /// Routes data written to the object into the hash algorithm for computing the hash.
+    /// </summary>
+    /// <param name="source">The input to compute the hash code for.</param>
+    protected override void HashCore(ReadOnlySpan<byte> source)
+    {
+        foreach (byte b in source)
         {
-            foreach (byte b in source)
+            unchecked
             {
-                unchecked
-                {
-                    _hash ^= b;
-                    _hash *= FnvPrime;
-                }
+                _hash ^= b;
+                _hash *= FnvPrime;
             }
         }
+    }
 
-        /// <inheritdoc />
-        /// <summary>
-        /// When overridden in a derived class, finalizes the hash computation after the last data is processed by the
-        /// cryptographic stream object.
-        /// </summary>
-        /// <returns>
-        /// The computed hash code.
-        /// </returns>
-        protected override byte[] HashFinal() => BitConverter.GetBytes(_hash);
+    /// <inheritdoc />
+    /// <summary>
+    /// When overridden in a derived class, finalizes the hash computation after the last data is processed by the
+    /// cryptographic stream object.
+    /// </summary>
+    /// <returns>
+    /// The computed hash code.
+    /// </returns>
+    protected override byte[] HashFinal() => BitConverter.GetBytes(_hash);
 
-        /// <summary>
-        /// Attempts to finalize the hash computation after the last data is processed by the hash algorithm.
-        /// </summary>
-        /// <param name="destination">The buffer to receive the hash value.</param>
-        /// <param name="bytesWritten">When this method returns, the total number of bytes written into
-        /// <paramref name="destination" />. This parameter is treated as uninitialized.</param>
-        /// <returns><see langword="true" /> if <paramref name="destination" /> is long enough to receive the hash
-        /// value; otherwise, <see langword="false" />.</returns>
-        /// <exception cref="ArgumentException">The destination Span is shorter than the source array.</exception>
-        /// <exception cref="OverflowException">The array is multidimensional and contains more than <see cref="int.MaxValue" /> elements.</exception>
-        protected override bool TryHashFinal(Span<byte> destination, out int bytesWritten)
-        {
-            byte[] bytes = BitConverter.GetBytes(_hash);
+    /// <summary>
+    /// Attempts to finalize the hash computation after the last data is processed by the hash algorithm.
+    /// </summary>
+    /// <param name="destination">The buffer to receive the hash value.</param>
+    /// <param name="bytesWritten">When this method returns, the total number of bytes written into
+    /// <paramref name="destination" />. This parameter is treated as uninitialized.</param>
+    /// <returns><see langword="true" /> if <paramref name="destination" /> is long enough to receive the hash
+    /// value; otherwise, <see langword="false" />.</returns>
+    /// <exception cref="ArgumentException">The destination Span is shorter than the source array.</exception>
+    /// <exception cref="OverflowException">The array is multidimensional and contains more than <see cref="int.MaxValue" /> elements.</exception>
+    protected override bool TryHashFinal(Span<byte> destination, out int bytesWritten)
+    {
+        byte[] bytes = BitConverter.GetBytes(_hash);
 
-            bytes.CopyTo(destination);
-            bytesWritten = bytes.Length;
-            return true;
-        }
+        bytes.CopyTo(destination);
+        bytesWritten = bytes.Length;
+        return true;
     }
 }
