@@ -11,8 +11,8 @@
 namespace Fnv1aTestVectorGenerator;
 
 using System;
+using System.IO.Hashing;
 using System.Numerics;
-using System.Security.Cryptography;
 using System.Text;
 
 using Fnv1a;
@@ -152,10 +152,10 @@ internal static class StringExtensions
     // ReSharper disable once InconsistentNaming
     private static string Fnv1a32s(this string data)
     {
-        using HashAlgorithm alg = new Fnv1a32();
+        NonCryptographicHashAlgorithm alg = new Fnv1a32();
 
         // ReSharper disable once ComplexConditionExpression
-        Span<byte> destination = stackalloc byte[1 + (alg.HashSize / 8)];
+        Span<byte> destination = stackalloc byte[1 + alg.HashLengthInBytes];
 
         data.CalculateHash(alg, destination);
         return "0x"
@@ -170,10 +170,10 @@ internal static class StringExtensions
     // ReSharper disable once InconsistentNaming
     private static string Fnv1a64s(this string data)
     {
-        using HashAlgorithm alg = new Fnv1a64();
+        NonCryptographicHashAlgorithm alg = new Fnv1a64();
 
         // ReSharper disable once ComplexConditionExpression
-        Span<byte> destination = stackalloc byte[1 + (alg.HashSize / 8)];
+        Span<byte> destination = stackalloc byte[1 + alg.HashLengthInBytes];
 
         data.CalculateHash(alg, destination);
         return "0x"
@@ -188,10 +188,10 @@ internal static class StringExtensions
     // ReSharper disable once InconsistentNaming
     private static string Fnv1a128s(this string data)
     {
-        using HashAlgorithm alg = new Fnv1a128();
+        NonCryptographicHashAlgorithm alg = new Fnv1a128();
 
         // ReSharper disable once ComplexConditionExpression
-        Span<byte> destination = stackalloc byte[1 + (alg.HashSize / 8)];
+        Span<byte> destination = stackalloc byte[1 + alg.HashLengthInBytes];
 
         data.CalculateHash(alg, destination);
 
@@ -208,10 +208,10 @@ internal static class StringExtensions
     // ReSharper disable once InconsistentNaming
     private static string Fnv1a256s(this string data)
     {
-        using HashAlgorithm alg = new Fnv1a256();
+        NonCryptographicHashAlgorithm alg = new Fnv1a256();
 
         // ReSharper disable once ComplexConditionExpression
-        Span<byte> destination = stackalloc byte[1 + (alg.HashSize / 8)];
+        Span<byte> destination = stackalloc byte[1 + alg.HashLengthInBytes];
 
         data.CalculateHash(alg, destination);
 
@@ -228,10 +228,10 @@ internal static class StringExtensions
     // ReSharper disable once InconsistentNaming
     private static string Fnv1a512s(this string data)
     {
-        using HashAlgorithm alg = new Fnv1a512();
+        NonCryptographicHashAlgorithm alg = new Fnv1a512();
 
         // ReSharper disable once ComplexConditionExpression
-        Span<byte> destination = stackalloc byte[1 + (alg.HashSize / 8)];
+        Span<byte> destination = stackalloc byte[1 + alg.HashLengthInBytes];
 
         data.CalculateHash(alg, destination);
 
@@ -254,10 +254,10 @@ internal static class StringExtensions
     // ReSharper disable once TooManyDeclarations
     private static string Fnv1a1024s(this string data)
     {
-        using HashAlgorithm alg = new Fnv1a1024();
+        NonCryptographicHashAlgorithm alg = new Fnv1a1024();
 
         // ReSharper disable once ComplexConditionExpression
-        Span<byte> destination = stackalloc byte[1 + (alg.HashSize / 8)];
+        Span<byte> destination = stackalloc byte[1 + alg.HashLengthInBytes];
 
         data.CalculateHash(alg, destination);
 
@@ -284,7 +284,7 @@ internal static class StringExtensions
     /// <param name="data">The string data to hash.</param>
     /// <param name="alg">The hash algorithm.</param>
     /// <param name="destination">The destination in which to place the hash result.</param>
-    private static void CalculateHash(this string data, HashAlgorithm alg, Span<byte> destination)
+    private static void CalculateHash(this string data, NonCryptographicHashAlgorithm alg, Span<byte> destination)
     {
         int inputByteCount = UTF8.GetByteCount(data);
         Span<byte> bytes = inputByteCount < 1024
@@ -292,6 +292,7 @@ internal static class StringExtensions
             : new byte[inputByteCount];
 
         UTF8.GetBytes(data, bytes);
-        _ = alg.TryComputeHash(bytes, destination, out int _);
+        alg.Append(bytes);
+        _ = alg.TryGetCurrentHash(destination, out int _);
     }
 }

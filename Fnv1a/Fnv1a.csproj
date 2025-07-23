@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>Fnv1a</RootNamespace>
     <AssemblyName>Fnv1a</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Authors>Charles J. Christie II</Authors>
     <Company />
-    <Description>A .NET Standard/Core port of Fnv1a originally by jslicer.</Description>
+    <Description>A .NET Core port of Fnv1a originally by jslicer.</Description>
     <RepositoryUrl>https://github.com/sonicbhoc/FNV-1a</RepositoryUrl>
     <Copyright />
     <PackageProjectUrl>https://github.com/sonicbhoc/FNV-1a</PackageProjectUrl>
@@ -44,10 +44,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.12.0-beta1.25155.1">
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="5.0.0-1.25277.114">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="MissingValues" Version="2.1.4" />
     <PackageReference Include="SecurityCodeScan.VS2019" Version="5.6.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -56,6 +57,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="System.IO.Hashing" Version="9.0.6" />
   </ItemGroup>
 
 </Project>

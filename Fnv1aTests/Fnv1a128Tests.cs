@@ -11,10 +11,8 @@
 namespace Fnv1aTests;
 
 using System;
-using System.Globalization;
 using System.IO;
-using System.Numerics;
-using System.Security.Cryptography;
+using System.IO.Hashing;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,304 +21,212 @@ using Fnv1a;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using static System.Globalization.CultureInfo;
-using static System.Globalization.NumberStyles;
-using static System.Numerics.BigInteger;
 using static System.Text.Encoding;
 using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
-/// <inheritdoc />
 /// <summary>
 /// Tests the FNV-1a 128-bit algorithm.
 /// </summary>
 [TestClass]
-//// ReSharper disable once InconsistentNaming
-//// ReSharper disable once ClassTooBig
 #pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable S101 // Types should be named in PascalCase
-public sealed class Fnv1a128Tests : IDisposable
+// ReSharper disable once InconsistentNaming
+// ReSharper disable once UnusedType.Global
+public sealed class Fnv1a128Tests
 #pragma warning restore S101 // Types should be named in PascalCase
 #pragma warning restore IDE0079 // Remove unnecessary suppression
 {
     /// <summary>
     /// The hash algorithm being tested.
     /// </summary>
-    private HashAlgorithm _alg = null!;
+    private NonCryptographicHashAlgorithm _alg = null!;
 
     /// <summary>
     /// The method to run before each test.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     [TestInitialize]
-    public void Initialize() => _alg = new Fnv1a128();
-
-    /// <summary>
-    /// The method to run after each test.
-    /// </summary>
-    [TestCleanup]
-    public void Cleanup() => Dispose();
-
-    /// <inheritdoc />
-    /// <summary>
-    /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-    /// </summary>
-    public void Dispose() => _alg.Dispose();
+    //// ReSharper disable once UnusedMember.Global
+    public void Initialize()
+    {
+        _alg = new Fnv1a128();
+        _alg.Reset();
+    }
 
     /// <summary>
     /// Tests the empty string against the known vector result.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once InconsistentNaming
     public void TestVector1() => AreEqual(
-        Parse("6C62272E07BB014262B821756295C58D", AllowHexSpecifier, InvariantCulture),
+        new(0x6C62272E07BB0142UL, 0x62B821756295C58DUL),
         Fnv1a128(string.Empty));
 
     /// <summary>
     /// Tests the empty string against the known vector result.
     /// </summary>
     /// <returns>An asynchronous <see cref="Task" />.</returns>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public async Task TestVector1Async()
     {
         using CancellationTokenSource cts = new();
         AreEqual(
-            Parse("6C62272E07BB014262B821756295C58D", AllowHexSpecifier, InvariantCulture),
+            new(0x6C62272E07BB0142UL, 0x62B821756295C58DUL),
             await Fnv1a128Async(string.Empty, cts.Token).ConfigureAwait(true));
     }
 
     /// <summary>
     /// Tests the empty string against the known vector result.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public void TestVector1Try() => AreEqual(
-        Parse("6C62272E07BB014262B821756295C58D", AllowHexSpecifier, InvariantCulture),
+        new(0x6C62272E07BB0142UL, 0x62B821756295C58DUL),
         Fnv1a128Try(string.Empty));
 
     /// <summary>
     /// Tests the string "a" against the known vector result.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public void TestVector2() => AreEqual(
-        Parse("0D228CB696F1A8CAF78912B704E4A8964", AllowHexSpecifier, InvariantCulture),
+        new(0x0D228CB696F1A8CAFUL, 0x78912B704E4A8964UL),
         Fnv1a128("a"));
 
     /// <summary>
     /// Tests the string "a" against the known vector result.
     /// </summary>
     /// <returns>An asynchronous <see cref="Task" />.</returns>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public async Task TestVector2Async()
     {
         using CancellationTokenSource cts = new();
         AreEqual(
-            Parse("0D228CB696F1A8CAF78912B704E4A8964", AllowHexSpecifier, InvariantCulture),
+            new(0x0D228CB696F1A8CAFUL, 0x78912B704E4A8964UL),
             await Fnv1a128Async("a", cts.Token).ConfigureAwait(true));
     }
 
     /// <summary>
     /// Tests the string "a" against the known vector result.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public void TestVector2Try() => AreEqual(
-        Parse("0D228CB696F1A8CAF78912B704E4A8964", AllowHexSpecifier, InvariantCulture),
+        new(0x0D228CB696F1A8CAFUL, 0x78912B704E4A8964UL),
         Fnv1a128Try("a"));
 
     /// <summary>
     /// Tests the string against the known vector result.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public void TestVector3() => AreEqual(
-        Parse("343E1662793C64BF6F0D3597BA446F18", AllowHexSpecifier, InvariantCulture),
+        new(0x343E1662793C64BFUL, 0x6F0D3597BA446F18UL),
         Fnv1a128("foobar"));
 
     /// <summary>
     /// Tests the string against the known vector result.
     /// </summary>
     /// <returns>An asynchronous <see cref="Task" />.</returns>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public async Task TestVector3Async()
     {
         using CancellationTokenSource cts = new();
         AreEqual(
-            Parse("343E1662793C64BF6F0D3597BA446F18", AllowHexSpecifier, InvariantCulture),
+            new(0x343E1662793C64BFUL, 0x6F0D3597BA446F18UL),
             await Fnv1a128Async("foobar", cts.Token).ConfigureAwait(true));
     }
 
     /// <summary>
     /// Tests the string against the known vector result.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public void TestVector3Try() => AreEqual(
-        Parse("343E1662793C64BF6F0D3597BA446F18", AllowHexSpecifier, InvariantCulture),
+        new(0x343E1662793C64BFUL, 0x6F0D3597BA446F18UL),
         Fnv1a128Try("foobar"));
 
     /// <summary>
     /// Tests the "Hello World" string against the known vector result.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
     public void TestHelloWorld() => AreEqual(
-        Parse("0CD7FECF582839515F3E6ECF66B967B77", AllowHexSpecifier, InvariantCulture),
+        new(0x0CD7FECF582839515UL, 0xF3E6ECF66B967B77UL),
         Fnv1a128("Hello World"));
 
     /// <summary>
     /// Tests the "Hello World" string against the known vector result.
     /// </summary>
     /// <returns>An asynchronous <see cref="Task" />.</returns>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
     [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
     public async Task TestHelloWorldAsync()
     {
         using CancellationTokenSource cts = new();
         AreEqual(
-            Parse("0CD7FECF582839515F3E6ECF66B967B77", AllowHexSpecifier, InvariantCulture),
+            new(0x0CD7FECF582839515UL, 0xF3E6ECF66B967B77UL),
             await Fnv1a128Async("Hello World", cts.Token).ConfigureAwait(true));
     }
 
     /// <summary>
     /// Tests the "Hello World" string against the known vector result.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
     public void TestHelloWorldTry() => AreEqual(
-        Parse("0CD7FECF582839515F3E6ECF66B967B77", AllowHexSpecifier, InvariantCulture),
+        new(0x0CD7FECF582839515UL, 0xF3E6ECF66B967B77UL),
         Fnv1a128Try("Hello World"));
 
     /// <summary>
     /// Tests the alternate prime and zero offset.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a
-    /// <see cref="NumberStyles" /> value.   -or-  style includes the
-    /// <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
     public void TestAlternatePrimeAndZeroOffset() =>
         ThrowsExactly<ArgumentOutOfRangeException>(() => _ = new Fnv1a128(
-            Parse("0000000001000000000000000000013B", AllowHexSpecifier, InvariantCulture),
-            Zero));
+            new(0x0000000001000000UL, 0x000000000000013BUL),
+            UInt128.Zero));
 
     /// <summary>
     /// Tests the alternate prime and non-zero offset.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
-    /// <exception cref="ArgumentException">startIndex is greater than or equal to the length of value minus 3, and
-    /// is less than or equal to the length of value minus 1.</exception>
-    /// <exception cref="ArgumentNullException">buffer is <see langword="null" />.</exception>
     [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
     public void TestAlternatePrimeAndOffset()
     {
-        using Fnv1a128 alg = new(
-            Parse("FFFFFFFFFEFFFFFFFFFFFFFFFFFFFEC4", AllowHexSpecifier, InvariantCulture),
-            Parse("939DD8D1F844FEBD9D47DE8A9D6A3A72", AllowHexSpecifier, InvariantCulture));
-        AreEqual(128, alg.HashSize);
-        AreEqual(Parse("FFFFFFFFFEFFFFFFFFFFFFFFFFFFFEC4", AllowHexSpecifier, InvariantCulture), alg.FnvPrime);
-        AreEqual(Parse("939DD8D1F844FEBD9D47DE8A9D6A3A72", AllowHexSpecifier, InvariantCulture), alg.FnvOffsetBasis);
+        Fnv1a128 alg = new(
+            new(0xFFFFFFFFFEFFFFFFUL, 0xFFFFFFFFFFFFFEC4UL),
+            new(0x939DD8D1F844FEBDUL, 0x9D47DE8A9D6A3A72UL));
+
+        AreEqual(16, alg.HashLengthInBytes);
+        AreEqual(new(0xFFFFFFFFFEFFFFFFUL, 0xFFFFFFFFFFFFFEC4UL), alg.FnvPrime);
+        AreEqual(new(0x939DD8D1F844FEBDUL, 0x9D47DE8A9D6A3A72UL), alg.FnvOffsetBasis);
+        alg.Append("foobar"u8.ToArray());
         AreEqual(
-            Parse("0AA2376793386FBA25B67E764D2093DD8", AllowHexSpecifier, InvariantCulture),
-            new(alg.ComputeHash("foobar"u8.ToArray()).AddZero()));
+            new(0x0AA2376793386FBA2UL, 0x5B67E764D2093DD8UL),
+            BitConverter.ToUInt128(alg.GetCurrentHash()));
     }
 
     /// <summary>
@@ -329,26 +235,26 @@ public sealed class Fnv1a128Tests : IDisposable
     /// <returns>An asynchronous <see cref="Task" />.</returns>
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
-    /// <exception cref="ArgumentException">startIndex is greater than or equal to the length of value minus 3, and
-    /// is less than or equal to the length of value minus 1.</exception>
-    /// <exception cref="ArgumentNullException">buffer is <see langword="null" />.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
     [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
     public async Task TestAlternatePrimeAndOffsetAsync()
     {
-        using Fnv1a128 alg = new(
-            Parse("FFFFFFFFFEFFFFFFFFFFFFFFFFFFFEC4", AllowHexSpecifier, InvariantCulture),
-            Parse("939DD8D1F844FEBD9D47DE8A9D6A3A72", AllowHexSpecifier, InvariantCulture));
-        AreEqual(128, alg.HashSize);
-        AreEqual(Parse("FFFFFFFFFEFFFFFFFFFFFFFFFFFFFEC4", AllowHexSpecifier, InvariantCulture), alg.FnvPrime);
-        AreEqual(Parse("939DD8D1F844FEBD9D47DE8A9D6A3A72", AllowHexSpecifier, InvariantCulture), alg.FnvOffsetBasis);
+        Fnv1a128 alg = new(
+            new(0xFFFFFFFFFEFFFFFFUL, 0xFFFFFFFFFFFFFEC4UL),
+            new(0x939DD8D1F844FEBDUL, 0x9D47DE8A9D6A3A72UL));
+
+        AreEqual(16, alg.HashLengthInBytes);
+        AreEqual(new(0xFFFFFFFFFEFFFFFFUL, 0xFFFFFFFFFFFFFEC4UL), alg.FnvPrime);
+        AreEqual(new(0x939DD8D1F844FEBDUL, 0x9D47DE8A9D6A3A72UL), alg.FnvOffsetBasis);
         using CancellationTokenSource cts = new();
         await using Stream stream = new MemoryStream("foobar"u8.ToArray());
+        await alg.AppendAsync(stream, cts.Token).ConfigureAwait(true);
 
-        BigInteger actual = new((await alg.ComputeHashAsync(stream, cts.Token).ConfigureAwait(false)).AddZero());
+        UInt128 actual = BitConverter.ToUInt128(alg.GetCurrentHash());
 
         AreEqual(
-            Parse("0AA2376793386FBA25B67E764D2093DD8", AllowHexSpecifier, InvariantCulture),
+            new(0x0AA2376793386FBA2UL, 0x5B67E764D2093DD8UL),
             actual);
     }
 
@@ -357,21 +263,22 @@ public sealed class Fnv1a128Tests : IDisposable
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
-    /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
     /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character
     /// Encoding in .NET)
     ///  -and-
     ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
     [TestMethod]
     //// ReSharper disable once TooManyDeclarations
+    //// ReSharper disable once UnusedMember.Global
     public void TestAlternatePrimeAndOffsetTry()
     {
-        using Fnv1a128 alg = new(
-            Parse("FFFFFFFFFEFFFFFFFFFFFFFFFFFFFEC4", AllowHexSpecifier, InvariantCulture),
-            Parse("939DD8D1F844FEBD9D47DE8A9D6A3A72", AllowHexSpecifier, InvariantCulture));
-        AreEqual(128, alg.HashSize);
-        AreEqual(Parse("FFFFFFFFFEFFFFFFFFFFFFFFFFFFFEC4", AllowHexSpecifier, InvariantCulture), alg.FnvPrime);
-        AreEqual(Parse("939DD8D1F844FEBD9D47DE8A9D6A3A72", AllowHexSpecifier, InvariantCulture), alg.FnvOffsetBasis);
+        Fnv1a128 alg = new(
+            new(0xFFFFFFFFFEFFFFFFUL, 0xFFFFFFFFFFFFFEC4UL),
+            new(0x939DD8D1F844FEBDUL, 0x9D47DE8A9D6A3A72UL));
+
+        AreEqual(16, alg.HashLengthInBytes);
+        AreEqual(new(0xFFFFFFFFFEFFFFFFUL, 0xFFFFFFFFFFFFFEC4UL), alg.FnvPrime);
+        AreEqual(new(0x939DD8D1F844FEBDUL, 0x9D47DE8A9D6A3A72UL), alg.FnvOffsetBasis);
 
         const string Data = "foobar";
         int inputByteCount = UTF8.GetByteCount(Data);
@@ -380,35 +287,37 @@ public sealed class Fnv1a128Tests : IDisposable
             : new byte[inputByteCount];
 
         UTF8.GetBytes(Data, bytes);
+        alg.Append(bytes);
 
-        // ReSharper disable once ComplexConditionExpression
-        Span<byte> destination = stackalloc byte[1 + (alg.HashSize / 8)];
-        bool result = alg.TryComputeHash(bytes, destination, out int bytesWritten);
+        Span<byte> destination = stackalloc byte[alg.HashLengthInBytes];
+        bool result = alg.TryGetCurrentHash(destination, out int bytesWritten);
 
         IsTrue(result);
-        IsTrue(destination.Length >= bytesWritten);
+        AreEqual(bytesWritten, destination.Length);
         AreEqual(
-            Parse("0AA2376793386FBA25B67E764D2093DD8", AllowHexSpecifier, InvariantCulture),
-            new(destination));
+            new(0x0AA2376793386FBA2UL, 0x5B67E764D2093DD8UL),
+            BitConverter.ToUInt128(destination));
     }
 
     /// <summary>
     /// Computes the FNV-1a 128-bit hash for the specified data using
-    /// <see cref="HashAlgorithm.ComputeHash(byte[])" />.
+    /// <see cref="NonCryptographicHashAlgorithm.GetCurrentHash()" />.
     /// </summary>
     /// <param name="data">The data.</param>
     /// <returns>The FNV-1a 128-bit hash of the specified data.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     //// ReSharper disable once InconsistentNaming
-    private BigInteger Fnv1a128(in string data)
+    private UInt128 Fnv1a128(in string data)
     {
-        AreEqual(128, _alg.HashSize);
-        return new(_alg.ComputeHash(UTF8.GetBytes(data)).AddZero());
+        AreEqual(16, _alg.HashLengthInBytes);
+        _alg.Append(UTF8.GetBytes(data));
+        return BitConverter.ToUInt128(_alg.GetCurrentHash());
     }
 
     /// <summary>
     /// Asynchronously computes the FNV-1a 128-bit hash for the specified data using
-    /// <see cref="HashAlgorithm.ComputeHashAsync(Stream, CancellationToken)" />.
+    /// <see cref="NonCryptographicHashAlgorithm.AppendAsync(Stream, CancellationToken)" /> and .
+    /// <see cref="NonCryptographicHashAlgorithm.GetCurrentHash()" />.
     /// </summary>
     /// <param name="data">The data.</param>
     /// <param name="token">The optional cancellation token.</param>
@@ -416,23 +325,25 @@ public sealed class Fnv1a128Tests : IDisposable
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
     //// ReSharper disable once InconsistentNaming
-    private async Task<BigInteger> Fnv1a128Async(string data, CancellationToken token = default)
+    private async Task<UInt128> Fnv1a128Async(string data, CancellationToken token = default)
     {
-        AreEqual(128, _alg.HashSize);
+        AreEqual(16, _alg.HashLengthInBytes);
         await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
-        return new((await _alg.ComputeHashAsync(stream, token).ConfigureAwait(false)).AddZero());
+        await _alg.AppendAsync(stream, token).ConfigureAwait(false);
+        return BitConverter.ToUInt128(_alg.GetCurrentHash());
     }
 
     /// <summary>
-    /// Computes the FNV-1a 128-bit hash for the specified data using <see cref="HashAlgorithm.TryComputeHash" />.
+    /// Computes the FNV-1a 128-bit hash for the specified data using
+    /// <see cref="NonCryptographicHashAlgorithm.TryGetCurrentHash" />.
     /// </summary>
     /// <param name="data">The data.</param>
     /// <returns>The FNV-1a 128-bit hash of the specified data.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     //// ReSharper disable once InconsistentNaming
-    private BigInteger Fnv1a128Try(in string data)
+    private UInt128 Fnv1a128Try(in string data)
     {
-        AreEqual(128, _alg.HashSize);
+        AreEqual(16, _alg.HashLengthInBytes);
 
         int inputByteCount = UTF8.GetByteCount(data);
         Span<byte> bytes = inputByteCount < 1024
@@ -441,12 +352,14 @@ public sealed class Fnv1a128Tests : IDisposable
 
         UTF8.GetBytes(data, bytes);
 
-        // ReSharper disable once ComplexConditionExpression
-        Span<byte> destination = stackalloc byte[1 + (_alg.HashSize / 8)];
-        bool result = _alg.TryComputeHash(bytes, destination, out int bytesWritten);
+        Span<byte> destination = stackalloc byte[_alg.HashLengthInBytes];
+
+        _alg.Append(bytes);
+
+        bool result = _alg.TryGetCurrentHash(destination, out int bytesWritten);
 
         IsTrue(result);
-        IsTrue(destination.Length >= bytesWritten);
-        return new(destination);
+        AreEqual(bytesWritten, destination.Length);
+        return BitConverter.ToUInt128(destination);
     }
 }

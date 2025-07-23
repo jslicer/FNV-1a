@@ -12,8 +12,8 @@ namespace Fnv1aTestVectorGenerator;
 
 using System;
 using System.IO;
+using System.IO.Hashing;
 using System.Numerics;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -175,10 +175,12 @@ internal static class AsyncStringExtensions
     // ReSharper disable once InconsistentNaming
     private static async Task<string> Fnv1a32sAsync(this string data, CancellationToken token = default)
     {
-        using HashAlgorithm alg = new Fnv1a32();
+        NonCryptographicHashAlgorithm alg = new Fnv1a32();
+
         await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+        await alg.AppendAsync(stream, token).ConfigureAwait(true);
         return "0x"
-            + ((uint)ToInt32(await alg.ComputeHashAsync(stream, token).ConfigureAwait(true), 0)).ToString("X8", InvariantCulture);
+            + ((uint)ToInt32(alg.GetCurrentHash(), 0)).ToString("X8", InvariantCulture);
     }
 
     /// <summary>
@@ -192,10 +194,12 @@ internal static class AsyncStringExtensions
     // ReSharper disable once InconsistentNaming
     private static async Task<string> Fnv1a64sAsync(this string data, CancellationToken token = default)
     {
-        using HashAlgorithm alg = new Fnv1a64();
+        NonCryptographicHashAlgorithm alg = new Fnv1a64();
+
         await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+        await alg.AppendAsync(stream, token).ConfigureAwait(true);
         return "0x"
-            + ((ulong)ToInt64(await alg.ComputeHashAsync(stream, token).ConfigureAwait(true), 0)).ToString("X16", InvariantCulture);
+            + ((ulong)ToInt64(alg.GetCurrentHash(), 0)).ToString("X16", InvariantCulture);
     }
 
     /// <summary>
@@ -209,11 +213,12 @@ internal static class AsyncStringExtensions
     // ReSharper disable once InconsistentNaming
     private static async Task<string> Fnv1a128sAsync(this string data, CancellationToken token = default)
     {
-        using HashAlgorithm alg = new Fnv1a128();
-        await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+        NonCryptographicHashAlgorithm alg = new Fnv1a128();
 
-        string value = new BigInteger((await alg.ComputeHashAsync(stream, token).ConfigureAwait(true)).AddZero())
-            .ToString("X32", InvariantCulture);
+        await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+        await alg.AppendAsync(stream, token).ConfigureAwait(true);
+
+        string value = new BigInteger(alg.GetCurrentHash().AddZero()).ToString("X32", InvariantCulture);
 
         return $"0x{value.AsSpan(value.Length - 32)}";
     }
@@ -229,11 +234,12 @@ internal static class AsyncStringExtensions
     // ReSharper disable once InconsistentNaming
     private static async Task<string> Fnv1a256sAsync(this string data, CancellationToken token = default)
     {
-        using HashAlgorithm alg = new Fnv1a256();
-        await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+        NonCryptographicHashAlgorithm alg = new Fnv1a256();
 
-        string value = new BigInteger((await alg.ComputeHashAsync(stream, token).ConfigureAwait(true)).AddZero())
-            .ToString("X64", InvariantCulture);
+        await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+        await alg.AppendAsync(stream, token).ConfigureAwait(true);
+
+        string value = new BigInteger(alg.GetCurrentHash().AddZero()).ToString("X64", InvariantCulture);
 
         return $"0x{value.AsSpan(value.Length - 64)}";
     }
@@ -249,10 +255,12 @@ internal static class AsyncStringExtensions
     // ReSharper disable once InconsistentNaming
     private static async Task<string> Fnv1a512sAsync(this string data, CancellationToken token = default)
     {
-        using HashAlgorithm alg = new Fnv1a512();
-        await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+        NonCryptographicHashAlgorithm alg = new Fnv1a512();
 
-        BigInteger hash = new((await alg.ComputeHashAsync(stream, token).ConfigureAwait(true)).AddZero());
+        await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+        await alg.AppendAsync(stream, token).ConfigureAwait(true);
+
+        BigInteger hash = new(alg.GetCurrentHash().AddZero());
         string value1 = (hash >> 256).ToString("X64", InvariantCulture);
         string value2 = (hash & Bitmasks.Bottom64Bytes).ToString("X64", InvariantCulture);
 
@@ -274,10 +282,12 @@ internal static class AsyncStringExtensions
     // ReSharper disable once TooManyDeclarations
     private static async Task<string> Fnv1a1024sAsync(this string data, CancellationToken token = default)
     {
-        using HashAlgorithm alg = new Fnv1a1024();
-        await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+        NonCryptographicHashAlgorithm alg = new Fnv1a1024();
 
-        BigInteger hash = new((await alg.ComputeHashAsync(stream, token).ConfigureAwait(true)).AddZero());
+        await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+        await alg.AppendAsync(stream, token).ConfigureAwait(true);
+
+        BigInteger hash = new(alg.GetCurrentHash().AddZero());
         string value1 = (hash >> 768).ToString("X64", InvariantCulture);
         //// ReSharper disable ComplexConditionExpression
         string value2 = ((hash & Bitmasks.Second64Bytes) >> 512).ToString("X64", InvariantCulture);

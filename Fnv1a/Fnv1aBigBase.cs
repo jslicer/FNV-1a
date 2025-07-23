@@ -7,22 +7,21 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-// Ignore Spelling: Fnv ib
+// Ignore Spelling: Fnv
 namespace Fnv1a;
 
 using System;
-using System.Diagnostics.CodeAnalysis;
+using System.IO.Hashing;
 using System.Numerics;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
 
-/// <inheritdoc cref="HashAlgorithm" />
+/// <inheritdoc cref="NonCryptographicHashAlgorithm" />
 /// <summary>
 /// Implements the FNV-1a variant hashing algorithm for subtypes using the BigInteger class.
 /// </summary>
 // ReSharper disable once InconsistentNaming
 #pragma warning disable S101 // Types should be named in PascalCase
-public abstract class Fnv1aBigBase : HashAlgorithm
+public abstract class Fnv1aBigBase : NonCryptographicHashAlgorithm
 #pragma warning restore S101 // Types should be named in PascalCase
 {
     /// <summary>
@@ -35,7 +34,7 @@ public abstract class Fnv1aBigBase : HashAlgorithm
     /// </summary>
     private BigInteger _hash;
 
-    /// <inheritdoc cref="HashAlgorithm" />
+    /// <inheritdoc cref="NonCryptographicHashAlgorithm" />
     /// <summary>
     /// Initializes a new instance of the <see cref="Fnv1aBigBase" /> class.
     /// </summary>
@@ -50,6 +49,7 @@ public abstract class Fnv1aBigBase : HashAlgorithm
         in BigInteger prime,
         in BigInteger offsetBasis,
         in int hashSizeValue)
+        : base(1 + (hashSizeValue >> 3))
     {
         if (offsetBasis.IsZero)
         {
@@ -62,7 +62,6 @@ public abstract class Fnv1aBigBase : HashAlgorithm
         _bitMask = bitMask;
         FnvPrime = prime;
         FnvOffsetBasis = offsetBasis;
-        HashSizeValue = hashSizeValue;
         Init();
     }
 
@@ -84,91 +83,39 @@ public abstract class Fnv1aBigBase : HashAlgorithm
 
     /// <inheritdoc />
     /// <summary>
-    /// Initializes an implementation of the <see cref="HashAlgorithm" /> class.
+    /// When overridden in a derived class, appends the contents of <paramref name="source" /> to the data already
+    /// processed for the current hash computation.
     /// </summary>
-    public override sealed void Initialize() => Init();
-
-    /// <inheritdoc />
-    /// <summary>
-    /// When overridden in a derived class, routes data written to the object into the hash algorithm for computing
-    /// the hash.
-    /// </summary>
-    /// <param name="array">The input to compute the hash code for.</param>
-    /// <param name="ibStart">The offset into the byte array from which to begin using data.</param>
-    /// <param name="cbSize">The number of bytes in the byte array to use as data.</param>
-#pragma warning disable IDE0079 // Remove unnecessary suppression
-    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
-#pragma warning restore IDE0079 // Remove unnecessary suppression
-    protected override void HashCore(byte[] array, int ibStart, int cbSize)
-    {
-        for (int i = ibStart; i < cbSize; i++)
-        {
-            unchecked
-            {
-                _hash ^= array[i];
-                _hash = (_hash * FnvPrime) & _bitMask;
-            }
-        }
-    }
-
-    /// <summary>
-    /// Routes data written to the object into the hash algorithm for computing the hash.
-    /// </summary>
-    /// <param name="source">The input to compute the hash code for.</param>
-    protected override void HashCore(ReadOnlySpan<byte> source)
+    /// <param name="source">The data to process.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    public override void Append(ReadOnlySpan<byte> source)
     {
         foreach (byte b in source)
         {
-            unchecked
-            {
-                _hash ^= b;
-                _hash = (_hash * FnvPrime) & _bitMask;
-            }
+            _hash ^= b;
+            _hash = (_hash * FnvPrime) & _bitMask;
         }
     }
 
     /// <inheritdoc />
     /// <summary>
-    /// When overridden in a derived class, finalizes the hash computation after the last data is processed by the
-    /// cryptographic stream object.
+    /// When overridden in a derived class, resets the hash computation to the initial state.
     /// </summary>
-    /// <returns>
-    /// The computed hash code.
-    /// </returns>
-    protected override byte[] HashFinal()
-    {
-        // ReSharper disable once ComplexConditionExpression
-        Span<byte> bytes = stackalloc byte[(HashSize / 8) + 1];
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override void Reset() => Init();
 
-        GetHashByteSpan(bytes, out _);
-        return bytes.ToArray();
-    }
-
+    /// <inheritdoc />
     /// <summary>
-    /// Attempts to finalize the hash computation after the last data is processed by the hash algorithm.
+    /// When overridden in a derived class, writes the computed hash value to <paramref name="destination" /> without
+    /// modifying accumulated state.
     /// </summary>
-    /// <param name="destination">The buffer to receive the hash value.</param>
-    /// <param name="bytesWritten">When this method returns, the total number of bytes written into
-    /// <paramref name="destination" />. This parameter is treated as uninitialized.</param>
-    /// <returns><see langword="true" /> if <paramref name="destination" /> is long enough to receive the hash
-    /// value; otherwise, <see langword="false" />.</returns>
-    protected override bool TryHashFinal(Span<byte> destination, out int bytesWritten) =>
-        GetHashByteSpan(destination, out bytesWritten);
+    /// <param name="destination">The buffer that receives the computed hash value.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected override void GetCurrentHashCore(Span<byte> destination) => _hash.TryWriteBytes(destination, out _);
 
     /// <summary>
     /// Initializes the hash for this instance.
     /// </summary>
-    private void Init() => _hash = FnvOffsetBasis;
-
-    /// <summary>
-    /// Gets the span of bytes representing the hash value.
-    /// </summary>
-    /// <param name="destination">The buffer to receive the hash value.</param>
-    /// <param name="bytesWritten">When this method returns, the total number of bytes written into
-    /// <paramref name="destination" />. This parameter is treated as uninitialized.</param>
-    /// <returns><see langword="true" /> if <paramref name="destination" /> is long enough to receive the hash
-    /// value; otherwise, <see langword="false" />.</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private bool GetHashByteSpan(Span<byte> destination, out int bytesWritten) =>
-        _hash.TryWriteBytes(destination, out bytesWritten);
+    private void Init() => _hash = FnvOffsetBasis;
 }

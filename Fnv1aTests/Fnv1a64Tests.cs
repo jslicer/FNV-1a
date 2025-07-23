@@ -12,7 +12,7 @@ namespace Fnv1aTests;
 
 using System;
 using System.IO;
-using System.Security.Cryptography;
+using System.IO.Hashing;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,47 +24,40 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static System.Text.Encoding;
 using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
-/// <inheritdoc />
 /// <summary>
 /// Tests the FNV-1a 64-bit algorithm.
 /// </summary>
 [TestClass]
-//// ReSharper disable once InconsistentNaming
 #pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable S101 // Types should be named in PascalCase
-public sealed class Fnv1a64Tests : IDisposable
+// ReSharper disable once InconsistentNaming
+// ReSharper disable once UnusedType.Global
+public sealed class Fnv1a64Tests
 #pragma warning restore S101 // Types should be named in PascalCase
 #pragma warning restore IDE0079 // Remove unnecessary suppression
 {
     /// <summary>
     /// The hash algorithm being tested.
     /// </summary>
-    private HashAlgorithm _alg = null!;
+    private NonCryptographicHashAlgorithm _alg = null!;
 
     /// <summary>
     /// The method to run before each test.
     /// </summary>
     [TestInitialize]
-    public void Initialize() => _alg = new Fnv1a64();
-
-    /// <summary>
-    /// The method to run after each test.
-    /// </summary>
-    [TestCleanup]
-    public void Cleanup() => Dispose();
-
-    /// <inheritdoc />
-    /// <summary>
-    /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-    /// </summary>
-    public void Dispose() => _alg.Dispose();
+    //// ReSharper disable once UnusedMember.Global
+    public void Initialize()
+    {
+        _alg = new Fnv1a64();
+        _alg.Reset();
+    }
 
     /// <summary>
     /// Tests the empty string against the known vector result.
     /// </summary>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public void TestVector1() => AreEqual(0xCBF29CE484222325UL, Fnv1a64(string.Empty));
 
     /// <summary>
@@ -74,7 +67,7 @@ public sealed class Fnv1a64Tests : IDisposable
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public async Task TestVector1Async()
     {
         using CancellationTokenSource cts = new();
@@ -86,7 +79,7 @@ public sealed class Fnv1a64Tests : IDisposable
     /// </summary>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public void TestVector1Try() => AreEqual(0xCBF29CE484222325UL, Fnv1a64Try(string.Empty));
 
     /// <summary>
@@ -94,7 +87,7 @@ public sealed class Fnv1a64Tests : IDisposable
     /// </summary>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public void TestVector2() => AreEqual(0xAF63DC4C8601EC8CUL, Fnv1a64("a"));
 
     /// <summary>
@@ -104,7 +97,7 @@ public sealed class Fnv1a64Tests : IDisposable
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public async Task TestVector2Async()
     {
         using CancellationTokenSource cts = new();
@@ -116,7 +109,7 @@ public sealed class Fnv1a64Tests : IDisposable
     /// </summary>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public void TestVector2Try() => AreEqual(0xAF63DC4C8601EC8CUL, Fnv1a64Try("a"));
 
     /// <summary>
@@ -124,7 +117,7 @@ public sealed class Fnv1a64Tests : IDisposable
     /// </summary>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public void TestVector3() => AreEqual(0x85944171F73967E8UL, Fnv1a64("foobar"));
 
     /// <summary>
@@ -134,7 +127,7 @@ public sealed class Fnv1a64Tests : IDisposable
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public async Task TestVector3Async()
     {
         using CancellationTokenSource cts = new();
@@ -146,7 +139,7 @@ public sealed class Fnv1a64Tests : IDisposable
     /// </summary>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public void TestVector3Try() => AreEqual(0x85944171F73967E8UL, Fnv1a64Try("foobar"));
 
     /// <summary>
@@ -154,6 +147,7 @@ public sealed class Fnv1a64Tests : IDisposable
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
     public void TestAlternatePrimeAndZeroOffset() =>
         ThrowsExactly<ArgumentOutOfRangeException>(() => _ = new Fnv1a64(0x00000100000001B3UL, 0x0UL));
 
@@ -166,13 +160,15 @@ public sealed class Fnv1a64Tests : IDisposable
     /// is less than or equal to the length of value minus 1.</exception>
     /// <exception cref="ArgumentNullException">buffer is <see langword="null" />.</exception>
     [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
     public void TestAlternatePrimeAndOffset()
     {
-        using Fnv1a64 alg = new(0xFFFFFEFFFFFFFE4CU, 0x340D631B7BDDDCDAU);
-        AreEqual(64, alg.HashSize);
+        Fnv1a64 alg = new(0xFFFFFEFFFFFFFE4CU, 0x340D631B7BDDDCDAU);
+        AreEqual(8, alg.HashLengthInBytes);
         AreEqual(0xFFFFFEFFFFFFFE4CU, alg.FnvPrime);
         AreEqual(0x340D631B7BDDDCDAU, alg.FnvOffsetBasis);
-        AreEqual(0x85944171F73967E8U, (ulong)BitConverter.ToInt64(_alg.ComputeHash("foobar"u8.ToArray()), 0));
+        _alg.Append("foobar"u8.ToArray());
+        AreEqual(0x85944171F73967E8U, (ulong)BitConverter.ToInt64(_alg.GetCurrentHash(), 0));
     }
 
     /// <summary>
@@ -186,17 +182,18 @@ public sealed class Fnv1a64Tests : IDisposable
     /// <exception cref="ArgumentNullException">buffer is <see langword="null" />.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
     [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
     public async Task TestAlternatePrimeAndOffsetAsync()
     {
-        using Fnv1a64 alg = new(0xFFFFFEFFFFFFFE4CU, 0x340D631B7BDDDCDAU);
-        AreEqual(64, alg.HashSize);
+        Fnv1a64 alg = new(0xFFFFFEFFFFFFFE4CU, 0x340D631B7BDDDCDAU);
+        AreEqual(8, alg.HashLengthInBytes);
         AreEqual(0xFFFFFEFFFFFFFE4CU, alg.FnvPrime);
         AreEqual(0x340D631B7BDDDCDAU, alg.FnvOffsetBasis);
         using CancellationTokenSource cts = new();
         await using Stream stream = new MemoryStream("foobar"u8.ToArray());
+        await _alg.AppendAsync(stream, cts.Token).ConfigureAwait(true);
 
-        ulong actual = (ulong)BitConverter.ToInt64(
-            await _alg.ComputeHashAsync(stream, cts.Token).ConfigureAwait(false), 0);
+        ulong actual = (ulong)BitConverter.ToInt64(_alg.GetCurrentHash(), 0);
 
         AreEqual(0x85944171F73967E8U, actual);
     }
@@ -213,10 +210,11 @@ public sealed class Fnv1a64Tests : IDisposable
     ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
     [TestMethod]
     //// ReSharper disable once TooManyDeclarations
+    //// ReSharper disable once UnusedMember.Global
     public void TestAlternatePrimeAndOffsetTry()
     {
-        using Fnv1a64 alg = new(0xFFFFFEFFFFFFFE4CU, 0x340D631B7BDDDCDAU);
-        AreEqual(64, alg.HashSize);
+        Fnv1a64 alg = new(0xFFFFFEFFFFFFFE4CU, 0x340D631B7BDDDCDAU);
+        AreEqual(8, alg.HashLengthInBytes);
         AreEqual(0xFFFFFEFFFFFFFE4CU, alg.FnvPrime);
         AreEqual(0x340D631B7BDDDCDAU, alg.FnvOffsetBasis);
 
@@ -228,18 +226,21 @@ public sealed class Fnv1a64Tests : IDisposable
 
         UTF8.GetBytes(Data, bytes);
 
-        // ReSharper disable once ComplexConditionExpression
-        Span<byte> destination = stackalloc byte[1 + (_alg.HashSize / 8)];
-        bool result = _alg.TryComputeHash(bytes, destination, out int bytesWritten);
+        Span<byte> destination = stackalloc byte[_alg.HashLengthInBytes];
+
+        _alg.Append(bytes);
+
+        bool result = _alg.TryGetCurrentHash(destination, out int bytesWritten);
 
         IsTrue(result);
-        IsTrue(destination.Length >= bytesWritten);
+        IsGreaterThanOrEqualTo(bytesWritten, destination.Length);
         AreEqual(0x85944171F73967E8U, (ulong)BitConverter.ToInt64(destination));
     }
 
     /// <summary>
     /// Computes the FNV-1a 64-bit hash for the specified data using
-    /// <see cref="HashAlgorithm.ComputeHash(byte[])" />.
+    /// <see cref="NonCryptographicHashAlgorithm.Append(byte[])" /> and
+    /// <see cref="NonCryptographicHashAlgorithm.GetCurrentHash()" />.
     /// </summary>
     /// <param name="data">The data.</param>
     /// <returns>The FNV-1a 64-bit hash of the specified data.</returns>
@@ -247,13 +248,15 @@ public sealed class Fnv1a64Tests : IDisposable
     //// ReSharper disable once InconsistentNaming
     private ulong Fnv1a64(in string data)
     {
-        AreEqual(64, _alg.HashSize);
-        return (ulong)BitConverter.ToInt64(_alg.ComputeHash(UTF8.GetBytes(data)), 0);
+        AreEqual(8, _alg.HashLengthInBytes);
+        _alg.Append(UTF8.GetBytes(data));
+        return (ulong)BitConverter.ToInt64(_alg.GetCurrentHash(), 0);
     }
 
     /// <summary>
     /// Asynchronously computes the FNV-1a 64-bit hash for the specified data using
-    /// <see cref="HashAlgorithm.ComputeHashAsync(Stream, CancellationToken)" />.
+    /// <see cref="NonCryptographicHashAlgorithm.AppendAsync(Stream, CancellationToken)" /> and
+    /// <see cref="NonCryptographicHashAlgorithm.GetCurrentHash()" />.
     /// </summary>
     /// <param name="data">The data.</param>
     /// <param name="token">The optional cancellation token.</param>
@@ -263,14 +266,16 @@ public sealed class Fnv1a64Tests : IDisposable
     //// ReSharper disable once InconsistentNaming
     private async Task<ulong> Fnv1a64Async(string data, CancellationToken token = default)
     {
-        AreEqual(64, _alg.HashSize);
+        AreEqual(8, _alg.HashLengthInBytes);
         await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
-        return (ulong)BitConverter.ToInt64(
-            await _alg.ComputeHashAsync(stream, token).ConfigureAwait(false), 0);
+        await _alg.AppendAsync(stream, token).ConfigureAwait(false);
+        return (ulong)BitConverter.ToInt64(_alg.GetCurrentHash(), 0);
     }
 
     /// <summary>
-    /// Computes the FNV-1a 64-bit hash for the specified data using <see cref="HashAlgorithm.TryComputeHash" />.
+    /// Computes the FNV-1a 64-bit hash for the specified data using
+    /// <see cref="NonCryptographicHashAlgorithm.Append(byte[])" /> and
+    /// <see cref="NonCryptographicHashAlgorithm.TryGetCurrentHash" />.
     /// </summary>
     /// <param name="data">The data.</param>
     /// <returns>The FNV-1a 64-bit hash of the specified data.</returns>
@@ -278,7 +283,7 @@ public sealed class Fnv1a64Tests : IDisposable
     //// ReSharper disable once InconsistentNaming
     private ulong Fnv1a64Try(in string data)
     {
-        AreEqual(64, _alg.HashSize);
+        AreEqual(8, _alg.HashLengthInBytes);
 
         int inputByteCount = UTF8.GetByteCount(data);
         Span<byte> bytes = inputByteCount < 1024
@@ -287,12 +292,14 @@ public sealed class Fnv1a64Tests : IDisposable
 
         UTF8.GetBytes(data, bytes);
 
-        // ReSharper disable once ComplexConditionExpression
-        Span<byte> destination = stackalloc byte[1 + (_alg.HashSize / 8)];
-        bool result = _alg.TryComputeHash(bytes, destination, out int bytesWritten);
+        Span<byte> destination = stackalloc byte[_alg.HashLengthInBytes];
+
+        _alg.Append(bytes);
+
+        bool result = _alg.TryGetCurrentHash(destination, out int bytesWritten);
 
         IsTrue(result);
-        IsTrue(destination.Length >= bytesWritten);
+        IsGreaterThanOrEqualTo(bytesWritten, destination.Length);
         return (ulong)BitConverter.ToInt64(destination);
     }
 }
