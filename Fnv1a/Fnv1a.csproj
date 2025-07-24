@@ -6,20 +6,28 @@
     <AssemblyName>Fnv1a</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Authors>Charles J. Christie II</Authors>
+    <Authors>Always Elucidated Solution Pioneers, LLC</Authors>
     <Company />
-    <Description>A .NET Core port of Fnv1a originally by jslicer.</Description>
-    <RepositoryUrl>https://github.com/sonicbhoc/FNV-1a</RepositoryUrl>
+    <Description>A .NET Core implementation of FNV-1a.</Description>
+    <RepositoryUrl>https://github.com/jslicer/FNV-1a</RepositoryUrl>
     <Copyright />
-    <PackageProjectUrl>https://github.com/sonicbhoc/FNV-1a</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/jslicer/FNV-1a</PackageProjectUrl>
     <PackageTags>FNV-1a</PackageTags>
     <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>cjcii.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <LangVersion>preview</LangVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <InformationalVersion>2.0.0</InformationalVersion>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <AnalysisLevel>preview-all</AnalysisLevel>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -44,6 +52,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="5.0.0-1.25277.114">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -58,6 +81,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.IO.Hashing" Version="9.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

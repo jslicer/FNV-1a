@@ -35,9 +35,11 @@ using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 [TestClass]
 #pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable S101 // Types should be named in PascalCase
+#pragma warning disable CA1515 // Consider making public types internal
 // ReSharper disable once InconsistentNaming
 // ReSharper disable once UnusedType.Global
 public sealed class Fnv1a1024Tests
+#pragma warning restore CA1515 // Consider making public types internal
 #pragma warning restore S101 // Types should be named in PascalCase
 #pragma warning restore IDE0079 // Remove unnecessary suppression
 {
@@ -289,7 +291,9 @@ public sealed class Fnv1a1024Tests
         AreEqual(Parse("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE72", AllowHexSpecifier, InvariantCulture), alg.FnvPrime);
         AreEqual(Parse("FFFFFFFFFFFFFFFFFFA085898A7133B2CD1A92A5A6EFD748B4D603BDDC02525E93C40CB125C98B2565DE26FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB392814918C7FD8CBAEF5AAA0DA933FFA51AA942173363956C4DE500B4E938E116F4C", AllowHexSpecifier, InvariantCulture), alg.FnvOffsetBasis);
         using CancellationTokenSource cts = new();
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
         await using Stream stream = new MemoryStream("foobar"u8.ToArray());
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await alg.AppendAsync(stream, cts.Token).ConfigureAwait(false);
 
         BigInteger actual = new(alg.GetCurrentHash());
@@ -327,7 +331,7 @@ public sealed class Fnv1a1024Tests
             ? stackalloc byte[inputByteCount]
             : new byte[inputByteCount];
 
-        UTF8.GetBytes(Data, bytes);
+        AreEqual(inputByteCount, UTF8.GetBytes(Data, bytes));
         alg.Append(bytes);
 
         Span<byte> destination = stackalloc byte[alg.HashLengthInBytes];
@@ -369,7 +373,9 @@ public sealed class Fnv1a1024Tests
     private async Task<BigInteger> Fnv1a1024Async(string data, CancellationToken token = default)
     {
         AreEqual(128, _alg.HashLengthInBytes - 1);
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
         await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await _alg.AppendAsync(stream, token).ConfigureAwait(false);
         return new(_alg.GetCurrentHash());
     }
@@ -391,7 +397,7 @@ public sealed class Fnv1a1024Tests
             ? stackalloc byte[inputByteCount]
             : new byte[inputByteCount];
 
-        UTF8.GetBytes(data, bytes);
+        AreEqual(inputByteCount, UTF8.GetBytes(data, bytes));
 
         Span<byte> destination = stackalloc byte[_alg.HashLengthInBytes];
 

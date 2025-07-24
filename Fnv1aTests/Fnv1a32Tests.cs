@@ -30,9 +30,11 @@ using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 [TestClass]
 #pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable S101 // Types should be named in PascalCase
+#pragma warning disable CA1515 // Consider making public types internal
 // ReSharper disable once InconsistentNaming
 // ReSharper disable once UnusedType.Global
 public sealed class Fnv1a32Tests
+#pragma warning restore CA1515 // Consider making public types internal
 #pragma warning restore S101 // Types should be named in PascalCase
 #pragma warning restore IDE0079 // Remove unnecessary suppression
 {
@@ -192,7 +194,9 @@ public sealed class Fnv1a32Tests
         AreEqual(0xB3CB2E29U, alg.FnvPrime);
         AreEqual(0x319712C3U, alg.FnvOffsetBasis);
         using CancellationTokenSource cts = new();
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
         await using Stream stream = new MemoryStream("foobar"u8.ToArray());
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await _alg.AppendAsync(stream, cts.Token).ConfigureAwait(true);
 
         uint actual = (uint)BitConverter.ToInt32(_alg.GetCurrentHash(), 0);
@@ -227,7 +231,7 @@ public sealed class Fnv1a32Tests
             ? stackalloc byte[inputByteCount]
             : new byte[inputByteCount];
 
-        UTF8.GetBytes(Data, bytes);
+        AreEqual(inputByteCount, UTF8.GetBytes(Data, bytes));
 
         Span<byte> destination = stackalloc byte[_alg.HashLengthInBytes];
 
@@ -270,7 +274,9 @@ public sealed class Fnv1a32Tests
     private async Task<uint> Fnv1a32Async(string data, CancellationToken token = default)
     {
         AreEqual(4, _alg.HashLengthInBytes);
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
         await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await _alg.AppendAsync(stream, token).ConfigureAwait(true);
         return (uint)BitConverter.ToInt32(_alg.GetCurrentHash(), 0);
     }
@@ -293,7 +299,7 @@ public sealed class Fnv1a32Tests
             ? stackalloc byte[inputByteCount]
             : new byte[inputByteCount];
 
-        UTF8.GetBytes(data, bytes);
+        AreEqual(inputByteCount, UTF8.GetBytes(data, bytes));
 
         Span<byte> destination = stackalloc byte[_alg.HashLengthInBytes];
 

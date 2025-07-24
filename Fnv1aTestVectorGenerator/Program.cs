@@ -21,7 +21,7 @@ using static System.Text.Encoding;
 /// <summary>
 /// Contains the entry point of the application.
 /// </summary>
-public static class Program
+internal static class Program
 {
     /// <summary>
     /// Defines the entry point of the application.
@@ -33,7 +33,7 @@ public static class Program
     /// <exception cref="InvalidOperationException">The reader is currently in use by a previous read
     /// operation.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    public static async Task Main()
+    private static async Task Main()
     {
         TextWriter writer = TextWriter.Null; ////Out;
         TextReader reader = TextReader.Null; ////In;
@@ -42,7 +42,7 @@ public static class Program
         cts.Token.ThrowIfCancellationRequested();
         await ProcessAsync(writer, cts.Token).ConfigureAwait(true);
         cts.Token.ThrowIfCancellationRequested();
-        await reader.ReadLineAsync(cts.Token).ConfigureAwait(true);
+        _ = await reader.ReadLineAsync(cts.Token).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -86,7 +86,9 @@ public static class Program
                 // ReSharper disable once MethodHasAsyncOverload
                 // ReSharper disable once MethodHasAsyncOverloadWithCancellation
 #pragma warning disable S6966 // Awaitable method should be used
+#pragma warning disable CA1849 // Call async methods when in an async method
                 set.Perform();
+#pragma warning restore CA1849 // Call async methods when in an async method
 #pragma warning restore S6966 // Awaitable method should be used
             }
         }

@@ -30,9 +30,11 @@ using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 [TestClass]
 #pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable S101 // Types should be named in PascalCase
+#pragma warning disable CA1515 // Consider making public types internal
 // ReSharper disable once InconsistentNaming
 // ReSharper disable once UnusedType.Global
 public sealed class Fnv1a128Tests
+#pragma warning restore CA1515 // Consider making public types internal
 #pragma warning restore S101 // Types should be named in PascalCase
 #pragma warning restore IDE0079 // Remove unnecessary suppression
 {
@@ -248,7 +250,9 @@ public sealed class Fnv1a128Tests
         AreEqual(new(0xFFFFFFFFFEFFFFFFUL, 0xFFFFFFFFFFFFFEC4UL), alg.FnvPrime);
         AreEqual(new(0x939DD8D1F844FEBDUL, 0x9D47DE8A9D6A3A72UL), alg.FnvOffsetBasis);
         using CancellationTokenSource cts = new();
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
         await using Stream stream = new MemoryStream("foobar"u8.ToArray());
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await alg.AppendAsync(stream, cts.Token).ConfigureAwait(true);
 
         UInt128 actual = BitConverter.ToUInt128(alg.GetCurrentHash());
@@ -286,7 +290,7 @@ public sealed class Fnv1a128Tests
             ? stackalloc byte[inputByteCount]
             : new byte[inputByteCount];
 
-        UTF8.GetBytes(Data, bytes);
+        AreEqual(inputByteCount, UTF8.GetBytes(Data, bytes));
         alg.Append(bytes);
 
         Span<byte> destination = stackalloc byte[alg.HashLengthInBytes];
@@ -328,7 +332,9 @@ public sealed class Fnv1a128Tests
     private async Task<UInt128> Fnv1a128Async(string data, CancellationToken token = default)
     {
         AreEqual(16, _alg.HashLengthInBytes);
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
         await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await _alg.AppendAsync(stream, token).ConfigureAwait(false);
         return BitConverter.ToUInt128(_alg.GetCurrentHash());
     }
@@ -350,7 +356,7 @@ public sealed class Fnv1a128Tests
             ? stackalloc byte[inputByteCount]
             : new byte[inputByteCount];
 
-        UTF8.GetBytes(data, bytes);
+        AreEqual(inputByteCount, UTF8.GetBytes(data, bytes));
 
         Span<byte> destination = stackalloc byte[_alg.HashLengthInBytes];
 

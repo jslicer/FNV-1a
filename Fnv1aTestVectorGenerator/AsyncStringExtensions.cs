@@ -82,21 +82,19 @@ internal static class AsyncStringExtensions
 
         for (int i = 0; i < 10; i++)
         {
-            sb.Append(data);
+            sb = sb.Append(data);
         }
 
         string newData = sb.ToString();
         string printData = await data.PrintAsync(token).ConfigureAwait(false);
 
         return "R10:" + NewLine
-            //// ReSharper disable AsyncConverter.CanBeUseAsyncMethodHighlighting
             + await printData.PrintAsync(token).ConfigureAwait(false) + " 32: " + await newData.Fnv1a32sAsync(token).ConfigureAwait(false) + NewLine
             + await printData.PrintAsync(token).ConfigureAwait(false) + " 64: " + await newData.Fnv1a64sAsync(token).ConfigureAwait(false) + NewLine
             + await printData.PrintAsync(token).ConfigureAwait(false) + " 128: " + await newData.Fnv1a128sAsync(token).ConfigureAwait(false) + NewLine
             + await printData.PrintAsync(token).ConfigureAwait(false) + " 256: " + await newData.Fnv1a256sAsync(token).ConfigureAwait(false) + NewLine
             + await printData.PrintAsync(token).ConfigureAwait(false) + " 512: " + await newData.Fnv1a512sAsync(token).ConfigureAwait(false) + NewLine
             + await printData.PrintAsync(token).ConfigureAwait(false) + " 1024: " + await newData.Fnv1a1024sAsync(token).ConfigureAwait(false) + NewLine;
-            //// ReSharper enable AsyncConverter.CanBeUseAsyncMethodHighlighting
     }
 
     /// <summary>
@@ -115,7 +113,7 @@ internal static class AsyncStringExtensions
 
         for (int i = 0; i < 500; i++)
         {
-            sb.Append(data);
+            sb = sb.Append(data);
         }
 
         string newData = sb.ToString();
@@ -148,12 +146,12 @@ internal static class AsyncStringExtensions
             token.ThrowIfCancellationRequested();
             if (controlCharacter || char.IsControl(c))
             {
-                sb.Append(InvariantCulture, $"\\x{(uint)c:x2}");
+                sb = sb.Append(InvariantCulture, $"\\x{(uint)c:x2}");
                 controlCharacter = true;
             }
             else
             {
-                sb.Append(c);
+                sb = sb.Append(c);
             }
         }
 
@@ -177,7 +175,9 @@ internal static class AsyncStringExtensions
     {
         NonCryptographicHashAlgorithm alg = new Fnv1a32();
 
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
         await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await alg.AppendAsync(stream, token).ConfigureAwait(true);
         return "0x"
             + ((uint)ToInt32(alg.GetCurrentHash(), 0)).ToString("X8", InvariantCulture);
@@ -196,7 +196,9 @@ internal static class AsyncStringExtensions
     {
         NonCryptographicHashAlgorithm alg = new Fnv1a64();
 
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
         await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await alg.AppendAsync(stream, token).ConfigureAwait(true);
         return "0x"
             + ((ulong)ToInt64(alg.GetCurrentHash(), 0)).ToString("X16", InvariantCulture);
@@ -215,7 +217,9 @@ internal static class AsyncStringExtensions
     {
         NonCryptographicHashAlgorithm alg = new Fnv1a128();
 
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
         await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await alg.AppendAsync(stream, token).ConfigureAwait(true);
 
         string value = new BigInteger(alg.GetCurrentHash().AddZero()).ToString("X32", InvariantCulture);
@@ -236,7 +240,9 @@ internal static class AsyncStringExtensions
     {
         NonCryptographicHashAlgorithm alg = new Fnv1a256();
 
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
         await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await alg.AppendAsync(stream, token).ConfigureAwait(true);
 
         string value = new BigInteger(alg.GetCurrentHash().AddZero()).ToString("X64", InvariantCulture);
@@ -257,7 +263,9 @@ internal static class AsyncStringExtensions
     {
         NonCryptographicHashAlgorithm alg = new Fnv1a512();
 
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
         await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await alg.AppendAsync(stream, token).ConfigureAwait(true);
 
         BigInteger hash = new(alg.GetCurrentHash().AddZero());
@@ -284,7 +292,9 @@ internal static class AsyncStringExtensions
     {
         NonCryptographicHashAlgorithm alg = new Fnv1a1024();
 
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
         await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await alg.AppendAsync(stream, token).ConfigureAwait(true);
 
         BigInteger hash = new(alg.GetCurrentHash().AddZero());

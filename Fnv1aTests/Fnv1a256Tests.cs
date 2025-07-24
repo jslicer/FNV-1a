@@ -34,9 +34,11 @@ using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 [TestClass]
 #pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable S101 // Types should be named in PascalCase
+#pragma warning disable CA1515 // Consider making public types internal
 // ReSharper disable once InconsistentNaming
 // ReSharper disable once UnusedType.Global
 public sealed class Fnv1a256Tests
+#pragma warning restore CA1515 // Consider making public types internal
 #pragma warning restore S101 // Types should be named in PascalCase
 #pragma warning restore IDE0079 // Remove unnecessary suppression
 {
@@ -300,7 +302,9 @@ public sealed class Fnv1a256Tests
             new(new(0x22D97243553AAFC9UL, 0xD2673C7B3B1A8933UL), new(0x374EAC97B849444CUL, 0xEFDC4B373511FACAUL)),
             alg.FnvOffsetBasis);
         using CancellationTokenSource cts = new();
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
         await using Stream stream = new MemoryStream("foobar"u8.ToArray());
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await alg.AppendAsync(stream, cts.Token).ConfigureAwait(true);
 
         ReadOnlySpan<byte> currentHash = alg.GetCurrentHash();
@@ -343,7 +347,7 @@ public sealed class Fnv1a256Tests
             ? stackalloc byte[inputByteCount]
             : new byte[inputByteCount];
 
-        UTF8.GetBytes(Data, bytes);
+        AreEqual(inputByteCount, UTF8.GetBytes(Data, bytes));
 
         Span<byte> destination = stackalloc byte[alg.HashLengthInBytes];
 
@@ -390,7 +394,9 @@ public sealed class Fnv1a256Tests
     private async Task<UInt256> Fnv1a256Async(string data, CancellationToken token = default)
     {
         AreEqual(32, _alg.HashLengthInBytes);
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
         await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await _alg.AppendAsync(stream, token).ConfigureAwait(false);
 
         ReadOnlySpan<byte> currentHash = _alg.GetCurrentHash();
@@ -415,7 +421,7 @@ public sealed class Fnv1a256Tests
             ? stackalloc byte[inputByteCount]
             : new byte[inputByteCount];
 
-        UTF8.GetBytes(data, bytes);
+        AreEqual(inputByteCount, UTF8.GetBytes(data, bytes));
         _alg.Append(bytes);
 
         Span<byte> destination = stackalloc byte[_alg.HashLengthInBytes];

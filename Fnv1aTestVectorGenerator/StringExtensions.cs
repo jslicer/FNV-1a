@@ -74,7 +74,7 @@ internal static class StringExtensions
 
         for (int i = 0; i < 10; i++)
         {
-            sb.Append(data);
+            sb = sb.Append(data);
         }
 
         string newData = sb.ToString();
@@ -103,7 +103,7 @@ internal static class StringExtensions
 
         for (int i = 0; i < 500; i++)
         {
-            sb.Append(data);
+            sb = sb.Append(data);
         }
 
         string newData = sb.ToString();
@@ -132,12 +132,12 @@ internal static class StringExtensions
         {
             if (controlCharacter || char.IsControl(c))
             {
-                sb.Append(InvariantCulture, $"\\x{(uint)c:x2}");
+                sb = sb.Append(InvariantCulture, $"\\x{(uint)c:x2}");
                 controlCharacter = true;
             }
             else
             {
-                sb.Append(c);
+                sb = sb.Append(c);
             }
         }
 
@@ -291,7 +291,7 @@ internal static class StringExtensions
             ? stackalloc byte[inputByteCount]
             : new byte[inputByteCount];
 
-        UTF8.GetBytes(data, bytes);
+        _ = UTF8.GetBytes(data, bytes);
         alg.Append(bytes);
         _ = alg.TryGetCurrentHash(destination, out int _);
     }
