@@ -6,11 +6,12 @@
     <AssemblyName>Fnv1a</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Authors>Always Elucidated Solution Pioneers, LLC</Authors>
-    <Company />
+    <Authors>jslicer</Authors>
+    <Company>Always Elucidated Solution Pioneers, LLC</Company>
+    <PackageId>Aesop.$(AssemblyName)</PackageId>
     <Description>A .NET Core implementation of FNV-1a.</Description>
     <RepositoryUrl>https://github.com/jslicer/FNV-1a</RepositoryUrl>
-    <Copyright />
+    <Copyright>Copyright (c) Always Elucidated Solution Pioneers, LLC 2025</Copyright>
     <PackageProjectUrl>https://github.com/jslicer/FNV-1a</PackageProjectUrl>
     <PackageTags>FNV-1a</PackageTags>
     <SignAssembly>false</SignAssembly>
@@ -20,8 +21,8 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <FileVersion>2.0.0.0</FileVersion>
-    <InformationalVersion>2.0.0</InformationalVersion>
+    <FileVersion>$(AssemblyVersion)</FileVersion>
+    <Version>$(AssemblyVersion)</Version>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <PackageIcon>icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -31,7 +32,6 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Fnv1a.xml</DocumentationFile>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <WarningLevel>9999</WarningLevel>
     <NoWarn />
