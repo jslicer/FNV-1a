@@ -13,9 +13,9 @@
 
     <Nullable>enable</Nullable>
 
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.1</AssemblyVersion>
 
-    <FileVersion>2.0.0.0</FileVersion>
+    <FileVersion>2.0.0.1</FileVersion>
 
     <InformationalVersion>2.0.0</InformationalVersion>
 

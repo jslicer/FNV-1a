@@ -93,7 +93,9 @@ public abstract class Fnv1aBigBase : NonCryptographicHashAlgorithm
         foreach (byte b in source)
         {
             _hash ^= b;
+#pragma warning disable IDE0047
             _hash = (_hash * FnvPrime) & _bitMask;
+#pragma warning restore IDE0047
         }
     }
 

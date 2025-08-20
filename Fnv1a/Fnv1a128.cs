@@ -13,6 +13,7 @@ namespace Fnv1a;
 using System;
 using System.IO.Hashing;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 /// <inheritdoc cref="NonCryptographicHashAlgorithm" />
 /// <summary>
@@ -100,13 +101,61 @@ public sealed class Fnv1a128 : NonCryptographicHashAlgorithm
     /// </summary>
     /// <param name="source">The data to process.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    //// ReSharper disable once MethodTooLong
     public override void Append(ReadOnlySpan<byte> source)
     {
-        foreach (byte b in source)
+        int i = 0;
+        int len = source.Length;
+
+        while (i + 16 <= len)
+        {
+            // ReSharper disable once ComplexConditionExpression
+            UInt128 chunk = BitConverter.ToUInt128(source[i..(i + 16)]);
+
+            unchecked
+            {
+                _hash ^= (byte)chunk;
+                _hash *= FnvPrime;
+                _hash ^= (byte)(chunk >> 8);
+                _hash *= FnvPrime;
+                _hash ^= (byte)(chunk >> 16);
+                _hash *= FnvPrime;
+                _hash ^= (byte)(chunk >> 24);
+                _hash *= FnvPrime;
+                _hash ^= (byte)(chunk >> 32);
+                _hash *= FnvPrime;
+                _hash ^= (byte)(chunk >> 40);
+                _hash *= FnvPrime;
+                _hash ^= (byte)(chunk >> 48);
+                _hash *= FnvPrime;
+                _hash ^= (byte)(chunk >> 56);
+                _hash *= FnvPrime;
+                _hash ^= (byte)(chunk >> 64);
+                _hash *= FnvPrime;
+                _hash ^= (byte)(chunk >> 72);
+                _hash *= FnvPrime;
+                _hash ^= (byte)(chunk >> 80);
+                _hash *= FnvPrime;
+                _hash ^= (byte)(chunk >> 88);
+                _hash *= FnvPrime;
+                _hash ^= (byte)(chunk >> 96);
+                _hash *= FnvPrime;
+                _hash ^= (byte)(chunk >> 104);
+                _hash *= FnvPrime;
+                _hash ^= (byte)(chunk >> 112);
+                _hash *= FnvPrime;
+                _hash ^= (byte)(chunk >> 120);
+                _hash *= FnvPrime;
+            }
+
+            i += 16;
+        }
+
+        for (; i < len; i++)
         {
             unchecked
             {
-                _hash ^= b;
+                _hash ^= source[i];
                 _hash *= FnvPrime;
             }
         }
@@ -125,12 +174,7 @@ public sealed class Fnv1a128 : NonCryptographicHashAlgorithm
     /// </summary>
     /// <param name="destination">The buffer that receives the computed hash value.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override void GetCurrentHashCore(Span<byte> destination)
-    {
-        byte[] bytes = BitConverter.GetBytes(_hash);
-
-        bytes.CopyTo(destination);
-    }
+    protected override void GetCurrentHashCore(Span<byte> destination) => MemoryMarshal.Write(destination, in _hash);
 
     /// <summary>
     /// Initializes the hash for this instance.
