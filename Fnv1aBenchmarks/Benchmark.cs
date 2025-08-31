@@ -8,7 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 // Ignore Spelling: Fnv
-
 namespace Fnv1aBenchmarks;
 
 using System.IO.Hashing;
@@ -71,7 +70,9 @@ public class Benchmark
     {
         _data = new byte[N];
 #pragma warning disable CA5394 // Do not use insecure randomness
+#pragma warning disable SCS0005 // Weak random number generator.
         Random.Shared.NextBytes(_data);
+#pragma warning restore SCS0005 // Weak random number generator.
 #pragma warning restore CA5394 // Do not use insecure randomness
     }
 
