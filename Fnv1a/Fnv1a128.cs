@@ -165,6 +165,7 @@ public sealed class Fnv1a128 : NonCryptographicHashAlgorithm
     /// <summary>
     /// When overridden in a derived class, resets the hash computation to the initial state.
     /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Reset() => _hash = FnvOffsetBasis;
 
     /// <inheritdoc />
