@@ -146,6 +146,36 @@ public sealed class Fnv1a32Tests
     public void TestVector3Try() => AreEqual(0xBF9CF968U, Fnv1a32Try("foobar"));
 
     /// <summary>
+    /// Tests the string against the known vector result.
+    /// </summary>
+    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
+    public void TestVector4() => AreEqual(0xD49930D5U, Fnv1a32("chongo was here!\n"));
+
+    /// <summary>
+    /// Tests the string against the known vector result.
+    /// </summary>
+    /// <returns>An asynchronous <see cref="Task" />.</returns>
+    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
+    public async Task TestVector4Async()
+    {
+        using CancellationTokenSource cts = new();
+        AreEqual(0xD49930D5U, await Fnv1a32Async("chongo was here!\n", cts.Token).ConfigureAwait(true));
+    }
+
+    /// <summary>
+    /// Tests the string against the known vector result.
+    /// </summary>
+    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
+    public void TestVector4Try() => AreEqual(0xD49930D5U, Fnv1a32Try("chongo was here!\n"));
+
+    /// <summary>
     /// Tests the alternate prime and zero offset.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>

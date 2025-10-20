@@ -245,6 +245,48 @@ public sealed class Fnv1a512Tests
         Fnv1a512Try("foobar"));
 
     /// <summary>
+    /// Tests the string against the known vector result.
+    /// </summary>
+    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
+    public void TestVector4() => AreEqual(
+        new(
+            new(new(0xD7F6E4D32796562AUL, 0xB427AF61606A6DFDUL), new(0xAF196D60149DB1F8UL, 0x554A2D4E790EDBB2UL)),
+            new(new(0x979C5F87EAB6ED7EUL, 0x9DA2C344DDBAA66CUL), new(0xE9C03C7E2C859263UL, 0x6FDED5B8EE5F28B5UL))),
+        Fnv1a512("chongo was here!\n"));
+
+    /// <summary>
+    /// Tests the string against the known vector result.
+    /// </summary>
+    /// <returns>An asynchronous <see cref="Task" />.</returns>
+    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
+    public async Task TestVector4Async()
+    {
+        using CancellationTokenSource cts = new();
+        AreEqual(
+            new(
+                new(new(0xD7F6E4D32796562AUL, 0xB427AF61606A6DFDUL), new(0xAF196D60149DB1F8UL, 0x554A2D4E790EDBB2UL)),
+                new(new(0x979C5F87EAB6ED7EUL, 0x9DA2C344DDBAA66CUL), new(0xE9C03C7E2C859263UL, 0x6FDED5B8EE5F28B5UL))),
+            await Fnv1a512Async("chongo was here!\n", cts.Token).ConfigureAwait(true));
+    }
+
+    /// <summary>
+    /// Tests the string against the known vector result.
+    /// </summary>
+    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
+    public void TestVector4Try() => AreEqual(
+        new(
+            new(new(0xD7F6E4D32796562AUL, 0xB427AF61606A6DFDUL), new(0xAF196D60149DB1F8UL, 0x554A2D4E790EDBB2UL)),
+            new(new(0x979C5F87EAB6ED7EUL, 0x9DA2C344DDBAA66CUL), new(0xE9C03C7E2C859263UL, 0x6FDED5B8EE5F28B5UL))),
+        Fnv1a512Try("chongo was here!\n"));
+
+    /// <summary>
     /// Tests the alternate prime and zero offset.
     /// </summary>
     /// <exception cref="ArgumentException">style is not a

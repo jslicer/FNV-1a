@@ -163,6 +163,42 @@ public sealed class Fnv1a128Tests
         Fnv1a128Try("foobar"));
 
     /// <summary>
+    /// Tests the string against the known vector result.
+    /// </summary>
+    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
+    public void TestVector4() => AreEqual(
+        new(0xD09F538FEC03781AUL, 0x034E1E32BAB19A75UL),
+        Fnv1a128("chongo was here!\n"));
+
+    /// <summary>
+    /// Tests the string against the known vector result.
+    /// </summary>
+    /// <returns>An asynchronous <see cref="Task" />.</returns>
+    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
+    public async Task TestVector4Async()
+    {
+        using CancellationTokenSource cts = new();
+        AreEqual(
+            new(0xD09F538FEC03781AUL, 0x034E1E32BAB19A75UL),
+            await Fnv1a128Async("chongo was here!\n", cts.Token).ConfigureAwait(true));
+    }
+
+    /// <summary>
+    /// Tests the string against the known vector result.
+    /// </summary>
+    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
+    public void TestVector4Try() => AreEqual(
+        new(0xD09F538FEC03781AUL, 0x034E1E32BAB19A75UL),
+        Fnv1a128Try("chongo was here!\n"));
+
+    /// <summary>
     /// Tests the "Hello World" string against the known vector result.
     /// </summary>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>

@@ -228,6 +228,42 @@ public sealed class Fnv1a1024Tests
         Fnv1a1024Try("foobar"));
 
     /// <summary>
+    /// Tests the string against the known vector result.
+    /// </summary>
+    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
+    public void TestVector4() => AreEqual(
+        Parse("0FD40C54ADB30B16FD3B5020075165BCAA391C47ED5598B8CB8354A81011D1F5C809A231C31CC8873C7DC8400000000000000000000000000000000000000000000000000000000000000002060C527CDAFE7B3DE88B930FF61BFFB975575E8EB7CAAB48E688BB6B3552D7074847733A726E137C1330AA0FD2822FD5B3A9FB541", AllowHexSpecifier, InvariantCulture),
+        Fnv1a1024("chongo was here!\n"));
+
+    /// <summary>
+    /// Tests the string against the known vector result.
+    /// </summary>
+    /// <returns>An asynchronous <see cref="Task" />.</returns>
+    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
+    public async Task TestVector4Async()
+    {
+        using CancellationTokenSource cts = new();
+        AreEqual(
+            Parse("0FD40C54ADB30B16FD3B5020075165BCAA391C47ED5598B8CB8354A81011D1F5C809A231C31CC8873C7DC8400000000000000000000000000000000000000000000000000000000000000002060C527CDAFE7B3DE88B930FF61BFFB975575E8EB7CAAB48E688BB6B3552D7074847733A726E137C1330AA0FD2822FD5B3A9FB541", AllowHexSpecifier, InvariantCulture),
+            await Fnv1a1024Async("chongo was here!\n", cts.Token).ConfigureAwait(true));
+    }
+
+    /// <summary>
+    /// Tests the string against the known vector result.
+    /// </summary>
+    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
+    public void TestVector4Try() => AreEqual(
+        Parse("0FD40C54ADB30B16FD3B5020075165BCAA391C47ED5598B8CB8354A81011D1F5C809A231C31CC8873C7DC8400000000000000000000000000000000000000000000000000000000000000002060C527CDAFE7B3DE88B930FF61BFFB975575E8EB7CAAB48E688BB6B3552D7074847733A726E137C1330AA0FD2822FD5B3A9FB541", AllowHexSpecifier, InvariantCulture),
+        Fnv1a1024Try("chongo was here!\n"));
+
+    /// <summary>
     /// Tests the alternate prime and zero offset.
     /// </summary>
     /// <exception cref="ArgumentException">style is not a

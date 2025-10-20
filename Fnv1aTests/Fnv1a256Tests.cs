@@ -129,7 +129,7 @@ public sealed class Fnv1a256Tests
     /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
+    //// ReSharper disable once UnusedMember.Global
     public void TestVector2() => AreEqual(
         new(new(0x63323FB0F35303ECUL, 0x28DC751D0A33BDFAUL), new(0x4DE6A99B7266494FUL, 0x6183B2716811637CUL)),
         Fnv1a256("a"));
@@ -225,6 +225,42 @@ public sealed class Fnv1a256Tests
     public void TestVector3Try() => AreEqual(
         new(new(0xB055EA2F306CADADUL, 0x4F0F81C02D3889DCUL), new(0x32453DAD5AE35B75UL, 0x3BA1A91084AF3428UL)),
         Fnv1a256Try("foobar"));
+
+    /// <summary>
+    /// Tests the string against the known vector result.
+    /// </summary>
+    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
+    public void TestVector4() => AreEqual(
+        new(new(0xAC710B58EEEE6731UL, 0x86C85CF976B784C1UL), new(0x050E2AE114199970UL, 0x01EE6BB963C40F35UL)),
+        Fnv1a256("chongo was here!\n"));
+
+    /// <summary>
+    /// Tests the string against the known vector result.
+    /// </summary>
+    /// <returns>An asynchronous <see cref="Task" />.</returns>
+    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
+    public async Task TestVector4Async()
+    {
+        using CancellationTokenSource cts = new();
+        AreEqual(
+            new(new(0xAC710B58EEEE6731UL, 0x86C85CF976B784C1UL), new(0x050E2AE114199970UL, 0x01EE6BB963C40F35UL)),
+            await Fnv1a256Async("chongo was here!\n", cts.Token).ConfigureAwait(true));
+    }
+
+    /// <summary>
+    /// Tests the string against the known vector result.
+    /// </summary>
+    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    [TestMethod]
+    //// ReSharper disable once UnusedMember.Global
+    public void TestVector4Try() => AreEqual(
+        new(new(0xAC710B58EEEE6731UL, 0x86C85CF976B784C1UL), new(0x050E2AE114199970UL, 0x01EE6BB963C40F35UL)),
+        Fnv1a256Try("chongo was here!\n"));
 
     /// <summary>
     /// Tests the alternate prime and zero offset.
