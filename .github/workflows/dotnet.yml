@@ -25,16 +25,22 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
-    - name: Coverlet coverage test
-      uses: b3b00/coverlet-action@1.3.1
+      run: dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage"
+    - name: Upload Combined Coverage XML
+      uses: actions/upload-artifact@v4
       with:
-        testProject: 'Fnv1aTests/Fnv1aTests.csproj'
-        output: 'lcov.info'
-        outputFormat: 'lcov'
-        excludes: '[program]*,[test]test.*'
-    - name: coveralls      
-      uses: coverallsapp/github-action@v1.1.1
+        name: coverage
+        path: ${{ github.workspace }}/coverage.cobertura.xml
+        retention-days: 5
+    - name: Publish Code Coverage Report
+      uses: irongut/CodeCoverageSummary@v1.3.0
       with:
-        github-token: ${{secrets.GITHUB_TOKEN }} 
-        path-to-lcov: ${{steps.coverlet.outputs.coverageFile}} 
+        filename: "coverage.cobertura.xml"
+        badge: true
+        fail_below_min: false # just informative for now
+        format: markdown
+        hide_branch_rate: false
+        hide_complexity: false
+        indicators: true
+        output: both
+        thresholds: "10 30"
