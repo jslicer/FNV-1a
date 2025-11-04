@@ -111,7 +111,7 @@ public sealed class Fnv1a32 : NonCryptographicHashAlgorithm
         while (i + 4 <= len)
         {
             // ReSharper disable once ComplexConditionExpression
-            uint chunk = MemoryMarshal.Read<uint>(source[i..(i + 4)]);
+            uint chunk = MemoryMarshal.Read<uint>(source[i..]);
 
             unchecked
             {

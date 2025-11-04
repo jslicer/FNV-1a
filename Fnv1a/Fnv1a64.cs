@@ -110,7 +110,7 @@ public sealed class Fnv1a64 : NonCryptographicHashAlgorithm
         while (i + 8 <= len)
         {
             // ReSharper disable once ComplexConditionExpression
-            ulong chunk = BitConverter.ToUInt64(source[i..(i + 8)]);
+            ulong chunk = MemoryMarshal.Read<ulong>(source[i..]);
 
             unchecked
             {

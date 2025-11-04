@@ -110,7 +110,7 @@ public sealed class Fnv1a128 : NonCryptographicHashAlgorithm
         while (i + 16 <= len)
         {
             // ReSharper disable once ComplexConditionExpression
-            UInt128 chunk = BitConverter.ToUInt128(source[i..(i + 16)]);
+            UInt128 chunk = MemoryMarshal.Read<UInt128>(source[i..]);
 
             unchecked
             {
