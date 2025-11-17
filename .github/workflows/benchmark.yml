@@ -1,0 +1,74 @@
+name: Run Benchmarks and Update README
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}
+
+permissions:
+  contents: write   # required to push README changes
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # needed to push later
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'  # adjust to your SDK
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release
+
+      - name: Run Benchmarks
+        run: |
+          # Adjust project path to your benchmark project
+          dotnet run --configuration Release --project ./Fnv1aBenchmarks/Fnv1aBenchmarks.csproj
+          
+          # If Benchmark.NET produces e.g. MyBenchmarks-report-github.md,
+          # normalize it to BenchmarkResults.md:
+          REPORT_FILE=$(ls *-report-github.md | head -n 1)
+          cp "$REPORT_FILE" BenchmarkResults.md
+
+      - name: Update README with benchmark results
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ ! -f BenchmarkResults.md ]; then
+            echo "BenchmarkResults.md not found; failing pipeline."
+            exit 1
+          fi
+
+          # Build new benchmark section with markers and file contents
+          BENCH_SECTION="$(printf '<!-- BENCHMARK_RESULTS_START -->\n\n%s\n\n<!-- BENCHMARK_RESULTS_END -->\n' "$(cat BenchmarkResults.md)")"
+
+          # Replace existing section in README between markers
+          perl -0777 -pe 'BEGIN { $s = $ENV{"BENCH_SECTION"} } s/<!-- BENCHMARK_RESULTS_START -->.*?<!-- BENCHMARK_RESULTS_END -->/$s/s' README.md > README.new.md
+
+          mv README.new.md README.md
+
+      - name: Commit and push changes if any
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "jslicer"
+          git config user.email "jcslicer@gmail.com"
+
+          if git diff --quiet; then
+            echo "No changes in README; nothing to commit."
+            exit 0
+          fi
+
+          git add README.md BenchmarkResults.md || true
+          git commit -m "Update benchmark results [skip ci]" || exit 0
+          git push
