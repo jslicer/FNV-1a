@@ -31,6 +31,10 @@ namespace Fnv1aTest
 
 This will output 85944171F73967E8 as the FNV-1A 64-bit hash of the string "foobar".
 
+## Benchmark Results
 
+<!-- BENCHMARK_RESULTS_START -->
+_No benchmark results yet. They will be updated automatically by GitHub Actions._
+<!-- BENCHMARK_RESULTS_END -->
 
 Special thanks to [crookseta](https://github.com/crookseta) for the [missing-values](https://github.com/crookseta/missing-values) project which allowed for the 256- and 512-bit variants to not have to use [BigInteger](https://learn.microsoft.com/en-us/dotnet/api/system.numerics.biginteger), which was very slow.
