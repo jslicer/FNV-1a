@@ -18,12 +18,12 @@ jobs:
         run: dotnet restore
 
       - name: Run benchmarks
-        run: dotnet run --project Fnv1aBenchmarks/Fnv1aBenchmarks.csproj
+        run: dotnet run --configuration Release --project Fnv1aBenchmarks/Fnv1aBenchmarks.csproj
 
       - name: Publish Results
         run: |
           mkdir -p output
-          cp -r bin/Release/net10.0/results output/
+          cp -r Fnv1aBenchmarks/bin/Release/net10.0/results output/
           git config --global user.name "jslicer"
           git config --global user.email "jcslicer@gmail.com"
           git checkout --orphan gh-pages
