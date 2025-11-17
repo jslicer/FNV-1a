@@ -46,12 +46,12 @@ AMD EPYC 7763 2.45GHz, 1 CPU, 4 logical and 2 physical cores
 ```
 | Method    | Mean        | Error     | StdDev    |
 |---------- |------------:|----------:|----------:|
-| Fnv1A32   |    180.1 μs |   0.11 μs |   0.09 μs |
-| Fnv1A64   |    152.2 μs |   0.30 μs |   0.28 μs |
-| Fnv1A128  |    922.5 μs |   2.60 μs |   2.30 μs |
-| Fnv1A256  |  5,687.8 μs |  11.63 μs |  10.88 μs |
-| Fnv1A512  | 19,059.5 μs |  75.20 μs |  66.66 μs |
-| Fnv1A1024 | 89,402.9 μs | 794.42 μs | 704.23 μs |
+| Fnv1A32   |    179.9 μs |   0.07 μs |   0.06 μs |
+| Fnv1A64   |    150.0 μs |   0.04 μs |   0.03 μs |
+| Fnv1A128  |  1,189.1 μs |  24.71 μs |  72.85 μs |
+| Fnv1A256  |  5,621.3 μs |   4.06 μs |   3.39 μs |
+| Fnv1A512  | 19,311.2 μs |  20.70 μs |  18.35 μs |
+| Fnv1A1024 | 88,004.9 μs | 841.03 μs | 786.70 μs |
 <!-- BENCHMARK_RESULTS_END -->
 
 Special thanks to [crookseta](https://github.com/crookseta) for the [missing-values](https://github.com/crookseta/missing-values) project which allowed for the 256- and 512-bit variants to not have to use [BigInteger](https://learn.microsoft.com/en-us/dotnet/api/system.numerics.biginteger), which was very slow.
