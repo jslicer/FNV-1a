@@ -81,7 +81,7 @@ jobs:
           # Make sure we are up to date with remote main
           git fetch origin
           git rebase origin/master
-      
+
           # Push rebased commit
           git push origin HEAD:master
 
