@@ -37,7 +37,7 @@ jobs:
           
           # If Benchmark.NET produces e.g. MyBenchmarks-report-github.md,
           # normalize it to BenchmarkResults.md:
-          REPORT_FILE=$(ls *-report-github.md | head -n 1)
+          REPORT_FILE=$(ls results/*-report-github.md | head -n 1)
           cp "$REPORT_FILE" BenchmarkResults.md
 
       - name: Update README with benchmark results
