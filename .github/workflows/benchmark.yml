@@ -50,7 +50,7 @@ jobs:
           fi
 
           # Build new benchmark section with markers and file contents
-          BENCH_SECTION="$(printf '<!-- BENCHMARK_RESULTS_START -->\n\n%s\n\n<!-- BENCHMARK_RESULTS_END -->\n' "$(cat BenchmarkResults.md)")"
+          BENCH_SECTION="$(printf '<!-- BENCHMARK_RESULTS_START -->\n%s\n<!-- BENCHMARK_RESULTS_END -->\n' "$(cat BenchmarkResults.md)")"
 
           # Replace existing section in README between markers
           perl -0777 -pe 'BEGIN { $s = $ENV{"BENCH_SECTION"} } s/<!-- BENCHMARK_RESULTS_START -->.*?<!-- BENCHMARK_RESULTS_END -->/$s/s' README.md > README.new.md
