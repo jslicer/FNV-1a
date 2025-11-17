@@ -80,7 +80,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.IO.Hashing" Version="9.0.10" />
+    <PackageReference Include="System.IO.Hashing" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup>
