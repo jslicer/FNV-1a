@@ -23,7 +23,7 @@ jobs:
       - name: Publish Results
         run: |
           mkdir -p output
-          cp -r Fnv1aBenchmarks/bin/Release/net10.0/Fnv1aBenchmarks-DefaultJob-1/publish/ output/
+          cp -r /home/runner/work/FNV-1a/FNV-1a/Fnv1aBenchmarks/bin/Release/net10.0/Fnv1aBenchmarks-DefaultJob-1/publish/ output/
           git config --global user.name "jslicer"
           git config --global user.email "jcslicer@gmail.com"
           git checkout --orphan gh-pages
