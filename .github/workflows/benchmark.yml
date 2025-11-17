@@ -80,8 +80,8 @@ jobs:
 
           # Make sure we are up to date with remote main
           git fetch origin
-          git rebase origin/main
+          git rebase origin/master
       
           # Push rebased commit
-          git push origin HEAD:main
+          git push origin HEAD:master
 
