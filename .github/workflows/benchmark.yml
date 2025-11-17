@@ -77,4 +77,11 @@ jobs:
 
           git add README.md BenchmarkResults.md || true
           git commit -m "Update benchmark results [skip ci]" || exit 0
-          git push
+
+          # Make sure we are up to date with remote main
+          git fetch origin
+          git rebase origin/main
+      
+          # Push rebased commit
+          git push origin HEAD:main
+
