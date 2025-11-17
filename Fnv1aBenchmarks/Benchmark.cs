@@ -3,7 +3,7 @@
 //   Copyright (c) Always Elucidated Solution Pioneers, LLC. All rights reserved.
 // </copyright>
 // <summary>
-//   Benchmark the X hashing algorithm variants.
+//   Benchmark the FNV-1A hashing algorithm variants.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -17,9 +17,10 @@ using BenchmarkDotNet.Attributes;
 using Fnv1a;
 
 /// <summary>
-/// Benchmark the X hashing algorithm variants.
+/// Benchmark the FNV-1A hashing algorithm variants.
 /// </summary>
 #pragma warning disable CA1515 // Consider making public types internal
+[Config(typeof(BenchmarkConfig))]
 public class Benchmark
 #pragma warning restore CA1515 // Consider making public types internal
 {
