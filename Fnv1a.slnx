@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="Directory.Build.props" />
+    <File Path="LICENSE.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="Fnv1a/Fnv1a.csproj" />
+  <Project Path="Fnv1aBenchmarks/Fnv1aBenchmarks.csproj" />
+  <Project Path="Fnv1aTests/Fnv1aTests.csproj" />
+  <Project Path="Fnv1aTestVectorGenerator/Fnv1aTestVectorGenerator.csproj" />
+</Solution>
