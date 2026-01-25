@@ -39,6 +39,11 @@ public sealed class Fnv1a32Tests
 #pragma warning restore IDE0079 // Remove unnecessary suppression
 {
     /// <summary>
+    /// The foobar string.
+    /// </summary>
+    private const string Foobar = "foobar";
+
+    /// <summary>
     /// The hash algorithm being tested.
     /// </summary>
     private NonCryptographicHashAlgorithm _alg = null!;
@@ -121,7 +126,7 @@ public sealed class Fnv1a32Tests
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
-    public void TestVector3() => AreEqual(0xBF9CF968U, Fnv1a32("foobar"));
+    public void TestVector3() => AreEqual(0xBF9CF968U, Fnv1a32(Foobar));
 
     /// <summary>
     /// Tests the string against the known vector result.
@@ -134,7 +139,7 @@ public sealed class Fnv1a32Tests
     public async Task TestVector3Async()
     {
         using CancellationTokenSource cts = new();
-        AreEqual(0xBF9CF968U, await Fnv1a32Async("foobar", cts.Token).ConfigureAwait(true));
+        AreEqual(0xBF9CF968U, await Fnv1a32Async(Foobar, cts.Token).ConfigureAwait(true));
     }
 
     /// <summary>
@@ -143,7 +148,7 @@ public sealed class Fnv1a32Tests
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
-    public void TestVector3Try() => AreEqual(0xBF9CF968U, Fnv1a32Try("foobar"));
+    public void TestVector3Try() => AreEqual(0xBF9CF968U, Fnv1a32Try(Foobar));
 
     /// <summary>
     /// Tests the string against the known vector result.
@@ -255,7 +260,7 @@ public sealed class Fnv1a32Tests
         AreEqual(0xB3CB2E29U, alg.FnvPrime);
         AreEqual(0x319712C3U, alg.FnvOffsetBasis);
 
-        const string Data = "foobar";
+        const string Data = Foobar;
         int inputByteCount = UTF8.GetByteCount(Data);
         Span<byte> bytes = inputByteCount < 1024
             ? stackalloc byte[inputByteCount]

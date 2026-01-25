@@ -23,6 +23,21 @@ using System.Threading.Tasks;
 /// <seealso cref="ISet" />
 internal sealed class Set10(TextWriter? writer = null) : SetBase(writer)
 {
+    /// <summary>
+    /// The feedface string.
+    /// </summary>
+    private const string Feedface = "feedface";
+
+    /// <summary>
+    /// The feedfacedaffdeed string.
+    /// </summary>
+    private const string Feedfacedaffdeed = "feedfacedaffdeed";
+
+    /// <summary>
+    /// The feedfacedeadbeef string.
+    /// </summary>
+    private const string Feedfacedeadbeef = "feedfacedeadbeef";
+
     /// <inheritdoc cref="SetBase" />
     /// <summary>
     /// Performs the test vector set 10 generation.
@@ -32,12 +47,12 @@ internal sealed class Set10(TextWriter? writer = null) : SetBase(writer)
     public override void Perform()
     {
         //// ReSharper disable StringLiteralTypo
-        WriteLine("feedface".Test());
-        WriteLine("feedface".Test0());
-        WriteLine("feedfacedaffdeed".Test());
-        WriteLine("feedfacedaffdeed".Test0());
-        WriteLine("feedfacedeadbeef".Test());
-        WriteLine("feedfacedeadbeef".Test0());
+        WriteLine(Feedface.Test());
+        WriteLine(Feedface.Test0());
+        WriteLine(Feedfacedaffdeed.Test());
+        WriteLine(Feedfacedaffdeed.Test0());
+        WriteLine(Feedfacedeadbeef.Test());
+        WriteLine(Feedfacedeadbeef.Test0());
         //// ReSharper enable StringLiteralTypo
     }
 
@@ -54,17 +69,17 @@ internal sealed class Set10(TextWriter? writer = null) : SetBase(writer)
     {
         //// ReSharper disable StringLiteralTypo
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "feedface".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await Feedface.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "feedface".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await Feedface.Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "feedfacedaffdeed".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await Feedfacedaffdeed.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "feedfacedaffdeed".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await Feedfacedaffdeed.Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "feedfacedeadbeef".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await Feedfacedeadbeef.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "feedfacedeadbeef".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await Feedfacedeadbeef.Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
         //// ReSharper enable StringLiteralTypo
     }
 }

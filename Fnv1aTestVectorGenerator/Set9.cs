@@ -23,6 +23,21 @@ using System.Threading.Tasks;
 /// <seealso cref="ISet" />
 internal sealed class Set9(TextWriter? writer = null) : SetBase(writer)
 {
+    /// <summary>
+    /// The 64.81.78.68 string.
+    /// </summary>
+    private const string SixtyFourDotEightyOneDotSeventyEightDotSixtyEight = "64.81.78.68";
+
+    /// <summary>
+    /// The 64.81.78.74 string.
+    /// </summary>
+    private const string SixtyFourDotEightyOneDotSeventyEightDotSeventyFour = "64.81.78.74";
+
+    /// <summary>
+    /// 64.81.78.84 string.
+    /// </summary>
+    private const string SixtyFourDotEightyOneDotSeventyEightDotEightyFour = "64.81.78.84";
+
     /// <inheritdoc cref="SetBase" />
     /// <summary>
     /// Performs the test vector set 9 generation.
@@ -31,12 +46,12 @@ internal sealed class Set9(TextWriter? writer = null) : SetBase(writer)
     /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
     public override void Perform()
     {
-        WriteLine("64.81.78.68".Test());
-        WriteLine("64.81.78.68".Test0());
-        WriteLine("64.81.78.74".Test());
-        WriteLine("64.81.78.74".Test0());
-        WriteLine("64.81.78.84".Test());
-        WriteLine("64.81.78.84".Test0());
+        WriteLine(SixtyFourDotEightyOneDotSeventyEightDotSixtyEight.Test());
+        WriteLine(SixtyFourDotEightyOneDotSeventyEightDotSixtyEight.Test0());
+        WriteLine(SixtyFourDotEightyOneDotSeventyEightDotSeventyFour.Test());
+        WriteLine(SixtyFourDotEightyOneDotSeventyEightDotSeventyFour.Test0());
+        WriteLine(SixtyFourDotEightyOneDotSeventyEightDotEightyFour.Test());
+        WriteLine(SixtyFourDotEightyOneDotSeventyEightDotEightyFour.Test0());
     }
 
     /// <inheritdoc cref="SetBase" />
@@ -51,16 +66,16 @@ internal sealed class Set9(TextWriter? writer = null) : SetBase(writer)
     public override async Task PerformAsync(CancellationToken token = default)
     {
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "64.81.78.68".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await SixtyFourDotEightyOneDotSeventyEightDotSixtyEight.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "64.81.78.68".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await SixtyFourDotEightyOneDotSeventyEightDotSixtyEight.Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "64.81.78.74".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await SixtyFourDotEightyOneDotSeventyEightDotSeventyFour.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "64.81.78.74".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await SixtyFourDotEightyOneDotSeventyEightDotSeventyFour.Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "64.81.78.84".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await SixtyFourDotEightyOneDotSeventyEightDotEightyFour.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "64.81.78.84".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await SixtyFourDotEightyOneDotSeventyEightDotEightyFour.Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
     }
 }

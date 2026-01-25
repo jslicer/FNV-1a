@@ -23,19 +23,29 @@ using System.Threading.Tasks;
 /// <seealso cref="ISet" />
 internal sealed class Set12(TextWriter? writer = null) : SetBase(writer)
 {
-    /// <inheritdoc cref="SetBase" />
+    /// <summary>
+    /// The chongo &lt;Landon Curt Noll&gt;  /\../\ string.
+    /// </summary>
+    private const string ChongoLandonCurtNoll = "chongo <Landon Curt Noll> /\\../\\";
+
+    /// <summary>
+    /// The chongo (Landon Curt Noll) /\../\ string.
+    /// </summary>
+    private const string ChongoLandonCurtNoll2 = "chongo (Landon Curt Noll) /\\../\\";
+
     /// <summary>
     /// Performs the test vector set 12 generation.
     /// </summary>
     /// <exception cref="IOException">An I/O error occurs.</exception>
     /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
+    /// <inheritdoc cref="SetBase" />
     public override void Perform()
     {
         //// ReSharper disable StringLiteralTypo
-        WriteLine("chongo <Landon Curt Noll> /\\../\\".Test());
-        WriteLine("chongo <Landon Curt Noll> /\\../\\".Test0());
-        WriteLine("chongo (Landon Curt Noll) /\\../\\".Test());
-        WriteLine("chongo (Landon Curt Noll) /\\../\\".Test0());
+        WriteLine(ChongoLandonCurtNoll.Test());
+        WriteLine(ChongoLandonCurtNoll.Test0());
+        WriteLine(ChongoLandonCurtNoll2.Test());
+        WriteLine(ChongoLandonCurtNoll2.Test0());
         //// ReSharper enable StringLiteralTypo
     }
 
@@ -52,13 +62,13 @@ internal sealed class Set12(TextWriter? writer = null) : SetBase(writer)
     {
         //// ReSharper disable StringLiteralTypo
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "chongo <Landon Curt Noll> /\\../\\".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await ChongoLandonCurtNoll.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "chongo <Landon Curt Noll> /\\../\\".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await ChongoLandonCurtNoll.Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "chongo (Landon Curt Noll) /\\../\\".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await ChongoLandonCurtNoll2.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "chongo (Landon Curt Noll) /\\../\\".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await ChongoLandonCurtNoll2.Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
         //// ReSharper enable StringLiteralTypo
     }
 }

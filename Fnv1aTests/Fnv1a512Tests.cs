@@ -43,6 +43,11 @@ public sealed class Fnv1a512Tests
 #pragma warning restore IDE0079 // Remove unnecessary suppression
 {
     /// <summary>
+    /// The foobar string.
+    /// </summary>
+    private const string Foobar = "foobar";
+
+    /// <summary>
     /// The hash algorithm being tested.
     /// </summary>
     private NonCryptographicHashAlgorithm _alg = null!;
@@ -200,7 +205,7 @@ public sealed class Fnv1a512Tests
         new(
             new(new(0xB0EC738D9C6FD969UL, 0xD05F0B35F6C0ED53UL), new(0xADCACCCD8E000000UL, 0x4BF99F58EE4196AFUL)),
             new(new(0xB9700E20110830FEUL, 0xA5396B76280E47FDUL), new(0x022B6E81331CA1A9UL, 0xCED729C364BE7788UL))),
-        Fnv1a512("foobar"));
+        Fnv1a512(Foobar));
 
     /// <summary>
     /// Tests the string against the known vector result.
@@ -223,7 +228,7 @@ public sealed class Fnv1a512Tests
             new(
                 new(new(0xB0EC738D9C6FD969UL, 0xD05F0B35F6C0ED53UL), new(0xADCACCCD8E000000UL, 0x4BF99F58EE4196AFUL)),
                 new(new(0xB9700E20110830FEUL, 0xA5396B76280E47FDUL), new(0x022B6E81331CA1A9UL, 0xCED729C364BE7788UL))),
-            await Fnv1a512Async("foobar", cts.Token).ConfigureAwait(true));
+            await Fnv1a512Async(Foobar, cts.Token).ConfigureAwait(true));
     }
 
     /// <summary>
@@ -242,7 +247,7 @@ public sealed class Fnv1a512Tests
         new(
             new(new(0xB0EC738D9C6FD969UL, 0xD05F0B35F6C0ED53UL), new(0xADCACCCD8E000000UL, 0x4BF99F58EE4196AFUL)),
             new(new(0xB9700E20110830FEUL, 0xA5396B76280E47FDUL), new(0x022B6E81331CA1A9UL, 0xCED729C364BE7788UL))),
-        Fnv1a512Try("foobar"));
+        Fnv1a512Try(Foobar));
 
     /// <summary>
     /// Tests the string against the known vector result.
@@ -439,7 +444,7 @@ public sealed class Fnv1a512Tests
                 new(new(0x16B70975CB3E6D09UL, 0xD1586436BD241831UL), new(0xE7DFC9BEA0A91CB4UL, 0x5367D553B5016026UL))),
             alg.FnvOffsetBasis);
 
-        const string Data = "foobar";
+        const string Data = Foobar;
         int inputByteCount = UTF8.GetByteCount(Data);
         Span<byte> bytes = inputByteCount < 1024
             ? stackalloc byte[inputByteCount]

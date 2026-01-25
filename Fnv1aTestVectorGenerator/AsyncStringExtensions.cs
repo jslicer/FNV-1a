@@ -31,135 +31,177 @@ using static System.Text.Encoding;
 internal static class AsyncStringExtensions
 {
     /// <summary>
-    /// Asynchronously tests the specified data.
+    /// The thirty-two string.
     /// </summary>
-    /// <param name="data">The data.</param>
-    /// <param name="token">The optional cancellation token.</param>
-    /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    internal static async Task<string> TestAsync(this string data, CancellationToken token = default) => "Test:" + NewLine
-        + data + " 32: " + await data.Fnv1a32sAsync(token).ConfigureAwait(false) + NewLine
-        + data + " 64: " + await data.Fnv1a64sAsync(token).ConfigureAwait(false) + NewLine
-        + data + " 128: " + await data.Fnv1a128sAsync(token).ConfigureAwait(false) + NewLine
-        + data + " 256: " + await data.Fnv1a256sAsync(token).ConfigureAwait(false) + NewLine
-        + data + " 512: " + await data.Fnv1a512sAsync(token).ConfigureAwait(false) + NewLine
-        + data + " 1024: " + await data.Fnv1a1024sAsync(token).ConfigureAwait(false) + NewLine;
+    private const string ThirtyTwo = " 32: ";
 
     /// <summary>
-    /// Asynchronously tests the specified data adding a trailing NULL byte.
+    /// The sixty-four string.
     /// </summary>
-    /// <param name="data">The data.</param>
-    /// <param name="token">The optional cancellation token.</param>
-    /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    internal static async Task<string> Test0Async(this string data, CancellationToken token = default)
-    {
-        string newData = data + '\0';
-        string printData = await data.PrintAsync(token).ConfigureAwait(false);
-
-        return "Test0:" + NewLine
-            + printData + " 32: " + await newData.Fnv1a32sAsync(token).ConfigureAwait(false) + NewLine
-            + printData + " 64: " + await newData.Fnv1a64sAsync(token).ConfigureAwait(false) + NewLine
-            + printData + " 128: " + await newData.Fnv1a128sAsync(token).ConfigureAwait(false) + NewLine
-            + printData + " 256: " + await newData.Fnv1a256sAsync(token).ConfigureAwait(false) + NewLine
-            + printData + " 512: " + await newData.Fnv1a512sAsync(token).ConfigureAwait(false) + NewLine
-            + printData + " 1024: " + await newData.Fnv1a1024sAsync(token).ConfigureAwait(false) + NewLine;
-    }
+    private const string SixtyFour = " 64: ";
 
     /// <summary>
-    /// Asynchronously tests the specified data repeated ten times.
+    /// The one hundred twenty-eight string.
     /// </summary>
-    /// <param name="data">The data.</param>
-    /// <param name="token">The optional cancellation token.</param>
-    /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
-    /// <see cref="StringBuilder.MaxCapacity" />.</exception>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    internal static async Task<string> R10Async(this string data, CancellationToken token = default)
-    {
-        StringBuilder sb = new(10 * data.Length);
+    private const string OneHundredTwentyEight = " 128: ";
 
-        for (int i = 0; i < 10; i++)
+    /// <summary>
+    /// The two hundred fifty-six string.
+    /// </summary>
+    private const string TwoHundredFiftySix = " 256: ";
+
+    /// <summary>
+    /// The five hundred twelve string.
+    /// </summary>
+    private const string FiveHundredTwelve = " 512: ";
+
+    /// <summary>
+    /// The one thousand twenty-four string.
+    /// </summary>
+    private const string OneThousandTwentyFour = " 1024: ";
+
+    /// <summary>
+    /// Asynchronous extensions for strings to test its data.
+    /// </summary>
+    extension(string data)
+    {
+        /// <summary>
+        /// Asynchronously tests the specified data.
+        /// </summary>
+        /// <param name="token">The optional cancellation token.</param>
+        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+#pragma warning disable S2325 // Make a static method.
+        internal async Task<string> TestAsync(CancellationToken token = default) =>
+#pragma warning restore S2325 // Make a static method.
+            "Test:" + NewLine
+                + data + ThirtyTwo + await data.Fnv1a32sAsync(token).ConfigureAwait(false) + NewLine
+                + data + SixtyFour + await data.Fnv1a64sAsync(token).ConfigureAwait(false) + NewLine
+                + data + OneHundredTwentyEight + await data.Fnv1a128sAsync(token).ConfigureAwait(false) + NewLine
+                + data + TwoHundredFiftySix + await data.Fnv1a256sAsync(token).ConfigureAwait(false) + NewLine
+                + data + FiveHundredTwelve + await data.Fnv1a512sAsync(token).ConfigureAwait(false) + NewLine
+                + data + OneThousandTwentyFour + await data.Fnv1a1024sAsync(token).ConfigureAwait(false) + NewLine;
+
+        /// <summary>
+        /// Asynchronously tests the specified data adding a trailing NULL byte.
+        /// </summary>
+        /// <param name="token">The optional cancellation token.</param>
+        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+#pragma warning disable S2325 // Make a static method.
+        internal async Task<string> Test0Async(CancellationToken token = default)
+#pragma warning restore S2325 // Make a static method.
         {
-            sb = sb.Append(data);
+            string newData = data + '\0';
+            string printData = await data.PrintAsync(token).ConfigureAwait(false);
+
+            return "Test0:" + NewLine
+                + printData + ThirtyTwo + await newData.Fnv1a32sAsync(token).ConfigureAwait(false) + NewLine
+                + printData + SixtyFour + await newData.Fnv1a64sAsync(token).ConfigureAwait(false) + NewLine
+                + printData + OneHundredTwentyEight + await newData.Fnv1a128sAsync(token).ConfigureAwait(false) + NewLine
+                + printData + TwoHundredFiftySix + await newData.Fnv1a256sAsync(token).ConfigureAwait(false) + NewLine
+                + printData + FiveHundredTwelve + await newData.Fnv1a512sAsync(token).ConfigureAwait(false) + NewLine
+                + printData + OneThousandTwentyFour + await newData.Fnv1a1024sAsync(token).ConfigureAwait(false) + NewLine;
         }
 
-        string newData = sb.ToString();
-        string printData = await data.PrintAsync(token).ConfigureAwait(false);
-
-        return "R10:" + NewLine
-            + await printData.PrintAsync(token).ConfigureAwait(false) + " 32: " + await newData.Fnv1a32sAsync(token).ConfigureAwait(false) + NewLine
-            + await printData.PrintAsync(token).ConfigureAwait(false) + " 64: " + await newData.Fnv1a64sAsync(token).ConfigureAwait(false) + NewLine
-            + await printData.PrintAsync(token).ConfigureAwait(false) + " 128: " + await newData.Fnv1a128sAsync(token).ConfigureAwait(false) + NewLine
-            + await printData.PrintAsync(token).ConfigureAwait(false) + " 256: " + await newData.Fnv1a256sAsync(token).ConfigureAwait(false) + NewLine
-            + await printData.PrintAsync(token).ConfigureAwait(false) + " 512: " + await newData.Fnv1a512sAsync(token).ConfigureAwait(false) + NewLine
-            + await printData.PrintAsync(token).ConfigureAwait(false) + " 1024: " + await newData.Fnv1a1024sAsync(token).ConfigureAwait(false) + NewLine;
-    }
-
-    /// <summary>
-    /// Asynchronously tests the specified data repeated five hundred times.
-    /// </summary>
-    /// <param name="data">The data.</param>
-    /// <param name="token">The optional cancellation token.</param>
-    /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
-    /// <see cref="StringBuilder.MaxCapacity" />.</exception>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    internal static async Task<string> R500Async(this string data, CancellationToken token = default)
-    {
-        StringBuilder sb = new(500 * data.Length);
-
-        for (int i = 0; i < 500; i++)
+        /// <summary>
+        /// Asynchronously tests the specified data repeated ten times.
+        /// </summary>
+        /// <param name="token">The optional cancellation token.</param>
+        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
+        /// <see cref="StringBuilder.MaxCapacity" />.</exception>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+#pragma warning disable S2325 // Make a static method.
+        internal async Task<string> R10Async(CancellationToken token = default)
+#pragma warning restore S2325 // Make a static method.
         {
-            sb = sb.Append(data);
-        }
+            StringBuilder sb = new(10 * data.Length);
 
-        string newData = sb.ToString();
-        string printData = await data.PrintAsync(token).ConfigureAwait(false);
-
-        return "R500:" + NewLine
-            + await printData.PrintAsync(token).ConfigureAwait(false) + " 32: " + await newData.Fnv1a32sAsync(token).ConfigureAwait(false) + NewLine
-            + await printData.PrintAsync(token).ConfigureAwait(false) + " 64: " + await newData.Fnv1a64sAsync(token).ConfigureAwait(false) + NewLine
-            + await printData.PrintAsync(token).ConfigureAwait(false) + " 128: " + await newData.Fnv1a128sAsync(token).ConfigureAwait(false) + NewLine
-            + await printData.PrintAsync(token).ConfigureAwait(false) + " 256: " + await newData.Fnv1a256sAsync(token).ConfigureAwait(false) + NewLine
-            + await printData.PrintAsync(token).ConfigureAwait(false) + " 512: " + await newData.Fnv1a512sAsync(token).ConfigureAwait(false) + NewLine
-            + await printData.PrintAsync(token).ConfigureAwait(false) + " 1024: " + await newData.Fnv1a1024sAsync(token).ConfigureAwait(false) + NewLine;
-    }
-
-    /// <summary>
-    /// Asynchronously returns a printable string (hex encodes any control characters).
-    /// </summary>
-    /// <param name="data">The data.</param>
-    /// <param name="token">The optional cancellation token.</param>
-    /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the printable string.</returns>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    // ReSharper disable once RedundantAwait
-    private static async Task<string> PrintAsync(this string data, CancellationToken token = default)
-    {
-        bool controlCharacter = false;
-        StringBuilder sb = new(data.Length);
-
-        foreach (char c in data)
-        {
-            token.ThrowIfCancellationRequested();
-            if (controlCharacter || char.IsControl(c))
+            for (int i = 0; i < 10; i++)
             {
-                sb = sb.Append(InvariantCulture, $"\\x{(uint)c:x2}");
-                controlCharacter = true;
+                sb = sb.Append(data);
             }
-            else
-            {
-                sb = sb.Append(c);
-            }
+
+            string newData = sb.ToString();
+            string printData = await data.PrintAsync(token).ConfigureAwait(false);
+
+            return "R10:" + NewLine
+                + await printData.PrintAsync(token).ConfigureAwait(false) + ThirtyTwo + await newData.Fnv1a32sAsync(token).ConfigureAwait(false) + NewLine
+                + await printData.PrintAsync(token).ConfigureAwait(false) + SixtyFour + await newData.Fnv1a64sAsync(token).ConfigureAwait(false) + NewLine
+                + await printData.PrintAsync(token).ConfigureAwait(false) + OneHundredTwentyEight + await newData.Fnv1a128sAsync(token).ConfigureAwait(false) + NewLine
+                + await printData.PrintAsync(token).ConfigureAwait(false) + TwoHundredFiftySix + await newData.Fnv1a256sAsync(token).ConfigureAwait(false) + NewLine
+                + await printData.PrintAsync(token).ConfigureAwait(false) + FiveHundredTwelve + await newData.Fnv1a512sAsync(token).ConfigureAwait(false) + NewLine
+                + await printData.PrintAsync(token).ConfigureAwait(false) + OneThousandTwentyFour + await newData.Fnv1a1024sAsync(token).ConfigureAwait(false) + NewLine;
         }
 
-        // ReSharper disable once AsyncConverter.AsyncAwaitMayBeElidedHighlighting
-        // ReSharper disable once AsyncApostle.AsyncAwaitMayBeElidedHighlighting
-        //// ReSharper disable RedundantAwait
-        return await Task.FromResult(sb.ToString()).ConfigureAwait(false);
-        //// ReSharper enable RedundantAwait
+        /// <summary>
+        /// Asynchronously tests the specified data repeated five hundred times.
+        /// </summary>
+        /// <param name="token">The optional cancellation token.</param>
+        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
+        /// <see cref="StringBuilder.MaxCapacity" />.</exception>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+#pragma warning disable S2325 // Make a static method.
+        internal async Task<string> R500Async(CancellationToken token = default)
+#pragma warning restore S2325 // Make a static method.
+        {
+            StringBuilder sb = new(500 * data.Length);
+
+            for (int i = 0; i < 500; i++)
+            {
+                sb = sb.Append(data);
+            }
+
+            string newData = sb.ToString();
+            string printData = await data.PrintAsync(token).ConfigureAwait(false);
+
+            return "R500:" + NewLine
+                + await printData.PrintAsync(token).ConfigureAwait(false) + ThirtyTwo + await newData.Fnv1a32sAsync(token).ConfigureAwait(false) + NewLine
+                + await printData.PrintAsync(token).ConfigureAwait(false) + SixtyFour + await newData.Fnv1a64sAsync(token).ConfigureAwait(false) + NewLine
+                + await printData.PrintAsync(token).ConfigureAwait(false) + OneHundredTwentyEight + await newData.Fnv1a128sAsync(token).ConfigureAwait(false) + NewLine
+                + await printData.PrintAsync(token).ConfigureAwait(false) + TwoHundredFiftySix + await newData.Fnv1a256sAsync(token).ConfigureAwait(false) + NewLine
+                + await printData.PrintAsync(token).ConfigureAwait(false) + FiveHundredTwelve + await newData.Fnv1a512sAsync(token).ConfigureAwait(false) + NewLine
+                + await printData.PrintAsync(token).ConfigureAwait(false) + OneThousandTwentyFour + await newData.Fnv1a1024sAsync(token).ConfigureAwait(false) + NewLine;
+        }
+
+        /// <summary>
+        /// Asynchronously returns a printable string (hex encodes any control characters).
+        /// </summary>
+        /// <param name="token">The optional cancellation token.</param>
+        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the printable string.</returns>
+        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+        // ReSharper disable once RedundantAwait
+#pragma warning disable S2325 // Make a static method.
+        private async Task<string> PrintAsync(CancellationToken token = default)
+#pragma warning restore S2325 // Make a static method.
+        {
+            bool controlCharacter = false;
+            StringBuilder sb = new(data.Length);
+
+            foreach (char c in data)
+            {
+                token.ThrowIfCancellationRequested();
+                if (controlCharacter || char.IsControl(c))
+                {
+                    sb = sb.Append(InvariantCulture, $"\\x{(uint)c:x2}");
+                    controlCharacter = true;
+                }
+                else
+                {
+                    sb = sb.Append(c);
+                }
+            }
+
+            // ReSharper disable once AsyncConverter.AsyncAwaitMayBeElidedHighlighting
+            // ReSharper disable once AsyncApostle.AsyncAwaitMayBeElidedHighlighting
+            //// ReSharper disable RedundantAwait
+            return await Task.FromResult(sb.ToString()).ConfigureAwait(false);
+            //// ReSharper enable RedundantAwait
+        }
     }
 
     /// <summary>

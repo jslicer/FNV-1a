@@ -39,6 +39,11 @@ public sealed class Fnv1a64Tests
 #pragma warning restore IDE0079 // Remove unnecessary suppression
 {
     /// <summary>
+    /// The foobar string.
+    /// </summary>
+    private const string Foobar = "foobar";
+
+    /// <summary>
     /// The hash algorithm being tested.
     /// </summary>
     private NonCryptographicHashAlgorithm _alg = null!;
@@ -120,7 +125,7 @@ public sealed class Fnv1a64Tests
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
-    public void TestVector3() => AreEqual(0x85944171F73967E8UL, Fnv1a64("foobar"));
+    public void TestVector3() => AreEqual(0x85944171F73967E8UL, Fnv1a64(Foobar));
 
     /// <summary>
     /// Tests the string against the known vector result.
@@ -133,7 +138,7 @@ public sealed class Fnv1a64Tests
     public async Task TestVector3Async()
     {
         using CancellationTokenSource cts = new();
-        AreEqual(0x85944171F73967E8UL, await Fnv1a64Async("foobar", cts.Token).ConfigureAwait(true));
+        AreEqual(0x85944171F73967E8UL, await Fnv1a64Async(Foobar, cts.Token).ConfigureAwait(true));
     }
 
     /// <summary>
@@ -142,7 +147,7 @@ public sealed class Fnv1a64Tests
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
-    public void TestVector3Try() => AreEqual(0x85944171F73967E8UL, Fnv1a64Try("foobar"));
+    public void TestVector3Try() => AreEqual(0x85944171F73967E8UL, Fnv1a64Try(Foobar));
 
     /// <summary>
     /// Tests the string against the known vector result.
@@ -252,7 +257,7 @@ public sealed class Fnv1a64Tests
         AreEqual(0xFFFFFEFFFFFFFE4CU, alg.FnvPrime);
         AreEqual(0x340D631B7BDDDCDAU, alg.FnvOffsetBasis);
 
-        const string Data = "foobar";
+        const string Data = Foobar;
         int inputByteCount = UTF8.GetByteCount(Data);
         Span<byte> bytes = inputByteCount < 1024
             ? stackalloc byte[inputByteCount]

@@ -43,6 +43,11 @@ public sealed class Fnv1a256Tests
 #pragma warning restore IDE0079 // Remove unnecessary suppression
 {
     /// <summary>
+    /// The foobar string.
+    /// </summary>
+    private const string Foobar = "foobar";
+
+    /// <summary>
     /// The hash algorithm being tested.
     /// </summary>
     private NonCryptographicHashAlgorithm _alg = null!;
@@ -186,7 +191,7 @@ public sealed class Fnv1a256Tests
     //// ReSharper disable once UnusedMember.Global
     public void TestVector3() => AreEqual(
         new(new(0xB055EA2F306CADADUL, 0x4F0F81C02D3889DCUL), new(0x32453DAD5AE35B75UL, 0x3BA1A91084AF3428UL)),
-        Fnv1a256("foobar"));
+        Fnv1a256(Foobar));
 
     /// <summary>
     /// Tests the string against the known vector result.
@@ -207,7 +212,7 @@ public sealed class Fnv1a256Tests
         using CancellationTokenSource cts = new();
         AreEqual(
             new(new(0xB055EA2F306CADADUL, 0x4F0F81C02D3889DCUL), new(0x32453DAD5AE35B75UL, 0x3BA1A91084AF3428UL)),
-            await Fnv1a256Async("foobar", cts.Token).ConfigureAwait(true));
+            await Fnv1a256Async(Foobar, cts.Token).ConfigureAwait(true));
     }
 
     /// <summary>
@@ -224,7 +229,7 @@ public sealed class Fnv1a256Tests
     //// ReSharper disable once UnusedMember.Global
     public void TestVector3Try() => AreEqual(
         new(new(0xB055EA2F306CADADUL, 0x4F0F81C02D3889DCUL), new(0x32453DAD5AE35B75UL, 0x3BA1A91084AF3428UL)),
-        Fnv1a256Try("foobar"));
+        Fnv1a256Try(Foobar));
 
     /// <summary>
     /// Tests the string against the known vector result.
@@ -377,7 +382,7 @@ public sealed class Fnv1a256Tests
             new(new(0x22D97243553AAFC9UL, 0xD2673C7B3B1A8933UL), new(0x374EAC97B849444CUL, 0xEFDC4B373511FACAUL)),
             alg.FnvOffsetBasis);
 
-        const string Data = "foobar";
+        const string Data = Foobar;
         int inputByteCount = UTF8.GetByteCount(Data);
         Span<byte> bytes = inputByteCount < 1024
             ? stackalloc byte[inputByteCount]

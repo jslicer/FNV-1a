@@ -23,6 +23,16 @@ using System.Threading.Tasks;
 /// <seealso cref="ISet" />
 internal sealed class Set6(TextWriter? writer = null) : SetBase(writer)
 {
+    /// <summary>
+    /// The hi string.
+    /// </summary>
+    private const string Hi = "hi";
+
+    /// <summary>
+    /// The hello string.
+    /// </summary>
+    private const string Hello = "hello";
+
     /// <inheritdoc cref="SetBase" />
     /// <summary>
     /// Performs the test vector set 6 generation.
@@ -31,10 +41,10 @@ internal sealed class Set6(TextWriter? writer = null) : SetBase(writer)
     /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
     public override void Perform()
     {
-        WriteLine("hi".Test());
-        WriteLine("hi".Test0());
-        WriteLine("hello".Test());
-        WriteLine("hello".Test0());
+        WriteLine(Hi.Test());
+        WriteLine(Hi.Test0());
+        WriteLine(Hello.Test());
+        WriteLine(Hello.Test0());
     }
 
     /// <inheritdoc cref="SetBase" />
@@ -49,12 +59,12 @@ internal sealed class Set6(TextWriter? writer = null) : SetBase(writer)
     public override async Task PerformAsync(CancellationToken token = default)
     {
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "hi".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await Hi.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "hi".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await Hi.Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "hello".TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await Hello.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
         token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "hello".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(await Hello.Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
     }
 }

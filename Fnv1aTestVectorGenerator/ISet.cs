@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 /// <summary>
-/// Provides an definition for performing test vector set generation.
+/// Provides a definition for performing test vector set generation.
 /// </summary>
 internal interface ISet
 {

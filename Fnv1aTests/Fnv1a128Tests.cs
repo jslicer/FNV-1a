@@ -39,6 +39,11 @@ public sealed class Fnv1a128Tests
 #pragma warning restore IDE0079 // Remove unnecessary suppression
 {
     /// <summary>
+    /// The foobar string.
+    /// </summary>
+    private const string Foobar = "foobar";
+
+    /// <summary>
     /// The hash algorithm being tested.
     /// </summary>
     private NonCryptographicHashAlgorithm _alg = null!;
@@ -134,7 +139,7 @@ public sealed class Fnv1a128Tests
     //// ReSharper disable once UnusedMember.Global
     public void TestVector3() => AreEqual(
         new(0x343E1662793C64BFUL, 0x6F0D3597BA446F18UL),
-        Fnv1a128("foobar"));
+        Fnv1a128(Foobar));
 
     /// <summary>
     /// Tests the string against the known vector result.
@@ -149,7 +154,7 @@ public sealed class Fnv1a128Tests
         using CancellationTokenSource cts = new();
         AreEqual(
             new(0x343E1662793C64BFUL, 0x6F0D3597BA446F18UL),
-            await Fnv1a128Async("foobar", cts.Token).ConfigureAwait(true));
+            await Fnv1a128Async(Foobar, cts.Token).ConfigureAwait(true));
     }
 
     /// <summary>
@@ -160,7 +165,7 @@ public sealed class Fnv1a128Tests
     //// ReSharper disable once UnusedMember.Global
     public void TestVector3Try() => AreEqual(
         new(0x343E1662793C64BFUL, 0x6F0D3597BA446F18UL),
-        Fnv1a128Try("foobar"));
+        Fnv1a128Try(Foobar));
 
     /// <summary>
     /// Tests the string against the known vector result.
@@ -320,7 +325,7 @@ public sealed class Fnv1a128Tests
         AreEqual(new(0xFFFFFFFFFEFFFFFFUL, 0xFFFFFFFFFFFFFEC4UL), alg.FnvPrime);
         AreEqual(new(0x939DD8D1F844FEBDUL, 0x9D47DE8A9D6A3A72UL), alg.FnvOffsetBasis);
 
-        const string Data = "foobar";
+        const string Data = Foobar;
         int inputByteCount = UTF8.GetByteCount(Data);
         Span<byte> bytes = inputByteCount < 1024
             ? stackalloc byte[inputByteCount]
