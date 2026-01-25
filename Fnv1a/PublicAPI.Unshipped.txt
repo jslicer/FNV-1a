@@ -1,0 +1,45 @@
+﻿Fnv1a.Fnv1a1024
+Fnv1a.Fnv1a1024.Fnv1a1024() -> void
+Fnv1a.Fnv1a1024.Fnv1a1024(System.Numerics.BigInteger prime, System.Numerics.BigInteger offsetBasis) -> void
+Fnv1a.Fnv1a128
+Fnv1a.Fnv1a128.Fnv1a128() -> void
+Fnv1a.Fnv1a128.Fnv1a128(System.UInt128 prime, System.UInt128 offsetBasis) -> void
+Fnv1a.Fnv1a128.FnvOffsetBasis.get -> System.UInt128
+Fnv1a.Fnv1a128.FnvPrime.get -> System.UInt128
+Fnv1a.Fnv1a256
+Fnv1a.Fnv1a256.Fnv1a256() -> void
+Fnv1a.Fnv1a256.Fnv1a256(MissingValues.UInt256 prime, MissingValues.UInt256 offsetBasis) -> void
+Fnv1a.Fnv1a256.FnvOffsetBasis.get -> MissingValues.UInt256
+Fnv1a.Fnv1a256.FnvPrime.get -> MissingValues.UInt256
+Fnv1a.Fnv1a32
+Fnv1a.Fnv1a32.Fnv1a32() -> void
+Fnv1a.Fnv1a32.Fnv1a32(uint prime, uint offsetBasis) -> void
+Fnv1a.Fnv1a32.FnvOffsetBasis.get -> uint
+Fnv1a.Fnv1a32.FnvPrime.get -> uint
+Fnv1a.Fnv1a512
+Fnv1a.Fnv1a512.Fnv1a512() -> void
+Fnv1a.Fnv1a512.Fnv1a512(MissingValues.UInt512 prime, MissingValues.UInt512 offsetBasis) -> void
+Fnv1a.Fnv1a512.FnvOffsetBasis.get -> MissingValues.UInt512
+Fnv1a.Fnv1a512.FnvPrime.get -> MissingValues.UInt512
+Fnv1a.Fnv1a64
+Fnv1a.Fnv1a64.Fnv1a64() -> void
+Fnv1a.Fnv1a64.Fnv1a64(ulong prime, ulong offsetBasis) -> void
+Fnv1a.Fnv1a64.FnvOffsetBasis.get -> ulong
+Fnv1a.Fnv1a64.FnvPrime.get -> ulong
+Fnv1a.Fnv1aBigBase
+Fnv1a.Fnv1aBigBase.Fnv1aBigBase(in System.Numerics.BigInteger bitMask, in System.Numerics.BigInteger prime, in System.Numerics.BigInteger offsetBasis, in int hashSizeValue) -> void
+Fnv1a.Fnv1aBigBase.FnvOffsetBasis.get -> System.Numerics.BigInteger
+Fnv1a.Fnv1aBigBase.FnvPrime.get -> System.Numerics.BigInteger
+override Fnv1a.Fnv1a128.Append(System.ReadOnlySpan<byte> source) -> void
+override Fnv1a.Fnv1a128.Reset() -> void
+override Fnv1a.Fnv1a256.Append(System.ReadOnlySpan<byte> source) -> void
+override Fnv1a.Fnv1a256.Reset() -> void
+override Fnv1a.Fnv1a32.Append(System.ReadOnlySpan<byte> source) -> void
+override Fnv1a.Fnv1a32.Reset() -> void
+override Fnv1a.Fnv1a512.Append(System.ReadOnlySpan<byte> source) -> void
+override Fnv1a.Fnv1a512.Reset() -> void
+override Fnv1a.Fnv1a64.Append(System.ReadOnlySpan<byte> source) -> void
+override Fnv1a.Fnv1a64.Reset() -> void
+override Fnv1a.Fnv1aBigBase.Append(System.ReadOnlySpan<byte> source) -> void
+override Fnv1a.Fnv1aBigBase.GetCurrentHashCore(System.Span<byte> destination) -> void
+override Fnv1a.Fnv1aBigBase.Reset() -> void

@@ -1,0 +1,11 @@
+﻿#nullable enable
+Fnv1aBenchmarks.Benchmark
+Fnv1aBenchmarks.Benchmark.Benchmark() -> void
+Fnv1aBenchmarks.Benchmark.Fnv1A1024() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A128() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A256() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A32() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A512() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A64() -> byte[]!
+Fnv1aBenchmarks.BenchmarkConfig
+Fnv1aBenchmarks.BenchmarkConfig.BenchmarkConfig() -> void
