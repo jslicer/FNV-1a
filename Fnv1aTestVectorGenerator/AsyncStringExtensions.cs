@@ -11,9 +11,6 @@
 namespace Fnv1aTestVectorGenerator;
 
 using System;
-using System.IO;
-using System.IO.Hashing;
-using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -61,6 +58,36 @@ internal static class AsyncStringExtensions
     private const string OneThousandTwentyFour = " 1024: ";
 
     /// <summary>
+    /// The FNV-1A 32-bit hasher.
+    /// </summary>
+    private static readonly ThreadLocal<Fnv1a32> _Fnv1A32Hasher = new(static () => new());
+
+    /// <summary>
+    /// The FNV-1A 64-bit hasher.
+    /// </summary>
+    private static readonly ThreadLocal<Fnv1a64> _Fnv1A64Hasher = new(static () => new());
+
+    /// <summary>
+    /// The FNV-1A 128-bit hasher.
+    /// </summary>
+    private static readonly ThreadLocal<Fnv1a128> _Fnv1A128Hasher = new(static () => new());
+
+    /// <summary>
+    /// The FNV-1A 256-bit hasher.
+    /// </summary>
+    private static readonly ThreadLocal<Fnv1a256> _Fnv1A256Hasher = new(static () => new());
+
+    /// <summary>
+    /// The FNV-1A 512-bit hasher.
+    /// </summary>
+    private static readonly ThreadLocal<Fnv1a512> _Fnv1A512Hasher = new(static () => new());
+
+    /// <summary>
+    /// The FNV-1A 1024-bit hasher.
+    /// </summary>
+    private static readonly ThreadLocal<Fnv1a1024> _Fnv1A1024Hasher = new(static () => new());
+
+    /// <summary>
     /// Asynchronous extensions for strings to test its data.
     /// </summary>
     extension(string data)
@@ -72,15 +99,24 @@ internal static class AsyncStringExtensions
         /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
         /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
 #pragma warning disable S2325 // Make a static method.
-        internal async Task<string> TestAsync(CancellationToken token = default) =>
+        internal Task<string> TestAsync(CancellationToken token = default)
 #pragma warning restore S2325 // Make a static method.
-            "Test:" + NewLine
-                + data + ThirtyTwo + await data.Fnv1a32sAsync(token).ConfigureAwait(false) + NewLine
-                + data + SixtyFour + await data.Fnv1a64sAsync(token).ConfigureAwait(false) + NewLine
-                + data + OneHundredTwentyEight + await data.Fnv1a128sAsync(token).ConfigureAwait(false) + NewLine
-                + data + TwoHundredFiftySix + await data.Fnv1a256sAsync(token).ConfigureAwait(false) + NewLine
-                + data + FiveHundredTwelve + await data.Fnv1a512sAsync(token).ConfigureAwait(false) + NewLine
-                + data + OneThousandTwentyFour + await data.Fnv1a1024sAsync(token).ConfigureAwait(false) + NewLine;
+        {
+            token.ThrowIfCancellationRequested();
+
+            byte[] payload = UTF8.GetBytes(data);
+
+            // ReSharper disable once ComplexConditionExpression
+            string result = "Test:" + NewLine
+                + data + ThirtyTwo + ComputeFnv1A32(payload) + NewLine
+                + data + SixtyFour + ComputeFnv1A64(payload) + NewLine
+                + data + OneHundredTwentyEight + ComputeFnv1A128(payload) + NewLine
+                + data + TwoHundredFiftySix + ComputeFnv1A256(payload) + NewLine
+                + data + FiveHundredTwelve + ComputeFnv1A512(payload) + NewLine
+                + data + OneThousandTwentyFour + ComputeFnv1A1024(payload) + NewLine;
+
+            return Task.FromResult(result);
+        }
 
         /// <summary>
         /// Asynchronously tests the specified data adding a trailing NULL byte.
@@ -93,15 +129,16 @@ internal static class AsyncStringExtensions
 #pragma warning restore S2325 // Make a static method.
         {
             string newData = data + '\0';
+            byte[] payload = UTF8.GetBytes(newData);
             string printData = await data.PrintAsync(token).ConfigureAwait(false);
 
             return "Test0:" + NewLine
-                + printData + ThirtyTwo + await newData.Fnv1a32sAsync(token).ConfigureAwait(false) + NewLine
-                + printData + SixtyFour + await newData.Fnv1a64sAsync(token).ConfigureAwait(false) + NewLine
-                + printData + OneHundredTwentyEight + await newData.Fnv1a128sAsync(token).ConfigureAwait(false) + NewLine
-                + printData + TwoHundredFiftySix + await newData.Fnv1a256sAsync(token).ConfigureAwait(false) + NewLine
-                + printData + FiveHundredTwelve + await newData.Fnv1a512sAsync(token).ConfigureAwait(false) + NewLine
-                + printData + OneThousandTwentyFour + await newData.Fnv1a1024sAsync(token).ConfigureAwait(false) + NewLine;
+                + printData + ThirtyTwo + ComputeFnv1A32(payload) + NewLine
+                + printData + SixtyFour + ComputeFnv1A64(payload) + NewLine
+                + printData + OneHundredTwentyEight + ComputeFnv1A128(payload) + NewLine
+                + printData + TwoHundredFiftySix + ComputeFnv1A256(payload) + NewLine
+                + printData + FiveHundredTwelve + ComputeFnv1A512(payload) + NewLine
+                + printData + OneThousandTwentyFour + ComputeFnv1A1024(payload) + NewLine;
         }
 
         /// <summary>
@@ -121,19 +158,20 @@ internal static class AsyncStringExtensions
 
             for (int i = 0; i < 10; i++)
             {
-                sb = sb.Append(data);
+                sb.Append(data);
             }
 
             string newData = sb.ToString();
-            string printData = await data.PrintAsync(token).ConfigureAwait(false);
+            byte[] payload = UTF8.GetBytes(newData);
+            string printable = await newData.PrintAsync(token).ConfigureAwait(false);
 
             return "R10:" + NewLine
-                + await printData.PrintAsync(token).ConfigureAwait(false) + ThirtyTwo + await newData.Fnv1a32sAsync(token).ConfigureAwait(false) + NewLine
-                + await printData.PrintAsync(token).ConfigureAwait(false) + SixtyFour + await newData.Fnv1a64sAsync(token).ConfigureAwait(false) + NewLine
-                + await printData.PrintAsync(token).ConfigureAwait(false) + OneHundredTwentyEight + await newData.Fnv1a128sAsync(token).ConfigureAwait(false) + NewLine
-                + await printData.PrintAsync(token).ConfigureAwait(false) + TwoHundredFiftySix + await newData.Fnv1a256sAsync(token).ConfigureAwait(false) + NewLine
-                + await printData.PrintAsync(token).ConfigureAwait(false) + FiveHundredTwelve + await newData.Fnv1a512sAsync(token).ConfigureAwait(false) + NewLine
-                + await printData.PrintAsync(token).ConfigureAwait(false) + OneThousandTwentyFour + await newData.Fnv1a1024sAsync(token).ConfigureAwait(false) + NewLine;
+                + printable + ThirtyTwo + ComputeFnv1A32(payload) + NewLine
+                + printable + SixtyFour + ComputeFnv1A64(payload) + NewLine
+                + printable + OneHundredTwentyEight + ComputeFnv1A128(payload) + NewLine
+                + printable + TwoHundredFiftySix + ComputeFnv1A256(payload) + NewLine
+                + printable + FiveHundredTwelve + ComputeFnv1A512(payload) + NewLine
+                + printable + OneThousandTwentyFour + ComputeFnv1A1024(payload) + NewLine;
         }
 
         /// <summary>
@@ -153,19 +191,20 @@ internal static class AsyncStringExtensions
 
             for (int i = 0; i < 500; i++)
             {
-                sb = sb.Append(data);
+                sb.Append(data);
             }
 
             string newData = sb.ToString();
-            string printData = await data.PrintAsync(token).ConfigureAwait(false);
+            byte[] payload = UTF8.GetBytes(newData);
+            string printable = await newData.PrintAsync(token).ConfigureAwait(false);
 
             return "R500:" + NewLine
-                + await printData.PrintAsync(token).ConfigureAwait(false) + ThirtyTwo + await newData.Fnv1a32sAsync(token).ConfigureAwait(false) + NewLine
-                + await printData.PrintAsync(token).ConfigureAwait(false) + SixtyFour + await newData.Fnv1a64sAsync(token).ConfigureAwait(false) + NewLine
-                + await printData.PrintAsync(token).ConfigureAwait(false) + OneHundredTwentyEight + await newData.Fnv1a128sAsync(token).ConfigureAwait(false) + NewLine
-                + await printData.PrintAsync(token).ConfigureAwait(false) + TwoHundredFiftySix + await newData.Fnv1a256sAsync(token).ConfigureAwait(false) + NewLine
-                + await printData.PrintAsync(token).ConfigureAwait(false) + FiveHundredTwelve + await newData.Fnv1a512sAsync(token).ConfigureAwait(false) + NewLine
-                + await printData.PrintAsync(token).ConfigureAwait(false) + OneThousandTwentyFour + await newData.Fnv1a1024sAsync(token).ConfigureAwait(false) + NewLine;
+                + printable + ThirtyTwo + ComputeFnv1A32(payload) + NewLine
+                + printable + SixtyFour + ComputeFnv1A64(payload) + NewLine
+                + printable + OneHundredTwentyEight + ComputeFnv1A128(payload) + NewLine
+                + printable + TwoHundredFiftySix + ComputeFnv1A256(payload) + NewLine
+                + printable + FiveHundredTwelve + ComputeFnv1A512(payload) + NewLine
+                + printable + OneThousandTwentyFour + ComputeFnv1A1024(payload) + NewLine;
         }
 
         /// <summary>
@@ -176,7 +215,7 @@ internal static class AsyncStringExtensions
         /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
         // ReSharper disable once RedundantAwait
 #pragma warning disable S2325 // Make a static method.
-        private async Task<string> PrintAsync(CancellationToken token = default)
+        private Task<string> PrintAsync(CancellationToken token = default)
 #pragma warning restore S2325 // Make a static method.
         {
             bool controlCharacter = false;
@@ -187,171 +226,114 @@ internal static class AsyncStringExtensions
                 token.ThrowIfCancellationRequested();
                 if (controlCharacter || char.IsControl(c))
                 {
-                    sb = sb.Append(InvariantCulture, $"\\x{(uint)c:x2}");
+                    _ = sb.Append(InvariantCulture, $"\\x{(uint)c:x2}");
                     controlCharacter = true;
                 }
                 else
                 {
-                    sb = sb.Append(c);
+                    sb.Append(c);
                 }
             }
 
-            // ReSharper disable once AsyncConverter.AsyncAwaitMayBeElidedHighlighting
-            // ReSharper disable once AsyncApostle.AsyncAwaitMayBeElidedHighlighting
-            //// ReSharper disable RedundantAwait
-            return await Task.FromResult(sb.ToString()).ConfigureAwait(false);
-            //// ReSharper enable RedundantAwait
+            return Task.FromResult(sb.ToString());
         }
     }
 
     /// <summary>
-    /// Asynchronously computes the FNV-1a 32-bit hash for the specified data.
+    /// Computes the FNV-1A 32-bit hash of the given data.
     /// </summary>
     /// <param name="data">The data.</param>
-    /// <param name="token">The optional cancellation token.</param>
-    /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 32-bit hash of the specified
-    /// data.</returns>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    // ReSharper disable once InconsistentNaming
-    private static async Task<string> Fnv1a32sAsync(this string data, CancellationToken token = default)
+    /// <returns>The hash value in hexadecimal.</returns>
+    private static string ComputeFnv1A32(ReadOnlySpan<byte> data)
     {
-        NonCryptographicHashAlgorithm alg = new Fnv1a32();
+        Fnv1a32 hasher = _Fnv1A32Hasher.Value!;
 
-#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
-        await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
-#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
-        await alg.AppendAsync(stream, token).ConfigureAwait(true);
-        return "0x"
-            + ((uint)ToInt32(alg.GetCurrentHash(), 0)).ToString("X8", InvariantCulture);
+        hasher.Reset();
+        hasher.Append(data);
+        return "0x" + ((uint)ToInt32(hasher.GetCurrentHash(), 0)).ToString("X8", InvariantCulture);
     }
 
     /// <summary>
-    /// Asynchronously computes the FNV-1a 64-bit hash for the specified data.
+    /// Computes the FNV-1A 64-bit hash of the given data.
     /// </summary>
     /// <param name="data">The data.</param>
-    /// <param name="token">The optional cancellation token.</param>
-    /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 64-bit hash of the specified
-    /// data.</returns>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    // ReSharper disable once InconsistentNaming
-    private static async Task<string> Fnv1a64sAsync(this string data, CancellationToken token = default)
+    /// <returns>The hash value in hexadecimal.</returns>
+    private static string ComputeFnv1A64(ReadOnlySpan<byte> data)
     {
-        NonCryptographicHashAlgorithm alg = new Fnv1a64();
+        Fnv1a64 hasher = _Fnv1A64Hasher.Value!;
 
-#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
-        await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
-#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
-        await alg.AppendAsync(stream, token).ConfigureAwait(true);
-        return "0x"
-            + ((ulong)ToInt64(alg.GetCurrentHash(), 0)).ToString("X16", InvariantCulture);
+        hasher.Reset();
+        hasher.Append(data);
+        return "0x" + ((ulong)ToInt64(hasher.GetCurrentHash(), 0)).ToString("X16", InvariantCulture);
     }
 
     /// <summary>
-    /// Asynchronously computes the FNV-1a 128-bit hash for the specified data.
+    /// Computes the FNV-1A 128-bit hash of the given data.
     /// </summary>
     /// <param name="data">The data.</param>
-    /// <param name="token">The optional cancellation token.</param>
-    /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 128-bit hash of the specified
-    /// data.</returns>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    // ReSharper disable once InconsistentNaming
-    private static async Task<string> Fnv1a128sAsync(this string data, CancellationToken token = default)
+    /// <returns>The hash value in hexadecimal.</returns>
+    private static string ComputeFnv1A128(ReadOnlySpan<byte> data)
     {
-        NonCryptographicHashAlgorithm alg = new Fnv1a128();
+        Fnv1a128 hasher = _Fnv1A128Hasher.Value!;
 
-#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
-        await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
-#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
-        await alg.AppendAsync(stream, token).ConfigureAwait(true);
-
-        string value = new BigInteger(alg.GetCurrentHash().AddZero()).ToString("X32", InvariantCulture);
-
-        return $"0x{value.AsSpan(value.Length - 32)}";
+        hasher.Reset();
+        hasher.Append(data);
+        return FormatBigEndianHex(hasher.GetCurrentHash());
     }
 
     /// <summary>
-    /// Asynchronously computes the FNV-1a 256-bit hash for the specified data.
+    /// Computes the FNV-1A 256-bit hash of the given data.
     /// </summary>
     /// <param name="data">The data.</param>
-    /// <param name="token">The optional cancellation token.</param>
-    /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 256-bit hash of the specified
-    /// data.</returns>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    // ReSharper disable once InconsistentNaming
-    private static async Task<string> Fnv1a256sAsync(this string data, CancellationToken token = default)
+    /// <returns>The hash value in hexadecimal.</returns>
+    private static string ComputeFnv1A256(ReadOnlySpan<byte> data)
     {
-        NonCryptographicHashAlgorithm alg = new Fnv1a256();
+        Fnv1a256 hasher = _Fnv1A256Hasher.Value!;
 
-#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
-        await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
-#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
-        await alg.AppendAsync(stream, token).ConfigureAwait(true);
-
-        string value = new BigInteger(alg.GetCurrentHash().AddZero()).ToString("X64", InvariantCulture);
-
-        return $"0x{value.AsSpan(value.Length - 64)}";
+        hasher.Reset();
+        hasher.Append(data);
+        return FormatBigEndianHex(hasher.GetCurrentHash());
     }
 
     /// <summary>
-    /// Asynchronously computes the FNV-1a 512-bit hash for the specified data.
+    /// Computes the FNV-1A 512-bit hash of the given data.
     /// </summary>
     /// <param name="data">The data.</param>
-    /// <param name="token">The optional cancellation token.</param>
-    /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 512-bit hash of the specified
-    /// data.</returns>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    // ReSharper disable once InconsistentNaming
-    private static async Task<string> Fnv1a512sAsync(this string data, CancellationToken token = default)
+    /// <returns>The hash value in hexadecimal.</returns>
+    private static string ComputeFnv1A512(ReadOnlySpan<byte> data)
     {
-        NonCryptographicHashAlgorithm alg = new Fnv1a512();
+        Fnv1a512 hasher = _Fnv1A512Hasher.Value!;
 
-#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
-        await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
-#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
-        await alg.AppendAsync(stream, token).ConfigureAwait(true);
-
-        BigInteger hash = new(alg.GetCurrentHash().AddZero());
-        string value1 = (hash >> 256).ToString("X64", InvariantCulture);
-        string value2 = (hash & Bitmasks.Bottom64Bytes).ToString("X64", InvariantCulture);
-
-        return string.Concat(
-            "0x",
-            value1.AsSpan(value1.Length - 64),
-            value2.AsSpan(value2.Length - 64));
+        hasher.Reset();
+        hasher.Append(data);
+        return FormatBigEndianHex(hasher.GetCurrentHash());
     }
 
     /// <summary>
-    /// Asynchronously computes the FNV-1a 1024-bit hash for the specified data.
+    /// Computes the FNV-1A 1024-bit hash of the given data.
     /// </summary>
     /// <param name="data">The data.</param>
-    /// <param name="token">The optional cancellation token.</param>
-    /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the FNV-1a 1024-bit hash of the specified
-    /// data.</returns>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    // ReSharper disable once InconsistentNaming
-    // ReSharper disable once TooManyDeclarations
-    private static async Task<string> Fnv1a1024sAsync(this string data, CancellationToken token = default)
+    /// <returns>The hash value in hexadecimal.</returns>
+    private static string ComputeFnv1A1024(ReadOnlySpan<byte> data)
     {
-        NonCryptographicHashAlgorithm alg = new Fnv1a1024();
+        Fnv1a1024 hasher = _Fnv1A1024Hasher.Value!;
 
-#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
-        await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
-#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
-        await alg.AppendAsync(stream, token).ConfigureAwait(true);
+        hasher.Reset();
+        hasher.Append(data);
+        return FormatBigEndianHex(hasher.GetCurrentHash());
+    }
 
-        BigInteger hash = new(alg.GetCurrentHash().AddZero());
-        string value1 = (hash >> 768).ToString("X64", InvariantCulture);
-        //// ReSharper disable ComplexConditionExpression
-        string value2 = ((hash & Bitmasks.Second64Bytes) >> 512).ToString("X64", InvariantCulture);
-        string value3 = ((hash & Bitmasks.Third64Bytes) >> 256).ToString("X64", InvariantCulture);
-        //// ReSharper enable ComplexConditionExpression
-        string value4 = (hash & Bitmasks.Bottom64Bytes).ToString("X64", InvariantCulture);
-        string allValues = string.Concat(
-            value1.AsSpan(value1.Length - 64),
-            value2.AsSpan(value2.Length - 64),
-            value3.AsSpan(value3.Length - 64),
-            value4.AsSpan(value4.Length - 64));
+    /// <summary>
+    /// Formats the little endian value as big endian hexadecimal.
+    /// </summary>
+    /// <param name="littleEndian">The little endian value.</param>
+    /// <returns>The little endian value as big endian hexadecimal.</returns>
+    private static string FormatBigEndianHex(byte[] littleEndian)
+    {
+        Span<byte> bigEndian = stackalloc byte[littleEndian.Length];
 
-        return "0x" + allValues;
+        littleEndian.AsSpan().CopyTo(bigEndian);
+        bigEndian.Reverse();
+        return "0x" + System.Convert.ToHexString(bigEndian);
     }
 }

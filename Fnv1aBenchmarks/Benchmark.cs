@@ -10,6 +10,7 @@
 // Ignore Spelling: Fnv
 namespace Fnv1aBenchmarks;
 
+using System;
 using System.IO.Hashing;
 
 using BenchmarkDotNet.Attributes;
@@ -25,14 +26,9 @@ public class Benchmark
 #pragma warning restore CA1515 // Consider making public types internal
 {
     /// <summary>
-    /// The size of the random byte array to hash.
+    /// Shared single-byte buffer for streaming benchmarks.
     /// </summary>
-    private const int N = 100000;
-
-    /// <summary>
-    /// The random byte array to hash.
-    /// </summary>
-    private readonly byte[] _data;
+    private readonly byte[] _singleByte = new byte[1];
 
     /// <summary>
     /// The FNV-1a 32-bit hasher.
@@ -65,11 +61,24 @@ public class Benchmark
     private readonly NonCryptographicHashAlgorithm _fnv1A1024 = new Fnv1a1024();
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Benchmark" /> class.
+    /// The random byte array to hash.
     /// </summary>
-    public Benchmark()
+    private byte[] _data = [];
+
+    /// <summary>
+    /// Gets or sets the payload length for the benchmarks.
+    /// </summary>
+    [Params(32, 1024, 65536)]
+    //// ReSharper disable once UnusedAutoPropertyAccessor.Global
+    public int PayloadLength { get; set; }
+
+    /// <summary>
+    /// Initializes the data buffer for each benchmark run.
+    /// </summary>
+    [GlobalSetup]
+    public void Setup()
     {
-        _data = new byte[N];
+        _data = new byte[PayloadLength];
 #pragma warning disable CA5394 // Do not use insecure randomness
 #pragma warning disable SCS0005 // Weak random number generator.
         Random.Shared.NextBytes(_data);
@@ -81,65 +90,112 @@ public class Benchmark
     /// Benchmark the FNV-1a 32-bit hashing algorithm variant.
     /// </summary>
     /// <returns>The resulting hash value of the random byte array.</returns>
+    [Benchmark(Baseline = true)]
+    public byte[] Fnv1A32Block() => ComputeBlock(_fnv1A32);
+
+    /// <summary>
+    /// Benchmark the FNV-1a 32-bit hashing algorithm variant processing one byte at a time.
+    /// </summary>
+    /// <returns>The resulting hash value of the random byte array.</returns>
     [Benchmark]
-    public byte[] Fnv1A32()
-    {
-        _fnv1A32.Append(_data);
-        return _fnv1A32.GetCurrentHash();
-    }
+    public byte[] Fnv1A32SingleByte() => ComputeSingleByte(_fnv1A32);
 
     /// <summary>
     /// Benchmark the FNV-1a 64-bit hashing algorithm variant.
     /// </summary>
     /// <returns>The resulting hash value of the random byte array.</returns>
     [Benchmark]
-    public byte[] Fnv1A64()
-    {
-        _fnv1A64.Append(_data);
-        return _fnv1A64.GetCurrentHash();
-    }
+    public byte[] Fnv1A64Block() => ComputeBlock(_fnv1A64);
+
+    /// <summary>
+    /// Benchmark the FNV-1a 64-bit hashing algorithm variant processing one byte at a time.
+    /// </summary>
+    /// <returns>The resulting hash value of the random byte array.</returns>
+    [Benchmark]
+    public byte[] Fnv1A64SingleByte() => ComputeSingleByte(_fnv1A64);
 
     /// <summary>
     /// Benchmark the FNV-1a 128-bit hashing algorithm variant.
     /// </summary>
     /// <returns>The resulting hash value of the random byte array.</returns>
     [Benchmark]
-    public byte[] Fnv1A128()
-    {
-        _fnv1A128.Append(_data);
-        return _fnv1A128.GetCurrentHash();
-    }
+    public byte[] Fnv1A128Block() => ComputeBlock(_fnv1A128);
+
+    /// <summary>
+    /// Benchmark the FNV-1a 128-bit hashing algorithm variant one byte at a time.
+    /// </summary>
+    /// <returns>The resulting hash value of the random byte array.</returns>
+    [Benchmark]
+    public byte[] Fnv1A128SingleByte() => ComputeSingleByte(_fnv1A128);
 
     /// <summary>
     /// Benchmark the FNV-1a 1256-bit hashing algorithm variant.
     /// </summary>
     /// <returns>The resulting hash value of the random byte array.</returns>
     [Benchmark]
-    public byte[] Fnv1A256()
-    {
-        _fnv1A256.Append(_data);
-        return _fnv1A256.GetCurrentHash();
-    }
+    public byte[] Fnv1A256Block() => ComputeBlock(_fnv1A256);
+
+    /// <summary>
+    /// Benchmark the FNV-1a 256-bit hashing algorithm variant one byte at a time.
+    /// </summary>
+    /// <returns>The resulting hash value of the random byte array.</returns>
+    [Benchmark]
+    public byte[] Fnv1A256SingleByte() => ComputeSingleByte(_fnv1A256);
 
     /// <summary>
     /// Benchmark the FNV-1a 512-bit hashing algorithm variant.
     /// </summary>
     /// <returns>The resulting hash value of the random byte array.</returns>
     [Benchmark]
-    public byte[] Fnv1A512()
-    {
-        _fnv1A512.Append(_data);
-        return _fnv1A512.GetCurrentHash();
-    }
+    public byte[] Fnv1A512Block() => ComputeBlock(_fnv1A512);
+
+    /// <summary>
+    /// Benchmark the FNV-1a 512-bit hashing algorithm variant one byte at a time.
+    /// </summary>
+    /// <returns>The resulting hash value of the random byte array.</returns>
+    [Benchmark]
+    public byte[] Fnv1A512SingleByte() => ComputeSingleByte(_fnv1A512);
 
     /// <summary>
     /// Benchmark the FNV-1a 1024-bit hashing algorithm variant.
     /// </summary>
     /// <returns>The resulting hash value of the random byte array.</returns>
     [Benchmark]
-    public byte[] Fnv1A1024()
+    public byte[] Fnv1A1024Block() => ComputeBlock(_fnv1A1024);
+
+    /// <summary>
+    /// Benchmark the FNV-1a 1024-bit hashing algorithm variant one byte at a time.
+    /// </summary>
+    /// <returns>The resulting hash value of the random byte array.</returns>
+    [Benchmark]
+    public byte[] Fnv1A1024SingleByte() => ComputeSingleByte(_fnv1A1024);
+
+    /// <summary>
+    /// Computes the block.
+    /// </summary>
+    /// <param name="algorithm">The algorithm.</param>
+    /// <returns>The computed block.</returns>
+    private byte[] ComputeBlock(NonCryptographicHashAlgorithm algorithm)
     {
-        _fnv1A1024.Append(_data);
-        return _fnv1A1024.GetCurrentHash();
+        algorithm.Reset();
+        algorithm.Append(_data);
+        return algorithm.GetCurrentHash();
+    }
+
+    /// <summary>
+    /// Computes the single byte.
+    /// </summary>
+    /// <param name="algorithm">The algorithm.</param>
+    /// <returns>The computed byte.</returns>
+    private byte[] ComputeSingleByte(NonCryptographicHashAlgorithm algorithm)
+    {
+        algorithm.Reset();
+        foreach (byte b in _data)
+        {
+            _singleByte[0] = b;
+            algorithm.Append(_singleByte);
+        }
+
+        return algorithm.GetCurrentHash();
     }
 }

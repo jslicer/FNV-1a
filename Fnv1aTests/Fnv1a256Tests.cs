@@ -411,7 +411,7 @@ public sealed class Fnv1a256Tests
     /// <returns>The FNV-1a 256-bit hash of the specified data.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     //// ReSharper disable once InconsistentNaming
-    private UInt256 Fnv1a256(in string data)
+    private UInt256 Fnv1a256(string data)
     {
         AreEqual(32, _alg.HashLengthInBytes);
         _alg.Append(UTF8.GetBytes(data));
@@ -453,7 +453,7 @@ public sealed class Fnv1a256Tests
     /// <returns>The FNV-1a 256-bit hash of the specified data.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     //// ReSharper disable once InconsistentNaming
-    private UInt256 Fnv1a256Try(in string data)
+    private UInt256 Fnv1a256Try(string data)
     {
         AreEqual(32, _alg.HashLengthInBytes);
 

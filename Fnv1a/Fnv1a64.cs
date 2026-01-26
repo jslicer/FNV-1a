@@ -104,42 +104,40 @@ public sealed class Fnv1a64 : NonCryptographicHashAlgorithm
     //// ReSharper disable once MethodTooLong
     public override void Append(ReadOnlySpan<byte> source)
     {
-        int i = 0;
         int len = source.Length;
+        int blockBytes = len & ~7;
 
-        while (i + 8 <= len)
+        if (blockBytes > 0)
         {
-            // ReSharper disable once ComplexConditionExpression
-            ulong chunk = MemoryMarshal.Read<ulong>(source[i..]);
-
-            unchecked
+            foreach (ulong chunk in MemoryMarshal.Cast<byte, ulong>(source[..blockBytes]))
             {
-                _hash ^= (byte)chunk;
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 8);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 16);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 24);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 32);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 40);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 48);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 56);
-                _hash *= FnvPrime;
+                unchecked
+                {
+                    _hash ^= (byte)chunk;
+                    _hash *= FnvPrime;
+                    _hash ^= (byte)(chunk >> 8);
+                    _hash *= FnvPrime;
+                    _hash ^= (byte)(chunk >> 16);
+                    _hash *= FnvPrime;
+                    _hash ^= (byte)(chunk >> 24);
+                    _hash *= FnvPrime;
+                    _hash ^= (byte)(chunk >> 32);
+                    _hash *= FnvPrime;
+                    _hash ^= (byte)(chunk >> 40);
+                    _hash *= FnvPrime;
+                    _hash ^= (byte)(chunk >> 48);
+                    _hash *= FnvPrime;
+                    _hash ^= (byte)(chunk >> 56);
+                    _hash *= FnvPrime;
+                }
             }
-
-            i += 8;
         }
 
-        for (; i < len; i++)
+        foreach (byte b in source[blockBytes..])
         {
             unchecked
             {
-                _hash ^= source[i];
+                _hash ^= b;
                 _hash *= FnvPrime;
             }
         }

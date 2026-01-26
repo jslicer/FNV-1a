@@ -104,36 +104,32 @@ public sealed class Fnv1a32 : NonCryptographicHashAlgorithm
     //// ReSharper disable once MethodTooLong
     public override void Append(ReadOnlySpan<byte> source)
     {
-        int i = 0;
         int len = source.Length;
+        int blockBytes = len & ~3;
 
-        // Process 4 bytes at a time if possible
-        while (i + 4 <= len)
+        if (blockBytes > 0)
         {
-            // ReSharper disable once ComplexConditionExpression
-            uint chunk = MemoryMarshal.Read<uint>(source[i..]);
-
-            unchecked
+            foreach (uint chunk in MemoryMarshal.Cast<byte, uint>(source[..blockBytes]))
             {
-                _hash ^= (byte)chunk;
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 8);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 16);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 24);
-                _hash *= FnvPrime;
+                unchecked
+                {
+                    _hash ^= (byte)chunk;
+                    _hash *= FnvPrime;
+                    _hash ^= (byte)(chunk >> 8);
+                    _hash *= FnvPrime;
+                    _hash ^= (byte)(chunk >> 16);
+                    _hash *= FnvPrime;
+                    _hash ^= (byte)(chunk >> 24);
+                    _hash *= FnvPrime;
+                }
             }
-
-            i += 4;
         }
 
-        // Process remaining bytes
-        for (; i < len; i++)
+        foreach (byte b in source[blockBytes..])
         {
             unchecked
             {
-                _hash ^= source[i];
+                _hash ^= b;
                 _hash *= FnvPrime;
             }
         }

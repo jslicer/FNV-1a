@@ -11,56 +11,146 @@
 namespace Fnv1a;
 
 using System;
-using System.Numerics;
+using System.IO.Hashing;
+using System.Runtime.CompilerServices;
 
-using static System.Globalization.CultureInfo;
-using static System.Globalization.NumberStyles;
-using static System.Numerics.BigInteger;
-
-/// <inheritdoc />
+/// <inheritdoc cref="NonCryptographicHashAlgorithm" />
 /// <summary>
 /// Implements the FNV-1a 1024-bit variant hashing algorithm.
 /// </summary>
-/// <inheritdoc cref="Fnv1aBigBase" />
-/// <remarks>
-/// Initializes a new instance of the <see cref="Fnv1a1024" /> class.
-/// </remarks>
-/// <param name="prime">The prime.</param>
-/// <param name="offsetBasis">The non-zero offset basis.</param>
-/// <exception cref="ArgumentException">style is not a
-/// <see cref="System.Globalization.NumberStyles" /> value.   -or-  style includes the
-/// <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-/// value.</exception>
-/// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-/// <exception cref="FormatException">value does not comply with the input pattern specified by
-/// style.</exception>
-/// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
 // ReSharper disable once InconsistentNaming
 #pragma warning disable S101 // Types should be named in PascalCase
-public sealed class Fnv1a1024(BigInteger prime, BigInteger offsetBasis) : Fnv1aBigBase(
-        Parse("0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", AllowHexSpecifier, InvariantCulture),
-        prime,
-        offsetBasis,
-        1024)
+public sealed class Fnv1a1024 : NonCryptographicHashAlgorithm
 #pragma warning restore S101 // Types should be named in PascalCase
 {
-    /// <inheritdoc cref="Fnv1aBigBase" />
+    /// <summary>
+    /// The hash size in bytes.
+    /// </summary>
+    private const int HashSizeInBytes = 128;
+
+    /// <summary>
+    /// The default prime.
+    /// </summary>
+    private static readonly UInt1024 _FnvDefaultPrime = new(
+        0x0000000000000000UL,
+        0x0000000000000000UL,
+        0x0000000000000000UL,
+        0x0000000000000000UL,
+        0x0000000000000000UL,
+        0x0000010000000000UL,
+        0x0000000000000000UL,
+        0x0000000000000000UL,
+        0x0000000000000000UL,
+        0x0000000000000000UL,
+        0x0000000000000000UL,
+        0x0000000000000000UL,
+        0x0000000000000000UL,
+        0x0000000000000000UL,
+        0x0000000000000000UL,
+        0x000000000000018DUL);
+
+    /// <summary>
+    /// The default non-zero offset basis.
+    /// </summary>
+    private static readonly UInt1024 _FnvDefaultOffsetBasis = new(
+        0x0000000000000000UL,
+        0x005F7A76758ECC4DUL,
+        0x32E56D5A591028B7UL,
+        0x4B29FC4223FDADA1UL,
+        0x6C3BF34EDA3674DAUL,
+        0x9A21D90000000000UL,
+        0x0000000000000000UL,
+        0x0000000000000000UL,
+        0x0000000000000000UL,
+        0x0000000000000000UL,
+        0x0000000000000000UL,
+        0x000000000004C6D7UL,
+        0xEB6E73802734510AUL,
+        0x555F256CC005AE55UL,
+        0x6BDE8CC9C6A93B21UL,
+        0xAFF4B16C71EE90B3UL);
+
+    /// <summary>
+    /// The hash.
+    /// </summary>
+    private UInt1024 _hash;
+
+    /// <inheritdoc cref="NonCryptographicHashAlgorithm" />
     /// <summary>
     /// Initializes a new instance of the <see cref="Fnv1a1024" /> class.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a
-    /// <see cref="System.Globalization.NumberStyles" /> value.   -or-  style includes the
-    /// <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     public Fnv1a1024()
-        : this(
-            Parse("000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000018D", AllowHexSpecifier, InvariantCulture),
-            Parse("0000000000000000005F7A76758ECC4D32E56D5A591028B74B29FC4223FDADA16C3BF34EDA3674DA9A21D9000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004C6D7EB6E73802734510A555F256CC005AE556BDE8CC9C6A93B21AFF4B16C71EE90B3", AllowHexSpecifier, InvariantCulture))
+        : this(_FnvDefaultPrime, _FnvDefaultOffsetBasis)
     {
         // Intentionally empty.
     }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Fnv1a1024" /> class.
+    /// </summary>
+    /// <param name="prime">The prime.</param>
+    /// <param name="offsetBasis">The non-zero offset basis.</param>
+    /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
+    public Fnv1a1024(UInt1024 prime, UInt1024 offsetBasis)
+        : base(HashSizeInBytes)
+    {
+        if (offsetBasis.IsZero)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(offsetBasis),
+                "The offset basis must be non-zero.");
+        }
+
+        FnvPrime = prime;
+        FnvOffsetBasis = offsetBasis;
+        Init();
+    }
+
+    /// <summary>
+    /// Gets the prime.
+    /// </summary>
+    public UInt1024 FnvPrime { get; }
+
+    /// <summary>
+    /// Gets the non-zero offset basis.
+    /// </summary>
+    public UInt1024 FnvOffsetBasis { get; }
+
+    /// <inheritdoc />
+    /// <summary>
+    /// When overridden in a derived class, appends the contents of <paramref name="source" /> to the data already
+    /// processed for the current hash computation.
+    /// </summary>
+    /// <param name="source">The data to process.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    public override void Append(ReadOnlySpan<byte> source)
+    {
+        foreach (byte b in source)
+        {
+            _hash.Xor(b);
+            _hash.Multiply(FnvPrime);
+        }
+    }
+
+    /// <inheritdoc />
+    /// <summary>
+    /// When overridden in a derived class, resets the hash computation to the initial state.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override void Reset() => Init();
+
+    /// <inheritdoc />
+    /// <summary>
+    /// When overridden in a derived class, writes the computed hash value to <paramref name="destination" /> without
+    /// modifying accumulated state.
+    /// </summary>
+    /// <param name="destination">The buffer that receives the computed hash value.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected override void GetCurrentHashCore(Span<byte> destination) => _hash.WriteLittleEndian(destination);
+
+    /// <summary>
+    /// Initializes the hash for this instance.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void Init() => _hash = FnvOffsetBasis;
 }

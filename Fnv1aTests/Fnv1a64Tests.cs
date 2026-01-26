@@ -285,7 +285,7 @@ public sealed class Fnv1a64Tests
     /// <returns>The FNV-1a 64-bit hash of the specified data.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     //// ReSharper disable once InconsistentNaming
-    private ulong Fnv1a64(in string data)
+    private ulong Fnv1a64(string data)
     {
         AreEqual(8, _alg.HashLengthInBytes);
         _alg.Append(UTF8.GetBytes(data));
@@ -322,7 +322,7 @@ public sealed class Fnv1a64Tests
     /// <returns>The FNV-1a 64-bit hash of the specified data.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     //// ReSharper disable once InconsistentNaming
-    private ulong Fnv1a64Try(in string data)
+    private ulong Fnv1a64Try(string data)
     {
         AreEqual(8, _alg.HashLengthInBytes);
 

@@ -288,7 +288,7 @@ public sealed class Fnv1a32Tests
     /// <returns>The FNV-1a 32-bit hash of the specified data.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     //// ReSharper disable once InconsistentNaming
-    private uint Fnv1a32(in string data)
+    private uint Fnv1a32(string data)
     {
         AreEqual(4, _alg.HashLengthInBytes);
         _alg.Append(UTF8.GetBytes(data));
@@ -325,7 +325,7 @@ public sealed class Fnv1a32Tests
     /// <returns>The FNV-1a 32-bit hash of the specified data.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     //// ReSharper disable once InconsistentNaming
-    private uint Fnv1a32Try(in string data)
+    private uint Fnv1a32Try(string data)
     {
         AreEqual(4, _alg.HashLengthInBytes);
 

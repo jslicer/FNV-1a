@@ -1,6 +1,8 @@
 ﻿Fnv1a.Fnv1a1024
 Fnv1a.Fnv1a1024.Fnv1a1024() -> void
-Fnv1a.Fnv1a1024.Fnv1a1024(System.Numerics.BigInteger prime, System.Numerics.BigInteger offsetBasis) -> void
+Fnv1a.Fnv1a1024.Fnv1a1024(Fnv1a.UInt1024 prime, Fnv1a.UInt1024 offsetBasis) -> void
+Fnv1a.Fnv1a1024.FnvOffsetBasis.get -> Fnv1a.UInt1024
+Fnv1a.Fnv1a1024.FnvPrime.get -> Fnv1a.UInt1024
 Fnv1a.Fnv1a128
 Fnv1a.Fnv1a128.Fnv1a128() -> void
 Fnv1a.Fnv1a128.Fnv1a128(System.UInt128 prime, System.UInt128 offsetBasis) -> void
@@ -26,10 +28,13 @@ Fnv1a.Fnv1a64.Fnv1a64() -> void
 Fnv1a.Fnv1a64.Fnv1a64(ulong prime, ulong offsetBasis) -> void
 Fnv1a.Fnv1a64.FnvOffsetBasis.get -> ulong
 Fnv1a.Fnv1a64.FnvPrime.get -> ulong
-Fnv1a.Fnv1aBigBase
-Fnv1a.Fnv1aBigBase.Fnv1aBigBase(in System.Numerics.BigInteger bitMask, in System.Numerics.BigInteger prime, in System.Numerics.BigInteger offsetBasis, in int hashSizeValue) -> void
-Fnv1a.Fnv1aBigBase.FnvOffsetBasis.get -> System.Numerics.BigInteger
-Fnv1a.Fnv1aBigBase.FnvPrime.get -> System.Numerics.BigInteger
+Fnv1a.UInt1024
+Fnv1a.UInt1024.Equals(Fnv1a.UInt1024 other) -> bool
+Fnv1a.UInt1024.UInt1024() -> void
+Fnv1a.UInt1024.UInt1024(System.ReadOnlySpan<byte> littleEndian) -> void
+Fnv1a.UInt1024.UInt1024(ulong w0, ulong w1, ulong w2, ulong w3, ulong w4, ulong w5, ulong w6, ulong w7, ulong w8, ulong w9, ulong w10, ulong w11, ulong w12, ulong w13, ulong w14, ulong w15) -> void
+override Fnv1a.Fnv1a1024.Append(System.ReadOnlySpan<byte> source) -> void
+override Fnv1a.Fnv1a1024.Reset() -> void
 override Fnv1a.Fnv1a128.Append(System.ReadOnlySpan<byte> source) -> void
 override Fnv1a.Fnv1a128.Reset() -> void
 override Fnv1a.Fnv1a256.Append(System.ReadOnlySpan<byte> source) -> void
@@ -40,6 +45,9 @@ override Fnv1a.Fnv1a512.Append(System.ReadOnlySpan<byte> source) -> void
 override Fnv1a.Fnv1a512.Reset() -> void
 override Fnv1a.Fnv1a64.Append(System.ReadOnlySpan<byte> source) -> void
 override Fnv1a.Fnv1a64.Reset() -> void
-override Fnv1a.Fnv1aBigBase.Append(System.ReadOnlySpan<byte> source) -> void
-override Fnv1a.Fnv1aBigBase.GetCurrentHashCore(System.Span<byte> destination) -> void
-override Fnv1a.Fnv1aBigBase.Reset() -> void
+override Fnv1a.UInt1024.Equals(object? obj) -> bool
+override Fnv1a.UInt1024.GetHashCode() -> int
+override Fnv1a.UInt1024.ToString() -> string!
+static Fnv1a.UInt1024.operator !=(Fnv1a.UInt1024 left, Fnv1a.UInt1024 right) -> bool
+static Fnv1a.UInt1024.operator ==(Fnv1a.UInt1024 left, Fnv1a.UInt1024 right) -> bool
+static Fnv1a.UInt1024.Zero.get -> Fnv1a.UInt1024

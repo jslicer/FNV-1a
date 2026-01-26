@@ -1,11 +1,20 @@
 ﻿#nullable enable
 Fnv1aBenchmarks.Benchmark
 Fnv1aBenchmarks.Benchmark.Benchmark() -> void
-Fnv1aBenchmarks.Benchmark.Fnv1A1024() -> byte[]!
-Fnv1aBenchmarks.Benchmark.Fnv1A128() -> byte[]!
-Fnv1aBenchmarks.Benchmark.Fnv1A256() -> byte[]!
-Fnv1aBenchmarks.Benchmark.Fnv1A32() -> byte[]!
-Fnv1aBenchmarks.Benchmark.Fnv1A512() -> byte[]!
-Fnv1aBenchmarks.Benchmark.Fnv1A64() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A1024Block() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A1024SingleByte() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A128Block() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A128SingleByte() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A256Block() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A256SingleByte() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A32Block() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A32SingleByte() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A512Block() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A512SingleByte() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A64Block() -> byte[]!
+Fnv1aBenchmarks.Benchmark.Fnv1A64SingleByte() -> byte[]!
+Fnv1aBenchmarks.Benchmark.PayloadLength.get -> int
+Fnv1aBenchmarks.Benchmark.PayloadLength.set -> void
+Fnv1aBenchmarks.Benchmark.Setup() -> void
 Fnv1aBenchmarks.BenchmarkConfig
 Fnv1aBenchmarks.BenchmarkConfig.BenchmarkConfig() -> void
