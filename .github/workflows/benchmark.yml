@@ -3,7 +3,7 @@ name: Run Benchmarks and Update README
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch: {}
 
 permissions:
@@ -78,7 +78,7 @@ jobs:
           git add README.md BenchmarkResults.md || true
           git commit -m "Update benchmark results [skip ci]" || exit 0
 
-          # Make sure we are up to date with remote main
+          # Make sure we are up to date with remote master
           git fetch origin
           git rebase origin/master
 
