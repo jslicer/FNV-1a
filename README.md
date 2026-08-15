@@ -36,54 +36,54 @@ This will output 85944171F73967E8 as the FNV-1A 64-bit hash of the string "fooba
 <!-- BENCHMARK_RESULTS_START -->
 ```
 
-BenchmarkDotNet v0.15.8, Linux Ubuntu 24.04.3 LTS (Noble Numbat)
-AMD EPYC 7763 2.45GHz, 1 CPU, 4 logical and 2 physical cores
-.NET SDK 10.0.102
-  [Host]     : .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3
-  DefaultJob : .NET 10.0.2 (10.0.2, 10.0.225.61305), X64 RyuJIT x86-64-v3
+BenchmarkDotNet v0.15.8, Linux Ubuntu 24.04.4 LTS (Noble Numbat)
+AMD EPYC 7763 3.12GHz, 1 CPU, 4 logical and 2 physical cores
+.NET SDK 10.0.400
+  [Host]     : .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
+  DefaultJob : .NET 10.0.11 (10.0.11, 10.0.1126.37416), X64 RyuJIT x86-64-v3
 
 
 ```
-| Method              | PayloadLength | Mean             | Error          | StdDev         | Ratio  | RatioSD |
-|-------------------- |-------------- |-----------------:|---------------:|---------------:|-------:|--------:|
-| **Fnv1A32Block**        | **32**            |         **51.40 ns** |       **0.129 ns** |       **0.114 ns** |   **1.00** |    **0.00** |
-| Fnv1A32SingleByte   | 32            |        104.00 ns |       0.198 ns |       0.165 ns |   2.02 |    0.01 |
-| Fnv1A64Block        | 32            |         45.47 ns |       0.389 ns |       0.364 ns |   0.88 |    0.01 |
-| Fnv1A64SingleByte   | 32            |        102.70 ns |       0.247 ns |       0.231 ns |   2.00 |    0.01 |
-| Fnv1A128Block       | 32            |        232.16 ns |       0.185 ns |       0.154 ns |   4.52 |    0.01 |
-| Fnv1A128SingleByte  | 32            |        183.46 ns |       0.256 ns |       0.240 ns |   3.57 |    0.01 |
-| Fnv1A256Block       | 32            |        881.68 ns |       0.473 ns |       0.369 ns |  17.15 |    0.04 |
-| Fnv1A256SingleByte  | 32            |        925.48 ns |       0.646 ns |       0.540 ns |  18.00 |    0.04 |
-| Fnv1A512Block       | 32            |      2,199.22 ns |       2.361 ns |       1.843 ns |  42.78 |    0.10 |
-| Fnv1A512SingleByte  | 32            |      2,209.79 ns |       2.459 ns |       2.054 ns |  42.99 |    0.10 |
-| Fnv1A1024Block      | 32            |     22,662.06 ns |      25.452 ns |      22.562 ns | 440.87 |    1.04 |
-| Fnv1A1024SingleByte | 32            |     22,361.64 ns |       8.785 ns |       7.336 ns | 435.02 |    0.94 |
-|                     |               |                  |                |                |        |         |
-| **Fnv1A32Block**        | **1024**          |      **1,824.70 ns** |       **0.527 ns** |       **0.411 ns** |   **1.00** |    **0.00** |
-| Fnv1A32SingleByte   | 1024          |      3,335.86 ns |       1.242 ns |       1.101 ns |   1.83 |    0.00 |
-| Fnv1A64Block        | 1024          |      1,551.64 ns |       2.794 ns |       2.477 ns |   0.85 |    0.00 |
-| Fnv1A64SingleByte   | 1024          |      3,280.27 ns |       5.973 ns |       5.587 ns |   1.80 |    0.00 |
-| Fnv1A128Block       | 1024          |      7,505.65 ns |      14.720 ns |      12.292 ns |   4.11 |    0.01 |
-| Fnv1A128SingleByte  | 1024          |      6,699.54 ns |       8.626 ns |       7.203 ns |   3.67 |    0.00 |
-| Fnv1A256Block       | 1024          |     27,622.35 ns |       4.264 ns |       3.329 ns |  15.14 |    0.00 |
-| Fnv1A256SingleByte  | 1024          |     28,971.42 ns |       5.264 ns |       4.395 ns |  15.88 |    0.00 |
-| Fnv1A512Block       | 1024          |     68,376.71 ns |     116.513 ns |      97.293 ns |  37.47 |    0.05 |
-| Fnv1A512SingleByte  | 1024          |     70,705.70 ns |     145.422 ns |     128.913 ns |  38.75 |    0.07 |
-| Fnv1A1024Block      | 1024          |    724,792.79 ns |   1,498.557 ns |   1,328.432 ns | 397.21 |    0.71 |
-| Fnv1A1024SingleByte | 1024          |    715,605.56 ns |     339.826 ns |     301.247 ns | 392.18 |    0.18 |
-|                     |               |                  |                |                |        |         |
-| **Fnv1A32Block**        | **65536**         |    **116,459.35 ns** |      **27.407 ns** |      **22.886 ns** |   **1.00** |    **0.00** |
-| Fnv1A32SingleByte   | 65536         |    207,938.78 ns |     256.201 ns |     213.939 ns |   1.79 |    0.00 |
-| Fnv1A64Block        | 65536         |     99,176.16 ns |      17.502 ns |      15.515 ns |   0.85 |    0.00 |
-| Fnv1A64SingleByte   | 65536         |    209,497.21 ns |     171.765 ns |     143.432 ns |   1.80 |    0.00 |
-| Fnv1A128Block       | 65536         |    480,519.81 ns |     258.369 ns |     201.717 ns |   4.13 |    0.00 |
-| Fnv1A128SingleByte  | 65536         |    386,017.04 ns |     152.126 ns |     142.299 ns |   3.31 |    0.00 |
-| Fnv1A256Block       | 65536         |  1,766,838.49 ns |     325.950 ns |     272.183 ns |  15.17 |    0.00 |
-| Fnv1A256SingleByte  | 65536         |  1,879,842.11 ns |     262.729 ns |     232.902 ns |  16.14 |    0.00 |
-| Fnv1A512Block       | 65536         |  4,392,293.09 ns |   3,646.681 ns |   3,232.688 ns |  37.72 |    0.03 |
-| Fnv1A512SingleByte  | 65536         |  4,423,738.27 ns |   6,647.503 ns |   5,892.838 ns |  37.99 |    0.05 |
-| Fnv1A1024Block      | 65536         | 46,356,388.15 ns |  12,217.543 ns |  10,202.202 ns | 398.05 |    0.11 |
-| Fnv1A1024SingleByte | 65536         | 45,820,265.71 ns | 124,585.155 ns | 104,034.247 ns | 393.44 |    0.86 |
+| Method              | PayloadLength | Mean             | Error         | StdDev        | Ratio  | RatioSD |
+|-------------------- |-------------- |-----------------:|--------------:|--------------:|-------:|--------:|
+| **Fnv1A32Block**        | **32**            |         **53.77 ns** |      **0.071 ns** |      **0.059 ns** |   **1.00** |    **0.00** |
+| Fnv1A32SingleByte   | 32            |         96.01 ns |      0.138 ns |      0.122 ns |   1.79 |    0.00 |
+| Fnv1A64Block        | 32            |         44.84 ns |      0.054 ns |      0.048 ns |   0.83 |    0.00 |
+| Fnv1A64SingleByte   | 32            |         98.42 ns |      0.065 ns |      0.051 ns |   1.83 |    0.00 |
+| Fnv1A128Block       | 32            |        233.02 ns |      0.292 ns |      0.273 ns |   4.33 |    0.01 |
+| Fnv1A128SingleByte  | 32            |        170.69 ns |      0.294 ns |      0.261 ns |   3.17 |    0.01 |
+| Fnv1A256Block       | 32            |        887.43 ns |      1.040 ns |      0.922 ns |  16.51 |    0.02 |
+| Fnv1A256SingleByte  | 32            |        905.15 ns |      0.660 ns |      0.551 ns |  16.83 |    0.02 |
+| Fnv1A512Block       | 32            |      2,183.07 ns |      3.500 ns |      2.923 ns |  40.60 |    0.07 |
+| Fnv1A512SingleByte  | 32            |      2,247.67 ns |      6.015 ns |      5.332 ns |  41.80 |    0.11 |
+| Fnv1A1024Block      | 32            |     22,418.97 ns |     53.490 ns |     50.035 ns | 416.97 |    1.00 |
+| Fnv1A1024SingleByte | 32            |     22,701.82 ns |     15.738 ns |     12.287 ns | 422.24 |    0.50 |
+|                     |               |                  |               |               |        |         |
+| **Fnv1A32Block**        | **1024**          |      **1,891.96 ns** |      **0.316 ns** |      **0.264 ns** |   **1.00** |    **0.00** |
+| Fnv1A32SingleByte   | 1024          |      3,259.02 ns |      3.095 ns |      2.744 ns |   1.72 |    0.00 |
+| Fnv1A64Block        | 1024          |      1,551.15 ns |      0.387 ns |      0.323 ns |   0.82 |    0.00 |
+| Fnv1A64SingleByte   | 1024          |      3,246.56 ns |      2.240 ns |      1.870 ns |   1.72 |    0.00 |
+| Fnv1A128Block       | 1024          |      7,580.69 ns |      3.063 ns |      2.715 ns |   4.01 |    0.00 |
+| Fnv1A128SingleByte  | 1024          |      5,842.92 ns |      4.436 ns |      3.705 ns |   3.09 |    0.00 |
+| Fnv1A256Block       | 1024          |     27,541.37 ns |     13.532 ns |     11.300 ns |  14.56 |    0.01 |
+| Fnv1A256SingleByte  | 1024          |     29,486.55 ns |     12.478 ns |     11.061 ns |  15.59 |    0.01 |
+| Fnv1A512Block       | 1024          |     68,644.13 ns |    101.904 ns |     90.335 ns |  36.28 |    0.05 |
+| Fnv1A512SingleByte  | 1024          |     70,752.02 ns |    115.946 ns |    108.456 ns |  37.40 |    0.06 |
+| Fnv1A1024Block      | 1024          |    715,140.42 ns |    299.602 ns |    265.590 ns | 377.99 |    0.14 |
+| Fnv1A1024SingleByte | 1024          |    725,413.95 ns |    179.404 ns |    149.811 ns | 383.42 |    0.09 |
+|                     |               |                  |               |               |        |         |
+| **Fnv1A32Block**        | **65536**         |    **116,803.66 ns** |     **19.588 ns** |     **17.364 ns** |   **1.00** |    **0.00** |
+| Fnv1A32SingleByte   | 65536         |    207,254.81 ns |     81.050 ns |     63.279 ns |   1.77 |    0.00 |
+| Fnv1A64Block        | 65536         |     99,375.62 ns |     22.139 ns |     20.709 ns |   0.85 |    0.00 |
+| Fnv1A64SingleByte   | 65536         |    205,256.42 ns |    146.290 ns |    122.159 ns |   1.76 |    0.00 |
+| Fnv1A128Block       | 65536         |    485,890.54 ns |    224.069 ns |    209.594 ns |   4.16 |    0.00 |
+| Fnv1A128SingleByte  | 65536         |    387,834.85 ns |    347.389 ns |    290.085 ns |   3.32 |    0.00 |
+| Fnv1A256Block       | 65536         |  1,763,287.44 ns |  1,399.332 ns |  1,308.936 ns |  15.10 |    0.01 |
+| Fnv1A256SingleByte  | 65536         |  1,837,939.85 ns |    895.023 ns |    837.205 ns |  15.74 |    0.01 |
+| Fnv1A512Block       | 65536         |  4,470,060.11 ns | 19,386.205 ns | 18,133.868 ns |  38.27 |    0.15 |
+| Fnv1A512SingleByte  | 65536         |  4,539,126.70 ns |  7,463.546 ns |  6,616.239 ns |  38.86 |    0.06 |
+| Fnv1A1024Block      | 65536         | 45,710,933.52 ns | 22,539.272 ns | 18,821.313 ns | 391.35 |    0.17 |
+| Fnv1A1024SingleByte | 65536         | 46,438,965.66 ns | 17,102.178 ns | 14,281.093 ns | 397.58 |    0.13 |
 <!-- BENCHMARK_RESULTS_END -->
 
 Special thanks to [crookseta](https://github.com/crookseta) for the [missing-values](https://github.com/crookseta/missing-values) project which allowed for the 256- and 512-bit variants to not have to use [BigInteger](https://learn.microsoft.com/en-us/dotnet/api/system.numerics.biginteger), which was very slow.
