@@ -158,7 +158,7 @@ internal static class AsyncStringExtensions
 
             for (int i = 0; i < 10; i++)
             {
-                sb.Append(data);
+                _ = sb.Append(data);
             }
 
             string newData = sb.ToString();
@@ -191,7 +191,7 @@ internal static class AsyncStringExtensions
 
             for (int i = 0; i < 500; i++)
             {
-                sb.Append(data);
+                _ = sb.Append(data);
             }
 
             string newData = sb.ToString();
@@ -231,7 +231,7 @@ internal static class AsyncStringExtensions
                 }
                 else
                 {
-                    sb.Append(c);
+                    _ = sb.Append(c);
                 }
             }
 

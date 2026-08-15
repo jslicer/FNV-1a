@@ -26,12 +26,12 @@ public sealed class BenchmarkConfig : ManualConfig
     /// </summary>
     public BenchmarkConfig()
     {
-        AddLogger(ConsoleLogger.Default);
+        _ = AddLogger(ConsoleLogger.Default);
 
         // produces GitHub-ready markdown
-        AddExporter(MarkdownExporter.GitHub);
+        _ = AddExporter(MarkdownExporter.GitHub);
 
         // write result files to repo root
-        WithArtifactsPath(".");
+        _ = WithArtifactsPath(".");
     }
 }
