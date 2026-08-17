@@ -10,15 +10,14 @@
 // Ignore Spelling: Fnv
 namespace Fnv1aTestVectorGenerator;
 
-using System;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Fnv1a;
 
+#pragma warning disable IDE0001
 using static System.BitConverter;
 using static System.Environment;
+#pragma warning restore IDE0001
 using static System.Globalization.CultureInfo;
 using static System.Text.Encoding;
 
@@ -58,32 +57,32 @@ internal static class AsyncStringExtensions
     private const string OneThousandTwentyFour = " 1024: ";
 
     /// <summary>
-    /// The FNV-1A 32-bit hasher.
+    /// The FNV-1a 32-bit hasher.
     /// </summary>
     private static readonly ThreadLocal<Fnv1a32> _Fnv1A32Hasher = new(static () => new());
 
     /// <summary>
-    /// The FNV-1A 64-bit hasher.
+    /// The FNV-1a 64-bit hasher.
     /// </summary>
     private static readonly ThreadLocal<Fnv1a64> _Fnv1A64Hasher = new(static () => new());
 
     /// <summary>
-    /// The FNV-1A 128-bit hasher.
+    /// The FNV-1a 128-bit hasher.
     /// </summary>
     private static readonly ThreadLocal<Fnv1a128> _Fnv1A128Hasher = new(static () => new());
 
     /// <summary>
-    /// The FNV-1A 256-bit hasher.
+    /// The FNV-1a 256-bit hasher.
     /// </summary>
     private static readonly ThreadLocal<Fnv1a256> _Fnv1A256Hasher = new(static () => new());
 
     /// <summary>
-    /// The FNV-1A 512-bit hasher.
+    /// The FNVa 512-bit hasher.
     /// </summary>
     private static readonly ThreadLocal<Fnv1a512> _Fnv1A512Hasher = new(static () => new());
 
     /// <summary>
-    /// The FNV-1A 1024-bit hasher.
+    /// The FNV-1a 1024-bit hasher.
     /// </summary>
     private static readonly ThreadLocal<Fnv1a1024> _Fnv1A1024Hasher = new(static () => new());
 
@@ -98,6 +97,10 @@ internal static class AsyncStringExtensions
         /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
         /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+        /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
+        /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character Encoding in .NET)
+        ///  -and-
+        ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
 #pragma warning disable S2325 // Make a static method.
         internal Task<string> TestAsync(CancellationToken token = default)
 #pragma warning restore S2325 // Make a static method.
@@ -124,6 +127,10 @@ internal static class AsyncStringExtensions
         /// <param name="token">The optional cancellation token.</param>
         /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
         /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+        /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
+        /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character Encoding in .NET)
+        ///  -and-
+        ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
 #pragma warning disable S2325 // Make a static method.
         internal async Task<string> Test0Async(CancellationToken token = default)
 #pragma warning restore S2325 // Make a static method.
@@ -150,6 +157,10 @@ internal static class AsyncStringExtensions
         /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
         /// <see cref="StringBuilder.MaxCapacity" />.</exception>
         /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+        /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
+        /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character Encoding in .NET)
+        ///  -and-
+        ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
 #pragma warning disable S2325 // Make a static method.
         internal async Task<string> R10Async(CancellationToken token = default)
 #pragma warning restore S2325 // Make a static method.
@@ -183,6 +194,10 @@ internal static class AsyncStringExtensions
         /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
         /// <see cref="StringBuilder.MaxCapacity" />.</exception>
         /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+        /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
+        /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character Encoding in .NET)
+        ///  -and-
+        ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
 #pragma warning disable S2325 // Make a static method.
         internal async Task<string> R500Async(CancellationToken token = default)
 #pragma warning restore S2325 // Make a static method.
@@ -240,7 +255,7 @@ internal static class AsyncStringExtensions
     }
 
     /// <summary>
-    /// Computes the FNV-1A 32-bit hash of the given data.
+    /// Computes the FNV-1a 32-bit hash of the given data.
     /// </summary>
     /// <param name="data">The data.</param>
     /// <returns>The hash value in hexadecimal.</returns>
@@ -254,7 +269,7 @@ internal static class AsyncStringExtensions
     }
 
     /// <summary>
-    /// Computes the FNV-1A 64-bit hash of the given data.
+    /// Computes the FNV-1a 64-bit hash of the given data.
     /// </summary>
     /// <param name="data">The data.</param>
     /// <returns>The hash value in hexadecimal.</returns>
@@ -268,7 +283,7 @@ internal static class AsyncStringExtensions
     }
 
     /// <summary>
-    /// Computes the FNV-1A 128-bit hash of the given data.
+    /// Computes the FNV-1a 128-bit hash of the given data.
     /// </summary>
     /// <param name="data">The data.</param>
     /// <returns>The hash value in hexadecimal.</returns>
@@ -282,7 +297,7 @@ internal static class AsyncStringExtensions
     }
 
     /// <summary>
-    /// Computes the FNV-1A 256-bit hash of the given data.
+    /// Computes the FNV-1a 256-bit hash of the given data.
     /// </summary>
     /// <param name="data">The data.</param>
     /// <returns>The hash value in hexadecimal.</returns>
@@ -296,7 +311,7 @@ internal static class AsyncStringExtensions
     }
 
     /// <summary>
-    /// Computes the FNV-1A 512-bit hash of the given data.
+    /// Computes the FNV-1a 512-bit hash of the given data.
     /// </summary>
     /// <param name="data">The data.</param>
     /// <returns>The hash value in hexadecimal.</returns>
@@ -310,7 +325,7 @@ internal static class AsyncStringExtensions
     }
 
     /// <summary>
-    /// Computes the FNV-1A 1024-bit hash of the given data.
+    /// Computes the FNV-1a 1024-bit hash of the given data.
     /// </summary>
     /// <param name="data">The data.</param>
     /// <returns>The hash value in hexadecimal.</returns>

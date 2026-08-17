@@ -24,27 +24,30 @@ internal static class Bitmasks
     /// <summary>
     /// Gets the bottom 64 bytes.
     /// </summary>
-    // ReSharper disable once ExceptionNotDocumentedOptional
+    //// ReSharper disable ExceptionNotDocumentedOptional
     internal static BigInteger Bottom64Bytes { get; } = Parse(
         "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
         AllowHexSpecifier,
         InvariantCulture);
+    //// ReSharper restore ExceptionNotDocumentedOptional
 
     /// <summary>
     /// Gets the third 64 bytes.
     /// </summary>
-    // ReSharper disable once ExceptionNotDocumentedOptional
+    //// ReSharper disable ExceptionNotDocumentedOptional
     internal static BigInteger Third64Bytes { get; } = Parse(
         "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000000000000000000000000000000000000000000000000000000000000000",
         AllowHexSpecifier,
         InvariantCulture);
+    //// ReSharper restore ExceptionNotDocumentedOptional
 
     /// <summary>
     /// Gets the second 64 bytes.
     /// </summary>
-    // ReSharper disable once ExceptionNotDocumentedOptional
+    //// ReSharper disable ExceptionNotDocumentedOptional
     internal static BigInteger Second64Bytes { get; } = Parse(
         "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
         AllowHexSpecifier,
         InvariantCulture);
+    //// ReSharper restore ExceptionNotDocumentedOptional
 }

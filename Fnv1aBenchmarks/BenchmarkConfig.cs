@@ -16,7 +16,7 @@ using BenchmarkDotNet.Loggers;
 /// <summary>
 /// Overrides the default BenchmarkDotNet configuration.
 /// </summary>
-/// <seealso cref="BenchmarkDotNet.Configs.ManualConfig" />
+/// <seealso cref="ManualConfig" />
 #pragma warning disable CA1515 // Consider making public types internal
 public sealed class BenchmarkConfig : ManualConfig
 #pragma warning restore CA1515 // Consider making public types internal

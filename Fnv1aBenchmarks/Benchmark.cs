@@ -3,14 +3,13 @@
 //   Copyright (c) Always Elucidated Solution Pioneers, LLC. All rights reserved.
 // </copyright>
 // <summary>
-//   Benchmark the FNV-1A hashing algorithm variants.
+//   Benchmark the FNV-1a hashing algorithm variants.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 // Ignore Spelling: Fnv
 namespace Fnv1aBenchmarks;
 
-using System;
 using System.IO.Hashing;
 
 using BenchmarkDotNet.Attributes;
@@ -18,7 +17,7 @@ using BenchmarkDotNet.Attributes;
 using Fnv1a;
 
 /// <summary>
-/// Benchmark the FNV-1A hashing algorithm variants.
+/// Benchmark the FNV-1a hashing algorithm variants.
 /// </summary>
 #pragma warning disable CA1515 // Consider making public types internal
 [Config(typeof(BenchmarkConfig))]
@@ -75,6 +74,7 @@ public class Benchmark
     /// <summary>
     /// Initializes the data buffer for each benchmark run.
     /// </summary>
+    /// <exception cref="ArgumentNullException">buffer is <see langword="null" />.</exception>
     [GlobalSetup]
     public void Setup()
     {

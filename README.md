@@ -29,7 +29,7 @@ namespace Fnv1aTest
 }
 ```
 
-This will output 85944171F73967E8 as the FNV-1A 64-bit hash of the string "foobar".
+This will output 85944171F73967E8 as the FNV-1a 64-bit hash of the string "foobar".
 
 ## Benchmark Results
 

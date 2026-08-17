@@ -10,12 +10,9 @@
 // Ignore Spelling: Fnv
 namespace Fnv1aTestVectorGenerator;
 
-using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-
+#pragma warning disable IDE0001
 using static System.Console;
+#pragma warning restore IDE0001
 using static System.Text.Encoding;
 
 /// <summary>
@@ -39,9 +36,7 @@ internal static class Program
         TextReader reader = TextReader.Null; ////In;
 
         using CancellationTokenSource cts = new();
-        cts.Token.ThrowIfCancellationRequested();
         await ProcessAsync(writer, cts.Token).ConfigureAwait(true);
-        cts.Token.ThrowIfCancellationRequested();
         _ = await reader.ReadLineAsync(cts.Token).ConfigureAwait(true);
     }
 
@@ -87,7 +82,9 @@ internal static class Program
                 // ReSharper disable once MethodHasAsyncOverloadWithCancellation
 #pragma warning disable S6966 // Awaitable method should be used
 #pragma warning disable CA1849 // Call async methods when in an async method
+#pragma warning disable VSTHRD103 // Call async methods when in an async method
                 set.Perform();
+#pragma warning restore VSTHRD103 // Call async methods when in an async method
 #pragma warning restore CA1849 // Call async methods when in an async method
 #pragma warning restore S6966 // Awaitable method should be used
             }
@@ -95,10 +92,8 @@ internal static class Program
 
         for (int loop = 0; loop < 1000; loop++)
         {
-            token.ThrowIfCancellationRequested();
             foreach (ISet set in sets)
             {
-                token.ThrowIfCancellationRequested();
                 await set.PerformAsync(token).ConfigureAwait(true);
             }
         }

@@ -7,9 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+// Ignore Spelling: Endian
 namespace Fnv1a;
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -28,20 +28,35 @@ public struct UInt1024 : IEquatable<UInt1024>
 #pragma warning disable IDE0044 // Make field readonly
 #pragma warning disable S2933 // Make readonly
     private ulong _w0;
+
     private ulong _w1;
+
     private ulong _w2;
+
     private ulong _w3;
+
     private ulong _w4;
+
     private ulong _w5;
+
     private ulong _w6;
+
     private ulong _w7;
+
     private ulong _w8;
+
     private ulong _w9;
+
     private ulong _w10;
+
     private ulong _w11;
+
     private ulong _w12;
+
     private ulong _w13;
+
     private ulong _w14;
+
     private ulong _w15;
 #pragma warning restore S2933 // Make readonly
 #pragma warning restore RCS1169 // Make field read-only
@@ -114,6 +129,10 @@ public struct UInt1024 : IEquatable<UInt1024>
     /// Initializes a new instance of the <see cref="UInt1024" /> struct from a little-endian byte span.
     /// </summary>
     /// <param name="littleEndian">The little-endian representation.</param>
+    /// <exception cref="ArgumentException">destination is shorter than the source
+    /// <see cref="ReadOnlySpan{T}" />.</exception>
+    /// <exception cref="OverflowException">The Length property of the new <see cref="ReadOnlySpan{T}" /> would exceed
+    /// MaxValue.</exception>
     public UInt1024(ReadOnlySpan<byte> littleEndian)
         : this() => littleEndian.CopyTo(MemoryMarshal.AsBytes(GetWords()));
 
@@ -253,6 +272,11 @@ public struct UInt1024 : IEquatable<UInt1024>
     /// Multiplies this value by the provided multiplier modulo 2^1024.
     /// </summary>
     /// <param name="multiplier">The multiplier.</param>
+    /// <exception cref="IndexOutOfRangeException">index is less than zero or greater than or equal to
+    /// <see cref="ReadOnlySpan{T}.Length" />.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">start or start + length is less than zero or greater than
+    /// <see cref="Span{T}.Length" />.</exception>
+    /// <exception cref="ArgumentException">destination is shorter than the source <see cref="Span{T}" />.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     //// ReSharper disable once MethodTooLong
     internal void Multiply(UInt1024 multiplier)
@@ -302,6 +326,9 @@ public struct UInt1024 : IEquatable<UInt1024>
     /// Writes the current value to the provided destination in little-endian order.
     /// </summary>
     /// <param name="destination">The destination span.</param>
+    /// <exception cref="OverflowException">The Length property of the new <see cref="ReadOnlySpan{T}" /> would exceed
+    /// MaxValue.</exception>
+    /// <exception cref="ArgumentException">T contains managed object references.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal void WriteLittleEndian(Span<byte> destination) =>
         MemoryMarshal.AsBytes(GetReadOnlyWords()).CopyTo(destination);

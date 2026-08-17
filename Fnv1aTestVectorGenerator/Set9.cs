@@ -10,10 +10,7 @@
 // Ignore Spelling: Fnv
 namespace Fnv1aTestVectorGenerator;
 
-using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Text;
 
 /// <inheritdoc cref="SetBase" />
 /// <summary>
@@ -23,6 +20,7 @@ using System.Threading.Tasks;
 /// <seealso cref="ISet" />
 internal sealed class Set9(TextWriter? writer = null) : SetBase(writer)
 {
+#pragma warning disable S1313 // IP addresses should not be hardcoded
     /// <summary>
     /// The 64.81.78.68 string.
     /// </summary>
@@ -37,6 +35,7 @@ internal sealed class Set9(TextWriter? writer = null) : SetBase(writer)
     /// 64.81.78.84 string.
     /// </summary>
     private const string SixtyFourDotEightyOneDotSeventyEightDotEightyFour = "64.81.78.84";
+#pragma warning restore S1313 // IP addresses should not be hardcoded
 
     /// <inheritdoc cref="SetBase" />
     /// <summary>
@@ -60,22 +59,34 @@ internal sealed class Set9(TextWriter? writer = null) : SetBase(writer)
     /// </summary>
     /// <param name="token">The optional cancellation token.</param>
     /// <returns>An asynchronous <see cref="Task" />.</returns>
-    /// <exception cref="InvalidOperationException">The text writer is currently in use by a previous write operation.</exception>
+    /// <exception cref="InvalidOperationException">The text writer is currently in use by a previous write
+    /// operation.</exception>
     /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
+    /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character Encoding in
+    /// .NET)
+    ///  -and-
+    ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
     public override async Task PerformAsync(CancellationToken token = default)
     {
-        token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await SixtyFourDotEightyOneDotSeventyEightDotSixtyEight.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await SixtyFourDotEightyOneDotSeventyEightDotSixtyEight.Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await SixtyFourDotEightyOneDotSeventyEightDotSeventyFour.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await SixtyFourDotEightyOneDotSeventyEightDotSeventyFour.Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await SixtyFourDotEightyOneDotSeventyEightDotEightyFour.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await SixtyFourDotEightyOneDotSeventyEightDotEightyFour.Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(
+            await SixtyFourDotEightyOneDotSeventyEightDotSixtyEight.TestAsync(token).ConfigureAwait(false),
+            token).ConfigureAwait(true);
+        await WriteLineAsync(
+            await SixtyFourDotEightyOneDotSeventyEightDotSixtyEight.Test0Async(token).ConfigureAwait(false),
+            token).ConfigureAwait(true);
+        await WriteLineAsync(
+            await SixtyFourDotEightyOneDotSeventyEightDotSeventyFour.TestAsync(token).ConfigureAwait(false),
+            token).ConfigureAwait(true);
+        await WriteLineAsync(
+            await SixtyFourDotEightyOneDotSeventyEightDotSeventyFour.Test0Async(token).ConfigureAwait(false),
+            token).ConfigureAwait(true);
+        await WriteLineAsync(
+            await SixtyFourDotEightyOneDotSeventyEightDotEightyFour.TestAsync(token).ConfigureAwait(false),
+            token).ConfigureAwait(true);
+        await WriteLineAsync(
+            await SixtyFourDotEightyOneDotSeventyEightDotEightyFour.Test0Async(token).ConfigureAwait(false),
+            token).ConfigureAwait(true);
     }
 }

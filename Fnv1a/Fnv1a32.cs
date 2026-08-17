@@ -10,7 +10,6 @@
 // Ignore Spelling: Fnv
 namespace Fnv1a;
 
-using System;
 using System.IO.Hashing;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -100,6 +99,11 @@ public sealed class Fnv1a32 : NonCryptographicHashAlgorithm
     /// processed for the current hash computation.
     /// </summary>
     /// <param name="source">The data to process.</param>
+    /// <exception cref="OverflowException">The Length property of the new <see cref="ReadOnlySpan{T}" /> would exceed
+    /// MaxValue.</exception>
+    /// <exception cref="ArgumentException">TFrom or TTo contains managed object references.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">start is less than zero or greater than
+    /// <see cref="Span{T}.Length" />.</exception>
     [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
     //// ReSharper disable once MethodTooLong
     public override void Append(ReadOnlySpan<byte> source)

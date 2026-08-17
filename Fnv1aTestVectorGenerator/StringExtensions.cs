@@ -10,15 +10,16 @@
 // Ignore Spelling: Fnv
 namespace Fnv1aTestVectorGenerator;
 
-using System;
 using System.IO.Hashing;
 using System.Numerics;
 using System.Text;
 
 using Fnv1a;
 
+#pragma warning disable IDE0001
 using static System.BitConverter;
 using static System.Environment;
+#pragma warning restore IDE0001
 using static System.Globalization.CultureInfo;
 using static System.Text.Encoding;
 

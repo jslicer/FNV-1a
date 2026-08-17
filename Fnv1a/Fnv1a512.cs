@@ -10,7 +10,6 @@
 // Ignore Spelling: Fnv
 namespace Fnv1a;
 
-using System;
 using System.IO.Hashing;
 using System.Runtime.CompilerServices;
 
@@ -33,14 +32,14 @@ public sealed class Fnv1a512 : NonCryptographicHashAlgorithm
     /// <summary>
     /// The default prime.
     /// </summary>
-    private static readonly UInt512 FnvDefaultPrime = new(
+    private static readonly UInt512 _FnvDefaultPrime = new(
         new(new(0x0000000000000000UL, 0x0000000000000000UL), new(0x0000000001000000UL, 0x0000000000000000UL)),
         new(new(0x0000000000000000UL, 0x0000000000000000UL), new(0x0000000000000000UL, 0x0000000000000157UL)));
 
     /// <summary>
     /// The default non-zero offset basis.
     /// </summary>
-    private static readonly UInt512 FnvDefaultOffsetBasis = new(
+    private static readonly UInt512 _FnvDefaultOffsetBasis = new(
         new(new(0xB86DB0B1171F4416UL, 0xDCA1E50F309990ACUL), new(0xAC87D059C9000000UL, 0x0000000000000D21UL)),
         new(new(0xE948F68A34C192F6UL, 0x2EA79BC942DBE7CEUL), new(0x182036415F56E34BUL, 0xAC982AAC4AFE9FD9UL)));
 
@@ -55,7 +54,7 @@ public sealed class Fnv1a512 : NonCryptographicHashAlgorithm
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     public Fnv1a512()
-        : this(FnvDefaultPrime, FnvDefaultOffsetBasis)
+        : this(_FnvDefaultPrime, _FnvDefaultOffsetBasis)
     {
         // Intentionally empty.
     }

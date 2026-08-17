@@ -10,9 +10,6 @@
 // Ignore Spelling: Fnv
 namespace Fnv1aTestVectorGenerator;
 
-using System.Threading;
-using System.Threading.Tasks;
-
 /// <summary>
 /// Provides a definition for performing test vector set generation.
 /// </summary>

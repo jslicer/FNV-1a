@@ -10,7 +10,6 @@
 // Ignore Spelling: Fnv
 namespace Fnv1a;
 
-using System;
 using System.IO.Hashing;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -32,12 +31,12 @@ public sealed class Fnv1a128 : NonCryptographicHashAlgorithm
     /// <summary>
     /// The default prime.
     /// </summary>
-    private static readonly UInt128 FnvDefaultPrime = new(0x0000000001000000UL, 0x000000000000013BUL);
+    private static readonly UInt128 _FnvDefaultPrime = new(0x0000000001000000UL, 0x000000000000013BUL);
 
     /// <summary>
     /// The default non-zero offset basis.
     /// </summary>
-    private static readonly UInt128 FnvDefaultOffsetBasis = new(0x6C62272E07BB0142UL, 0x62B821756295C58DUL);
+    private static readonly UInt128 _FnvDefaultOffsetBasis = new(0x6C62272E07BB0142UL, 0x62B821756295C58DUL);
 
     /// <summary>
     /// The hash.
@@ -50,7 +49,7 @@ public sealed class Fnv1a128 : NonCryptographicHashAlgorithm
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     public Fnv1a128()
-        : this(FnvDefaultPrime, FnvDefaultOffsetBasis)
+        : this(_FnvDefaultPrime, _FnvDefaultOffsetBasis)
     {
         // Intentionally empty.
     }

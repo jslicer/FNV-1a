@@ -10,19 +10,17 @@
 // Ignore Spelling: Fnv
 namespace Fnv1aTests;
 
-using System;
-using System.IO;
 using System.IO.Hashing;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Fnv1a;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using static System.Text.Encoding;
+#pragma warning disable IDE0001
 using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+#pragma warning restore IDE0001
 
 /// <summary>
 /// Tests the FNV-1a 1024-bit algorithm.
@@ -385,6 +383,7 @@ public sealed class Fnv1a1024Tests
     /// <returns>An asynchronous <see cref="Task" />.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestVector4Async()
@@ -440,7 +439,7 @@ public sealed class Fnv1a1024Tests
     /// <summary>
     /// Tests the alternate prime and zero offset.
     /// </summary>
-    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public void TestAlternatePrimeAndZeroOffset() =>
@@ -472,6 +471,8 @@ public sealed class Fnv1a1024Tests
     /// <exception cref="ArgumentException">startIndex is greater than or equal to the length of value minus 3, and
     /// is less than or equal to the length of value minus 1.</exception>
     /// <exception cref="ArgumentNullException">buffer is <see langword="null" />.</exception>
+    /// <exception cref="OverflowException">The Length property of the new <see cref="ReadOnlySpan{T}" /> would exceed
+    /// MaxValue.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public void TestAlternatePrimeAndOffset()
@@ -513,6 +514,9 @@ public sealed class Fnv1a1024Tests
     /// is less than or equal to the length of value minus 1.</exception>
     /// <exception cref="ArgumentNullException">buffer is <see langword="null" />.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
+    /// <exception cref="OverflowException">The Length property of the new <see cref="ReadOnlySpan{T}" />` would exceed
+    /// MaxValue.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestAlternatePrimeAndOffsetAsync()
@@ -524,7 +528,7 @@ public sealed class Fnv1a1024Tests
         AreEqual(_AlternateOffsetBasis, alg.FnvOffsetBasis);
         using CancellationTokenSource cts = new();
 #pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
-        await using Stream stream = new MemoryStream("foobar"u8.ToArray());
+        await using Stream stream = new MemoryStream([.. "foobar"u8]);
 #pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await alg.AppendAsync(stream, cts.Token).ConfigureAwait(false);
         AreEqual(
@@ -558,6 +562,10 @@ public sealed class Fnv1a1024Tests
     /// Encoding in .NET)
     ///  -and-
     ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
+    /// <exception cref="OverflowException">The Length property of the new <see cref="ReadOnlySpan{T}" /> would exceed
+    /// MaxValue.</exception>
+    /// <exception cref="ArgumentException">destination is shorter than the source
+    /// <see cref="ReadOnlySpan{T}" />.</exception>
     [TestMethod]
     //// ReSharper disable once TooManyDeclarations
     //// ReSharper disable once UnusedMember.Global
@@ -569,6 +577,8 @@ public sealed class Fnv1a1024Tests
         AreEqual(_AlternatePrime, alg.FnvPrime);
         AreEqual(_AlternateOffsetBasis, alg.FnvOffsetBasis);
 
+        // ReSharper disable once InconsistentNaming
+        // ReSharper disable once InlineTemporaryVariable
         const string Data = Foobar;
         int inputByteCount = UTF8.GetByteCount(Data);
         Span<byte> bytes = inputByteCount < 1024

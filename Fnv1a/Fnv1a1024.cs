@@ -10,7 +10,6 @@
 // Ignore Spelling: Fnv
 namespace Fnv1a;
 
-using System;
 using System.IO.Hashing;
 using System.Runtime.CompilerServices;
 

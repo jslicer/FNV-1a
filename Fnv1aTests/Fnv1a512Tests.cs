@@ -10,13 +10,8 @@
 // Ignore Spelling: Fnv
 namespace Fnv1aTests;
 
-using System;
-using System.Globalization;
-using System.IO;
 using System.IO.Hashing;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Fnv1a;
 
@@ -24,9 +19,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using MissingValues;
 
-using static System.Globalization.NumberStyles;
 using static System.Text.Encoding;
+#pragma warning disable IDE0001
 using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+#pragma warning restore IDE0001
 
 /// <summary>
 /// Tests the FNV-1a 512-bit algorithm.
@@ -55,12 +51,7 @@ public sealed class Fnv1a512Tests
     /// <summary>
     /// The method to run before each test.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     [TestInitialize]
     //// ReSharper disable once UnusedMember.Global
     public void Initialize()
@@ -72,12 +63,6 @@ public sealed class Fnv1a512Tests
     /// <summary>
     /// Tests the empty string against the known vector result.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
@@ -91,14 +76,9 @@ public sealed class Fnv1a512Tests
     /// Tests the empty string against the known vector result.
     /// </summary>
     /// <returns>An asynchronous <see cref="Task" />.</returns>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestVector1Async()
@@ -114,12 +94,6 @@ public sealed class Fnv1a512Tests
     /// <summary>
     /// Tests the empty string against the known vector result.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
@@ -132,12 +106,6 @@ public sealed class Fnv1a512Tests
     /// <summary>
     /// Tests the string "a" against the known vector result.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
@@ -151,14 +119,9 @@ public sealed class Fnv1a512Tests
     /// Tests the string "a" against the known vector result.
     /// </summary>
     /// <returns>An asynchronous <see cref="Task" />.</returns>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestVector2Async()
@@ -174,12 +137,6 @@ public sealed class Fnv1a512Tests
     /// <summary>
     /// Tests the string "a" against the known vector result.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
@@ -192,12 +149,6 @@ public sealed class Fnv1a512Tests
     /// <summary>
     /// Tests the string against the known vector result.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
@@ -211,14 +162,9 @@ public sealed class Fnv1a512Tests
     /// Tests the string against the known vector result.
     /// </summary>
     /// <returns>An asynchronous <see cref="Task" />.</returns>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestVector3Async()
@@ -234,12 +180,6 @@ public sealed class Fnv1a512Tests
     /// <summary>
     /// Tests the string against the known vector result.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a <see cref="NumberStyles" /> value.   -or-  style
-    /// includes the <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
@@ -267,6 +207,7 @@ public sealed class Fnv1a512Tests
     /// <returns>An asynchronous <see cref="Task" />.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestVector4Async()
@@ -294,14 +235,7 @@ public sealed class Fnv1a512Tests
     /// <summary>
     /// Tests the alternate prime and zero offset.
     /// </summary>
-    /// <exception cref="ArgumentException">style is not a
-    /// <see cref="NumberStyles" /> value.   -or-  style includes the
-    /// <see cref="AllowHexSpecifier" /> or <see cref="HexNumber" /> flag along with another
-    /// value.</exception>
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
-    /// <exception cref="ArgumentNullException">value is <see langword="null" />.</exception>
-    /// <exception cref="FormatException">value does not comply with the input pattern specified by
-    /// style.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public void TestAlternatePrimeAndZeroOffset() =>
@@ -316,8 +250,6 @@ public sealed class Fnv1a512Tests
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
-    /// <exception cref="ArgumentException">startIndex is greater than or equal to the length of value minus 3, and
-    /// is less than or equal to the length of value minus 1.</exception>
     /// <exception cref="ArgumentNullException">buffer is <see langword="null" />.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
@@ -363,10 +295,9 @@ public sealed class Fnv1a512Tests
     /// <returns>An asynchronous <see cref="Task" />.</returns>
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
-    /// <exception cref="ArgumentException">startIndex is greater than or equal to the length of value minus 3, and
-    /// is less than or equal to the length of value minus 1.</exception>
     /// <exception cref="ArgumentNullException">buffer is <see langword="null" />.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestAlternatePrimeAndOffsetAsync()
@@ -392,7 +323,7 @@ public sealed class Fnv1a512Tests
             alg.FnvOffsetBasis);
         using CancellationTokenSource cts = new();
 #pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
-        await using Stream stream = new MemoryStream("foobar"u8.ToArray());
+        await using Stream stream = new MemoryStream([.. "foobar"u8]);
 #pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await alg.AppendAsync(stream, cts.Token).ConfigureAwait(true);
 
@@ -444,6 +375,8 @@ public sealed class Fnv1a512Tests
                 new(new(0x16B70975CB3E6D09UL, 0xD1586436BD241831UL), new(0xE7DFC9BEA0A91CB4UL, 0x5367D553B5016026UL))),
             alg.FnvOffsetBasis);
 
+        // ReSharper disable once InconsistentNaming
+        // ReSharper disable once InlineTemporaryVariable
         const string Data = Foobar;
         int inputByteCount = UTF8.GetByteCount(Data);
         Span<byte> bytes = inputByteCount < 1024
@@ -459,7 +392,7 @@ public sealed class Fnv1a512Tests
         bool result = alg.TryGetCurrentHash(destination, out int bytesWritten);
 
         IsTrue(result);
-        AreEqual(bytesWritten, destination.Length);
+        HasCount(bytesWritten, destination);
         AreEqual(
             new UInt512(
                 new(new(0xBDF47E35FEA1353BUL, 0x31800456716B6D83UL), new(0x49B346DEFDFFFFFFUL, 0xB2AFA956272A8B77UL)),
@@ -545,7 +478,7 @@ public sealed class Fnv1a512Tests
         bool result = _alg.TryGetCurrentHash(destination, out int bytesWritten);
 
         IsTrue(result);
-        AreEqual(bytesWritten, destination.Length);
+        HasCount(bytesWritten, destination);
         return new(
             BitConverter.ToUInt128(destination[..16]),
             BitConverter.ToUInt128(destination.Slice(16, 16)),

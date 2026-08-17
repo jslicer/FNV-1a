@@ -10,19 +10,17 @@
 // Ignore Spelling: Fnv
 namespace Fnv1aTests;
 
-using System;
-using System.IO;
 using System.IO.Hashing;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Fnv1a;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using static System.Text.Encoding;
+#pragma warning disable IDE0001
 using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+#pragma warning restore IDE0001
 
 /// <summary>
 /// Tests the FNV-1a 32-bit algorithm.
@@ -51,6 +49,7 @@ public sealed class Fnv1a32Tests
     /// <summary>
     /// The method to run before each test.
     /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     //// ReSharper disable once UnusedMember.Global
     [TestInitialize]
     //// ReSharper disable once UnusedMember.Global
@@ -74,6 +73,7 @@ public sealed class Fnv1a32Tests
     /// <returns>An asynchronous <see cref="Task" />.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestVector1Async()
@@ -104,6 +104,7 @@ public sealed class Fnv1a32Tests
     /// <returns>An asynchronous <see cref="Task" />.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestVector2Async()
@@ -134,6 +135,7 @@ public sealed class Fnv1a32Tests
     /// <returns>An asynchronous <see cref="Task" />.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestVector3Async()
@@ -164,6 +166,7 @@ public sealed class Fnv1a32Tests
     /// <returns>An asynchronous <see cref="Task" />.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestVector4Async()
@@ -186,7 +189,8 @@ public sealed class Fnv1a32Tests
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
-    public void TestAlternatePrimeAndZeroOffset() => ThrowsExactly<ArgumentOutOfRangeException>(() => _ = new Fnv1a32(0xB3CB2E29U, 0x0U));
+    public void TestAlternatePrimeAndZeroOffset() => ThrowsExactly<ArgumentOutOfRangeException>(() =>
+        _ = new Fnv1a32(0xB3CB2E29U, 0x0U));
 
     /// <summary>
     /// Tests the alternate prime and non-zero offset.
@@ -219,6 +223,7 @@ public sealed class Fnv1a32Tests
     /// is less than or equal to the length of value minus 1.</exception>
     /// <exception cref="ArgumentNullException">buffer is <see langword="null" />.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestAlternatePrimeAndOffsetAsync()
@@ -230,7 +235,7 @@ public sealed class Fnv1a32Tests
         AreEqual(0x319712C3U, alg.FnvOffsetBasis);
         using CancellationTokenSource cts = new();
 #pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
-        await using Stream stream = new MemoryStream("foobar"u8.ToArray());
+        await using Stream stream = new MemoryStream([.. "foobar"u8]);
 #pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
         await _alg.AppendAsync(stream, cts.Token).ConfigureAwait(true);
 
@@ -260,6 +265,8 @@ public sealed class Fnv1a32Tests
         AreEqual(0xB3CB2E29U, alg.FnvPrime);
         AreEqual(0x319712C3U, alg.FnvOffsetBasis);
 
+        // ReSharper disable once InconsistentNaming
+        // ReSharper disable once InlineTemporaryVariable
         const string Data = Foobar;
         int inputByteCount = UTF8.GetByteCount(Data);
         Span<byte> bytes = inputByteCount < 1024

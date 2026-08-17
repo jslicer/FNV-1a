@@ -10,10 +10,7 @@
 // Ignore Spelling: Fnv
 namespace Fnv1aTestVectorGenerator;
 
-using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Text;
 
 /// <inheritdoc cref="SetBase" />
 /// <summary>
@@ -53,39 +50,37 @@ internal sealed class Set5(TextWriter? writer = null) : SetBase(writer)
     /// </summary>
     /// <param name="token">The optional cancellation token.</param>
     /// <returns>An asynchronous <see cref="Task" />.</returns>
-    /// <exception cref="InvalidOperationException">The text writer is currently in use by a previous write operation.</exception>
+    /// <exception cref="InvalidOperationException">The text writer is currently in use by a previous write
+    /// operation.</exception>
     /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
+    /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character Encoding in
+    /// .NET)
+    ///  -and-
+    ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
     // ReSharper disable once MethodTooLong
     public override async Task PerformAsync(CancellationToken token = default)
     {
-        token.ThrowIfCancellationRequested();
         await WriteLineAsync(await "cu".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
         await WriteLineAsync(await "cur".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
         await WriteLineAsync(await "curd".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
         await WriteLineAsync(await "curds".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
         await WriteLineAsync(await "curds ".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
         await WriteLineAsync(await "curds a".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
         await WriteLineAsync(await "curds an".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
         await WriteLineAsync(await "curds and".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
         await WriteLineAsync(await "curds and ".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
         await WriteLineAsync(await "curds and w".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
         await WriteLineAsync(await "curds and wh".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "curds and whe".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "curds and whey".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await "curds and whey\n".Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(
+            await "curds and whe".Test0Async(token).ConfigureAwait(false),
+            token).ConfigureAwait(true);
+        await WriteLineAsync(
+            await "curds and whey".Test0Async(token).ConfigureAwait(false),
+            token).ConfigureAwait(true);
+        await WriteLineAsync(
+            await "curds and whey\n".Test0Async(token).ConfigureAwait(false),
+            token).ConfigureAwait(true);
     }
 }

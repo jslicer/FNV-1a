@@ -10,10 +10,7 @@
 // Ignore Spelling: Fnv
 namespace Fnv1aTestVectorGenerator;
 
-using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Text;
 
 /// <inheritdoc cref="SetBase" />
 /// <summary>
@@ -62,24 +59,32 @@ internal sealed class Set10(TextWriter? writer = null) : SetBase(writer)
     /// </summary>
     /// <param name="token">The optional cancellation token.</param>
     /// <returns>An asynchronous <see cref="Task" />.</returns>
-    /// <exception cref="InvalidOperationException">The text writer is currently in use by a previous write operation.</exception>
+    /// <exception cref="InvalidOperationException">The text writer is currently in use by a previous write
+    /// operation.</exception>
     /// <exception cref="ObjectDisposedException">The <see cref="TextWriter" /> is closed.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
+    /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character Encoding in
+    /// .NET)
+    ///  -and-
+    ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
     public override async Task PerformAsync(CancellationToken token = default)
     {
         //// ReSharper disable StringLiteralTypo
-        token.ThrowIfCancellationRequested();
         await WriteLineAsync(await Feedface.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
         await WriteLineAsync(await Feedface.Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await Feedfacedaffdeed.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await Feedfacedaffdeed.Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await Feedfacedeadbeef.TestAsync(token).ConfigureAwait(false), token).ConfigureAwait(true);
-        token.ThrowIfCancellationRequested();
-        await WriteLineAsync(await Feedfacedeadbeef.Test0Async(token).ConfigureAwait(false), token).ConfigureAwait(true);
+        await WriteLineAsync(
+            await Feedfacedaffdeed.TestAsync(token).ConfigureAwait(false),
+            token).ConfigureAwait(true);
+        await WriteLineAsync(
+            await Feedfacedaffdeed.Test0Async(token).ConfigureAwait(false),
+            token).ConfigureAwait(true);
+        await WriteLineAsync(
+            await Feedfacedeadbeef.TestAsync(token).ConfigureAwait(false),
+            token).ConfigureAwait(true);
+        await WriteLineAsync(
+            await Feedfacedeadbeef.Test0Async(token).ConfigureAwait(false),
+            token).ConfigureAwait(true);
         //// ReSharper enable StringLiteralTypo
     }
 }

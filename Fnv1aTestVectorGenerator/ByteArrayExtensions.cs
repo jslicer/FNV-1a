@@ -10,11 +10,10 @@
 // Ignore Spelling: Fnv
 namespace Fnv1aTestVectorGenerator;
 
-using System;
-
 /// <summary>
 /// Extension methods which operate on byte arrays.
 /// </summary>
+// ReSharper disable once UnusedType.Global
 internal static class ByteArrayExtensions
 {
     /// <summary>
@@ -33,6 +32,7 @@ internal static class ByteArrayExtensions
     /// length is greater than the number of elements in destinationArray.</exception>
     /// <exception cref="ArgumentOutOfRangeException">length is less than zero.</exception>
     /// <exception cref="ArgumentNullException">sourceArray is null.   -or-  destinationArray is null.</exception>
+    // ReSharper disable once UnusedMember.Global
     internal static byte[] AddZero(this byte[] bytes)
     {
         byte[] temp = new byte[bytes.Length + 1];
