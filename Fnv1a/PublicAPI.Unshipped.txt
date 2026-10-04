@@ -8,6 +8,11 @@ Fnv1a.Fnv1a128.Fnv1a128() -> void
 Fnv1a.Fnv1a128.Fnv1a128(System.UInt128 prime, System.UInt128 offsetBasis) -> void
 Fnv1a.Fnv1a128.FnvOffsetBasis.get -> System.UInt128
 Fnv1a.Fnv1a128.FnvPrime.get -> System.UInt128
+Fnv1a.Fnv1a16
+Fnv1a.Fnv1a16.Fnv1a16() -> void
+Fnv1a.Fnv1a16.Fnv1a16(ushort prime, ushort offsetBasis) -> void
+Fnv1a.Fnv1a16.FnvOffsetBasis.get -> ushort
+Fnv1a.Fnv1a16.FnvPrime.get -> ushort
 Fnv1a.Fnv1a256
 Fnv1a.Fnv1a256.Fnv1a256() -> void
 Fnv1a.Fnv1a256.Fnv1a256(MissingValues.UInt256 prime, MissingValues.UInt256 offsetBasis) -> void
@@ -37,6 +42,8 @@ override Fnv1a.Fnv1a1024.Append(System.ReadOnlySpan<byte> source) -> void
 override Fnv1a.Fnv1a1024.Reset() -> void
 override Fnv1a.Fnv1a128.Append(System.ReadOnlySpan<byte> source) -> void
 override Fnv1a.Fnv1a128.Reset() -> void
+override Fnv1a.Fnv1a16.Append(System.ReadOnlySpan<byte> source) -> void
+override Fnv1a.Fnv1a16.Reset() -> void
 override Fnv1a.Fnv1a256.Append(System.ReadOnlySpan<byte> source) -> void
 override Fnv1a.Fnv1a256.Reset() -> void
 override Fnv1a.Fnv1a32.Append(System.ReadOnlySpan<byte> source) -> void

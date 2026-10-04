@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Fnv1a128.cs" company="Always Elucidated Solution Pioneers, LLC">
+// <copyright file="Fnv1a16.cs" company="Always Elucidated Solution Pioneers, LLC">
 //   Copyright (c) Always Elucidated Solution Pioneers, LLC. All rights reserved.
 // </copyright>
 // <summary>
-//   Implements the FNV-1a 128-bit variant hashing algorithm.
+//   Implements the FNV-1a 16-bit variant hashing algorithm.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -16,61 +16,60 @@ using System.Runtime.InteropServices;
 
 /// <inheritdoc cref="NonCryptographicHashAlgorithm" />
 /// <summary>
-/// Implements the FNV-1a 128-bit variant hashing algorithm.
+/// Implements the FNV-1a 32-bit variant hashing algorithm.
 /// </summary>
 #pragma warning disable SQ0079 // Unused #pragma warning directive
 #pragma warning disable S101 // Types should be named in PascalCase
 // ReSharper disable once InconsistentNaming
-public sealed class Fnv1a128 : NonCryptographicHashAlgorithm
+public sealed class Fnv1a16 : NonCryptographicHashAlgorithm
 #pragma warning restore S101 // Types should be named in PascalCase
 #pragma warning restore SQ0079 // Unused #pragma warning directive
 {
     /// <summary>
     /// The hash size in bytes.
     /// </summary>
-    private const int HashSizeInBytes = 16;
+    // ReSharper disable once InconsistentNaming
+    private const int HashSizeInBytes = 2;
 
     /// <summary>
     /// The default prime.
     /// </summary>
-#pragma warning disable IDE1006 // Naming Styles
-    private static readonly UInt128 _FnvDefaultPrime = new(0x0000000001000000UL, 0x000000000000013BUL);
-#pragma warning restore IDE1006 // Naming Styles
+    // ReSharper disable once InconsistentNaming
+    private const ushort FnvDefaultPrime = (ushort)0x0101U;
 
     /// <summary>
     /// The default non-zero offset basis.
     /// </summary>
-#pragma warning disable IDE1006 // Naming Styles
-    private static readonly UInt128 _FnvDefaultOffsetBasis = new(0x6C62272E07BB0142UL, 0x62B821756295C58DUL);
-#pragma warning restore IDE1006 // Naming Styles
+    // ReSharper disable once InconsistentNaming
+    private const ushort FnvDefaultOffsetBasis = (ushort)0x811CU;
 
     /// <summary>
     /// The hash.
     /// </summary>
-    private UInt128 _hash;
+    private ushort _hash;
 
     /// <inheritdoc cref="NonCryptographicHashAlgorithm" />
     /// <summary>
-    /// Initializes a new instance of the <see cref="Fnv1a128" /> class.
+    /// Initializes a new instance of the <see cref="Fnv1a16" /> class.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
-    public Fnv1a128()
-        : this(_FnvDefaultPrime, _FnvDefaultOffsetBasis)
+    public Fnv1a16()
+        : this(FnvDefaultPrime, FnvDefaultOffsetBasis)
     {
         // Intentionally empty.
     }
 
     /// <inheritdoc cref="NonCryptographicHashAlgorithm" />
     /// <summary>
-    /// Initializes a new instance of the <see cref="Fnv1a128" /> class.
+    /// Initializes a new instance of the <see cref="Fnv1a16" /> class.
     /// </summary>
     /// <param name="prime">The prime.</param>
     /// <param name="offsetBasis">The non-zero offset basis.</param>
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
-    public Fnv1a128(UInt128 prime, UInt128 offsetBasis)
+    public Fnv1a16(ushort prime, ushort offsetBasis)
         : base(HashSizeInBytes)
     {
-        if (offsetBasis == UInt128.Zero)
+        if (offsetBasis == (ushort)0U)
         {
             throw new ArgumentOutOfRangeException(
                 nameof(offsetBasis),
@@ -89,7 +88,7 @@ public sealed class Fnv1a128 : NonCryptographicHashAlgorithm
     /// <value>
     /// The prime.
     /// </value>
-    public UInt128 FnvPrime { get; }
+    public ushort FnvPrime { get; }
 
     /// <summary>
     /// Gets the non-zero offset basis.
@@ -97,7 +96,7 @@ public sealed class Fnv1a128 : NonCryptographicHashAlgorithm
     /// <value>
     /// The non-zero offset basis.
     /// </value>
-    public UInt128 FnvOffsetBasis { get; }
+    public ushort FnvOffsetBasis { get; }
 
     /// <inheritdoc />
     /// <summary>
@@ -105,66 +104,8 @@ public sealed class Fnv1a128 : NonCryptographicHashAlgorithm
     /// processed for the current hash computation.
     /// </summary>
     /// <param name="source">The data to process.</param>
-    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-    //// ReSharper disable once MethodTooLong
-    public override void Append(ReadOnlySpan<byte> source)
-    {
-        int i = 0;
-        int len = source.Length;
-
-        while (i + 16 <= len)
-        {
-            // ReSharper disable once ComplexConditionExpression
-            UInt128 chunk = MemoryMarshal.Read<UInt128>(source[i..]);
-
-            unchecked
-            {
-                _hash ^= (byte)chunk;
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 8);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 16);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 24);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 32);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 40);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 48);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 56);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 64);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 72);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 80);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 88);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 96);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 104);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 112);
-                _hash *= FnvPrime;
-                _hash ^= (byte)(chunk >> 120);
-                _hash *= FnvPrime;
-            }
-
-            i += 16;
-        }
-
-        for (; i < len; i++)
-        {
-            unchecked
-            {
-                _hash ^= source[i];
-                _hash *= FnvPrime;
-            }
-        }
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public override void Append(ReadOnlySpan<byte> source) => _hash = AppendCore(_hash, source);
 
     /// <inheritdoc />
     /// <summary>
@@ -179,8 +120,34 @@ public sealed class Fnv1a128 : NonCryptographicHashAlgorithm
     /// modifying accumulated state.
     /// </summary>
     /// <param name="destination">The buffer that receives the computed hash value.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
+    protected override void GetCurrentHashCore(Span<byte> destination)
+    {
+        if (destination.Length < sizeof(ushort))
+        {
+            throw new ArgumentException("Destination span is too small.", nameof(destination));
+        }
+
+        destination[0] = (byte)_hash;
+        destination[1] = (byte)(_hash >> 8);
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    protected override void GetCurrentHashCore(Span<byte> destination) => MemoryMarshal.Write(destination, in _hash);
+    private static ushort AppendCore(ushort hash, ReadOnlySpan<byte> source)
+    {
+        unchecked
+        {
+            ref byte r0 = ref MemoryMarshal.GetReference(source);
+
+            for (int i = 0; i < source.Length; i++)
+            {
+                hash ^= Unsafe.Add(ref r0, i);
+                hash = (ushort)(hash * FnvDefaultPrime);
+            }
+
+            return hash;
+        }
+    }
 
     /// <summary>
     /// Initializes the hash for this instance.

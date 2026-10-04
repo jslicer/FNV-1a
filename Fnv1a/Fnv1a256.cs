@@ -19,10 +19,12 @@ using MissingValues;
 /// <summary>
 /// Implements the FNV-1a 256-bit variant hashing algorithm.
 /// </summary>
-// ReSharper disable once InconsistentNaming
+#pragma warning disable SQ0079 // Unused #pragma warning directive
 #pragma warning disable S101 // Types should be named in PascalCase
+// ReSharper disable once InconsistentNaming
 public sealed class Fnv1a256 : NonCryptographicHashAlgorithm
 #pragma warning restore S101 // Types should be named in PascalCase
+#pragma warning restore SQ0079 // Unused #pragma warning directive
 {
     /// <summary>
     /// The hash size in bytes.
@@ -32,14 +34,18 @@ public sealed class Fnv1a256 : NonCryptographicHashAlgorithm
     /// <summary>
     /// The default prime.
     /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
     private static readonly UInt256 _FnvDefaultPrime =
         new(new(0x0000000000000000UL, 0x0000010000000000UL), new(0x0000000000000000UL, 0x0000000000000163UL));
+#pragma warning restore IDE1006 // Naming Styles
 
     /// <summary>
     /// The default non-zero offset basis.
     /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
     private static readonly UInt256 _FnvDefaultOffsetBasis =
         new(new(0xDD268DBCAAC55036UL, 0x2D98C384C4E576CCUL), new(0xC8B1536847B6BBB3UL, 0x1023B4C8CAEE0535UL));
+#pragma warning restore IDE1006 // Naming Styles
 
     /// <summary>
     /// The hash.

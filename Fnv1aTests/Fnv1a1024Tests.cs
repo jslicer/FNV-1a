@@ -26,7 +26,7 @@ using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 /// Tests the FNV-1a 1024-bit algorithm.
 /// </summary>
 [TestClass]
-#pragma warning disable IDE0079 // Remove unnecessary suppression
+#pragma warning disable SQ0079 // Unused #pragma warning directive
 #pragma warning disable S101 // Types should be named in PascalCase
 #pragma warning disable CA1515 // Consider making public types internal
 // ReSharper disable once InconsistentNaming
@@ -34,7 +34,7 @@ using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 public sealed class Fnv1a1024Tests
 #pragma warning restore CA1515 // Consider making public types internal
 #pragma warning restore S101 // Types should be named in PascalCase
-#pragma warning restore IDE0079 // Remove unnecessary suppression
+#pragma warning restore SQ0079 // Unused #pragma warning directive
 {
     /// <summary>
     /// The foobar string.
@@ -44,7 +44,9 @@ public sealed class Fnv1a1024Tests
     /// <summary>
     /// The alternate prime.
     /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
     private static readonly UInt1024 _AlternatePrime = new(
+#pragma warning restore IDE1006 // Naming Styles
         0xFFFFFFFFFFFFFFFFUL,
         0xFFFFFFFFFFFFFFFFUL,
         0xFFFFFFFFFFFFFFFFUL,
@@ -65,7 +67,9 @@ public sealed class Fnv1a1024Tests
     /// <summary>
     /// The alternate offset basis.
     /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
     private static readonly UInt1024 _AlternateOffsetBasis = new(
+#pragma warning restore IDE1006 // Naming Styles
         0xFFFFFFFFFFFFFFFFUL,
         0xFFA085898A7133B2UL,
         0xCD1A92A5A6EFD748UL,

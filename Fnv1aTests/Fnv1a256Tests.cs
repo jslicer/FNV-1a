@@ -28,7 +28,7 @@ using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 /// Tests the FNV-1a 256-bit algorithm.
 /// </summary>
 [TestClass]
-#pragma warning disable IDE0079 // Remove unnecessary suppression
+#pragma warning disable SQ0079 // Unused #pragma warning directive
 #pragma warning disable S101 // Types should be named in PascalCase
 #pragma warning disable CA1515 // Consider making public types internal
 // ReSharper disable once InconsistentNaming
@@ -36,7 +36,7 @@ using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 public sealed class Fnv1a256Tests
 #pragma warning restore CA1515 // Consider making public types internal
 #pragma warning restore S101 // Types should be named in PascalCase
-#pragma warning restore IDE0079 // Remove unnecessary suppression
+#pragma warning restore SQ0079 // Unused #pragma warning directive
 {
     /// <summary>
     /// The foobar string.

@@ -17,8 +17,9 @@ using System.Runtime.CompilerServices;
 /// <summary>
 /// Implements the FNV-1a 1024-bit variant hashing algorithm.
 /// </summary>
-// ReSharper disable once InconsistentNaming
+#pragma warning disable SQ0079 // Unused #pragma warning directive
 #pragma warning disable S101 // Types should be named in PascalCase
+// ReSharper disable once InconsistentNaming
 public sealed class Fnv1a1024 : NonCryptographicHashAlgorithm
 #pragma warning restore S101 // Types should be named in PascalCase
 {
@@ -30,7 +31,9 @@ public sealed class Fnv1a1024 : NonCryptographicHashAlgorithm
     /// <summary>
     /// The default prime.
     /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
     private static readonly UInt1024 _FnvDefaultPrime = new(
+#pragma warning restore IDE1006 // Naming Styles
         0x0000000000000000UL,
         0x0000000000000000UL,
         0x0000000000000000UL,
@@ -51,7 +54,9 @@ public sealed class Fnv1a1024 : NonCryptographicHashAlgorithm
     /// <summary>
     /// The default non-zero offset basis.
     /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
     private static readonly UInt1024 _FnvDefaultOffsetBasis = new(
+#pragma warning restore IDE1006 // Naming Styles
         0x0000000000000000UL,
         0x005F7A76758ECC4DUL,
         0x32E56D5A591028B7UL,
@@ -97,6 +102,7 @@ public sealed class Fnv1a1024 : NonCryptographicHashAlgorithm
         {
             throw new ArgumentOutOfRangeException(
                 nameof(offsetBasis),
+                offsetBasis,
                 "The offset basis must be non-zero.");
         }
 

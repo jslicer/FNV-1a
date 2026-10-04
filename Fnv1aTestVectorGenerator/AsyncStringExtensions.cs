@@ -59,199 +59,203 @@ internal static class AsyncStringExtensions
     /// <summary>
     /// The FNV-1a 32-bit hasher.
     /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
     private static readonly ThreadLocal<Fnv1a32> _Fnv1A32Hasher = new(static () => new());
+#pragma warning restore IDE1006 // Naming Styles
 
     /// <summary>
     /// The FNV-1a 64-bit hasher.
     /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
     private static readonly ThreadLocal<Fnv1a64> _Fnv1A64Hasher = new(static () => new());
+#pragma warning restore IDE1006 // Naming Styles
 
     /// <summary>
     /// The FNV-1a 128-bit hasher.
     /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
     private static readonly ThreadLocal<Fnv1a128> _Fnv1A128Hasher = new(static () => new());
+#pragma warning restore IDE1006 // Naming Styles
 
     /// <summary>
     /// The FNV-1a 256-bit hasher.
     /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
     private static readonly ThreadLocal<Fnv1a256> _Fnv1A256Hasher = new(static () => new());
+#pragma warning restore IDE1006 // Naming Styles
 
     /// <summary>
     /// The FNVa 512-bit hasher.
     /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
     private static readonly ThreadLocal<Fnv1a512> _Fnv1A512Hasher = new(static () => new());
+#pragma warning restore IDE1006 // Naming Styles
 
     /// <summary>
     /// The FNV-1a 1024-bit hasher.
     /// </summary>
+#pragma warning disable IDE1006 // Naming Styles
     private static readonly ThreadLocal<Fnv1a1024> _Fnv1A1024Hasher = new(static () => new());
+#pragma warning restore IDE1006 // Naming Styles
 
     /// <summary>
-    /// Asynchronous extensions for strings to test its data.
+    /// Asynchronously tests the specified data.
     /// </summary>
-    extension(string data)
+    /// <param name="data">The string data to test.</param>
+    /// <param name="token">The optional cancellation token.</param>
+    /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
+    /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character Encoding in .NET)
+    ///  -and-
+    ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
+    // ReSharper disable once ConvertToExtensionBlock
+    internal static Task<string> TestAsync(this string data, CancellationToken token = default)
     {
-        /// <summary>
-        /// Asynchronously tests the specified data.
-        /// </summary>
-        /// <param name="token">The optional cancellation token.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
-        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-        /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
-        /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character Encoding in .NET)
-        ///  -and-
-        ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
-#pragma warning disable S2325 // Make a static method.
-        internal Task<string> TestAsync(CancellationToken token = default)
-#pragma warning restore S2325 // Make a static method.
+        token.ThrowIfCancellationRequested();
+
+        byte[] payload = UTF8.GetBytes(data);
+
+        // ReSharper disable once ComplexConditionExpression
+        string result = "Test:" + NewLine
+                                + data + ThirtyTwo + ComputeFnv1A32(payload) + NewLine
+                                + data + SixtyFour + ComputeFnv1A64(payload) + NewLine
+                                + data + OneHundredTwentyEight + ComputeFnv1A128(payload) + NewLine
+                                + data + TwoHundredFiftySix + ComputeFnv1A256(payload) + NewLine
+                                + data + FiveHundredTwelve + ComputeFnv1A512(payload) + NewLine
+                                + data + OneThousandTwentyFour + ComputeFnv1A1024(payload) + NewLine;
+
+        return Task.FromResult(result);
+    }
+
+    /// <summary>
+    /// Asynchronously tests the specified data adding a trailing NULL byte.
+    /// </summary>
+    /// <param name="data">The string data to test.</param>
+    /// <param name="token">The optional cancellation token.</param>
+    /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
+    /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character Encoding in .NET)
+    ///  -and-
+    ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
+    internal static async Task<string> Test0Async(this string data, CancellationToken token = default)
+    {
+        string newData = data + '\0';
+        byte[] payload = UTF8.GetBytes(newData);
+        string printData = await data.PrintAsync(token).ConfigureAwait(false);
+
+        return "Test0:" + NewLine
+                        + printData + ThirtyTwo + ComputeFnv1A32(payload) + NewLine
+                        + printData + SixtyFour + ComputeFnv1A64(payload) + NewLine
+                        + printData + OneHundredTwentyEight + ComputeFnv1A128(payload) + NewLine
+                        + printData + TwoHundredFiftySix + ComputeFnv1A256(payload) + NewLine
+                        + printData + FiveHundredTwelve + ComputeFnv1A512(payload) + NewLine
+                        + printData + OneThousandTwentyFour + ComputeFnv1A1024(payload) + NewLine;
+    }
+
+    /// <summary>
+    /// Asynchronously tests the specified data repeated ten times.
+    /// </summary>
+    /// <param name="data">The string data to test.</param>
+    /// <param name="token">The optional cancellation token.</param>
+    /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
+    /// <see cref="StringBuilder.MaxCapacity" />.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
+    /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character Encoding in .NET)
+    ///  -and-
+    ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
+    internal static async Task<string> R10Async(this string data, CancellationToken token = default)
+    {
+        StringBuilder sb = new(10 * data.Length);
+
+        for (int i = 0; i < 10; i++)
+        {
+            _ = sb.Append(data);
+        }
+
+        string newData = sb.ToString();
+        byte[] payload = UTF8.GetBytes(newData);
+        string printable = await newData.PrintAsync(token).ConfigureAwait(false);
+
+        return "R10:" + NewLine
+                      + printable + ThirtyTwo + ComputeFnv1A32(payload) + NewLine
+                      + printable + SixtyFour + ComputeFnv1A64(payload) + NewLine
+                      + printable + OneHundredTwentyEight + ComputeFnv1A128(payload) + NewLine
+                      + printable + TwoHundredFiftySix + ComputeFnv1A256(payload) + NewLine
+                      + printable + FiveHundredTwelve + ComputeFnv1A512(payload) + NewLine
+                      + printable + OneThousandTwentyFour + ComputeFnv1A1024(payload) + NewLine;
+    }
+
+    /// <summary>
+    /// Asynchronously tests the specified data repeated five hundred times.
+    /// </summary>
+    /// <param name="data">The string data to test.</param>
+    /// <param name="token">The optional cancellation token.</param>
+    /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
+    /// <see cref="StringBuilder.MaxCapacity" />.</exception>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
+    /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character Encoding in .NET)
+    ///  -and-
+    ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
+    internal static async Task<string> R500Async(this string data, CancellationToken token = default)
+    {
+        StringBuilder sb = new(500 * data.Length);
+
+        for (int i = 0; i < 500; i++)
+        {
+            _ = sb.Append(data);
+        }
+
+        string newData = sb.ToString();
+        byte[] payload = UTF8.GetBytes(newData);
+        string printable = await newData.PrintAsync(token).ConfigureAwait(false);
+
+        return "R500:" + NewLine
+                       + printable + ThirtyTwo + ComputeFnv1A32(payload) + NewLine
+                       + printable + SixtyFour + ComputeFnv1A64(payload) + NewLine
+                       + printable + OneHundredTwentyEight + ComputeFnv1A128(payload) + NewLine
+                       + printable + TwoHundredFiftySix + ComputeFnv1A256(payload) + NewLine
+                       + printable + FiveHundredTwelve + ComputeFnv1A512(payload) + NewLine
+                       + printable + OneThousandTwentyFour + ComputeFnv1A1024(payload) + NewLine;
+    }
+
+    /// <summary>
+    /// Asynchronously returns a printable string (hex encodes any control characters).
+    /// </summary>
+    /// <param name="data">The string data to print.</param>
+    /// <param name="token">The optional cancellation token.</param>
+    /// <returns>
+    /// An asynchronous <see cref="Task{TResult}" /> containing the printable string.
+    /// </returns>
+    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
+    // ReSharper disable once RedundantAwait
+    private static Task<string> PrintAsync(this string data, CancellationToken token = default)
+    {
+        bool controlCharacter = false;
+        StringBuilder sb = new(data.Length);
+
+        foreach (char c in data)
         {
             token.ThrowIfCancellationRequested();
-
-            byte[] payload = UTF8.GetBytes(data);
-
-            // ReSharper disable once ComplexConditionExpression
-            string result = "Test:" + NewLine
-                + data + ThirtyTwo + ComputeFnv1A32(payload) + NewLine
-                + data + SixtyFour + ComputeFnv1A64(payload) + NewLine
-                + data + OneHundredTwentyEight + ComputeFnv1A128(payload) + NewLine
-                + data + TwoHundredFiftySix + ComputeFnv1A256(payload) + NewLine
-                + data + FiveHundredTwelve + ComputeFnv1A512(payload) + NewLine
-                + data + OneThousandTwentyFour + ComputeFnv1A1024(payload) + NewLine;
-
-            return Task.FromResult(result);
-        }
-
-        /// <summary>
-        /// Asynchronously tests the specified data adding a trailing NULL byte.
-        /// </summary>
-        /// <param name="token">The optional cancellation token.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
-        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-        /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
-        /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character Encoding in .NET)
-        ///  -and-
-        ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
-#pragma warning disable S2325 // Make a static method.
-        internal async Task<string> Test0Async(CancellationToken token = default)
-#pragma warning restore S2325 // Make a static method.
-        {
-            string newData = data + '\0';
-            byte[] payload = UTF8.GetBytes(newData);
-            string printData = await data.PrintAsync(token).ConfigureAwait(false);
-
-            return "Test0:" + NewLine
-                + printData + ThirtyTwo + ComputeFnv1A32(payload) + NewLine
-                + printData + SixtyFour + ComputeFnv1A64(payload) + NewLine
-                + printData + OneHundredTwentyEight + ComputeFnv1A128(payload) + NewLine
-                + printData + TwoHundredFiftySix + ComputeFnv1A256(payload) + NewLine
-                + printData + FiveHundredTwelve + ComputeFnv1A512(payload) + NewLine
-                + printData + OneThousandTwentyFour + ComputeFnv1A1024(payload) + NewLine;
-        }
-
-        /// <summary>
-        /// Asynchronously tests the specified data repeated ten times.
-        /// </summary>
-        /// <param name="token">The optional cancellation token.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
-        /// <see cref="StringBuilder.MaxCapacity" />.</exception>
-        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-        /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
-        /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character Encoding in .NET)
-        ///  -and-
-        ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
-#pragma warning disable S2325 // Make a static method.
-        internal async Task<string> R10Async(CancellationToken token = default)
-#pragma warning restore S2325 // Make a static method.
-        {
-            StringBuilder sb = new(10 * data.Length);
-
-            for (int i = 0; i < 10; i++)
+            if (controlCharacter || char.IsControl(c))
             {
-                _ = sb.Append(data);
+                _ = sb.Append(InvariantCulture, $"\\x{(uint)c:x2}");
+                controlCharacter = true;
             }
-
-            string newData = sb.ToString();
-            byte[] payload = UTF8.GetBytes(newData);
-            string printable = await newData.PrintAsync(token).ConfigureAwait(false);
-
-            return "R10:" + NewLine
-                + printable + ThirtyTwo + ComputeFnv1A32(payload) + NewLine
-                + printable + SixtyFour + ComputeFnv1A64(payload) + NewLine
-                + printable + OneHundredTwentyEight + ComputeFnv1A128(payload) + NewLine
-                + printable + TwoHundredFiftySix + ComputeFnv1A256(payload) + NewLine
-                + printable + FiveHundredTwelve + ComputeFnv1A512(payload) + NewLine
-                + printable + OneThousandTwentyFour + ComputeFnv1A1024(payload) + NewLine;
-        }
-
-        /// <summary>
-        /// Asynchronously tests the specified data repeated five hundred times.
-        /// </summary>
-        /// <param name="token">The optional cancellation token.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the test result string.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">capacity is less than zero.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Enlarging the value of this instance would exceed
-        /// <see cref="StringBuilder.MaxCapacity" />.</exception>
-        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-        /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
-        /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character Encoding in .NET)
-        ///  -and-
-        ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
-#pragma warning disable S2325 // Make a static method.
-        internal async Task<string> R500Async(CancellationToken token = default)
-#pragma warning restore S2325 // Make a static method.
-        {
-            StringBuilder sb = new(500 * data.Length);
-
-            for (int i = 0; i < 500; i++)
+            else
             {
-                _ = sb.Append(data);
+                _ = sb.Append(c);
             }
-
-            string newData = sb.ToString();
-            byte[] payload = UTF8.GetBytes(newData);
-            string printable = await newData.PrintAsync(token).ConfigureAwait(false);
-
-            return "R500:" + NewLine
-                + printable + ThirtyTwo + ComputeFnv1A32(payload) + NewLine
-                + printable + SixtyFour + ComputeFnv1A64(payload) + NewLine
-                + printable + OneHundredTwentyEight + ComputeFnv1A128(payload) + NewLine
-                + printable + TwoHundredFiftySix + ComputeFnv1A256(payload) + NewLine
-                + printable + FiveHundredTwelve + ComputeFnv1A512(payload) + NewLine
-                + printable + OneThousandTwentyFour + ComputeFnv1A1024(payload) + NewLine;
         }
 
-        /// <summary>
-        /// Asynchronously returns a printable string (hex encodes any control characters).
-        /// </summary>
-        /// <param name="token">The optional cancellation token.</param>
-        /// <returns>An asynchronous <see cref="Task{TResult}" /> containing the printable string.</returns>
-        /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-        // ReSharper disable once RedundantAwait
-#pragma warning disable S2325 // Make a static method.
-        private Task<string> PrintAsync(CancellationToken token = default)
-#pragma warning restore S2325 // Make a static method.
-        {
-            bool controlCharacter = false;
-            StringBuilder sb = new(data.Length);
-
-            foreach (char c in data)
-            {
-                token.ThrowIfCancellationRequested();
-                if (controlCharacter || char.IsControl(c))
-                {
-                    _ = sb.Append(InvariantCulture, $"\\x{(uint)c:x2}");
-                    controlCharacter = true;
-                }
-                else
-                {
-                    _ = sb.Append(c);
-                }
-            }
-
-            return Task.FromResult(sb.ToString());
-        }
+        return Task.FromResult(sb.ToString());
     }
 
     /// <summary>
@@ -265,6 +269,8 @@ internal static class AsyncStringExtensions
 
         hasher.Reset();
         hasher.Append(data);
+
+        // ReSharper disable once RedundantFormatProvider
         return "0x" + ((uint)ToInt32(hasher.GetCurrentHash(), 0)).ToString("X8", InvariantCulture);
     }
 
@@ -279,6 +285,8 @@ internal static class AsyncStringExtensions
 
         hasher.Reset();
         hasher.Append(data);
+
+        // ReSharper disable once RedundantFormatProvider
         return "0x" + ((ulong)ToInt64(hasher.GetCurrentHash(), 0)).ToString("X16", InvariantCulture);
     }
 

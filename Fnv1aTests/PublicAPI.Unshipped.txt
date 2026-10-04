@@ -40,6 +40,25 @@ Fnv1aTests.Fnv1a128Tests.TestVector3Try() -> void
 Fnv1aTests.Fnv1a128Tests.TestVector4() -> void
 Fnv1aTests.Fnv1a128Tests.TestVector4Async() -> System.Threading.Tasks.Task!
 Fnv1aTests.Fnv1a128Tests.TestVector4Try() -> void
+Fnv1aTests.Fnv1a16Tests
+Fnv1aTests.Fnv1a16Tests.Fnv1a16Tests() -> void
+Fnv1aTests.Fnv1a16Tests.Initialize() -> void
+Fnv1aTests.Fnv1a16Tests.TestAlternatePrimeAndOffset() -> void
+Fnv1aTests.Fnv1a16Tests.TestAlternatePrimeAndOffsetAsync() -> System.Threading.Tasks.Task!
+Fnv1aTests.Fnv1a16Tests.TestAlternatePrimeAndOffsetTry() -> void
+Fnv1aTests.Fnv1a16Tests.TestAlternatePrimeAndZeroOffset() -> void
+Fnv1aTests.Fnv1a16Tests.TestVector1() -> void
+Fnv1aTests.Fnv1a16Tests.TestVector1Async() -> System.Threading.Tasks.Task!
+Fnv1aTests.Fnv1a16Tests.TestVector1Try() -> void
+Fnv1aTests.Fnv1a16Tests.TestVector2() -> void
+Fnv1aTests.Fnv1a16Tests.TestVector2Async() -> System.Threading.Tasks.Task!
+Fnv1aTests.Fnv1a16Tests.TestVector2Try() -> void
+Fnv1aTests.Fnv1a16Tests.TestVector3() -> void
+Fnv1aTests.Fnv1a16Tests.TestVector3Async() -> System.Threading.Tasks.Task!
+Fnv1aTests.Fnv1a16Tests.TestVector3Try() -> void
+Fnv1aTests.Fnv1a16Tests.TestVector4() -> void
+Fnv1aTests.Fnv1a16Tests.TestVector4Async() -> System.Threading.Tasks.Task!
+Fnv1aTests.Fnv1a16Tests.TestVector4Try() -> void
 Fnv1aTests.Fnv1a256Tests
 Fnv1aTests.Fnv1a256Tests.Fnv1a256Tests() -> void
 Fnv1aTests.Fnv1a256Tests.Initialize() -> void

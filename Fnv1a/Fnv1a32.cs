@@ -18,10 +18,12 @@ using System.Runtime.InteropServices;
 /// <summary>
 /// Implements the FNV-1a 32-bit variant hashing algorithm.
 /// </summary>
-// ReSharper disable once InconsistentNaming
+#pragma warning disable SQ0079 // Unused #pragma warning directive
 #pragma warning disable S101 // Types should be named in PascalCase
+// ReSharper disable once InconsistentNaming
 public sealed class Fnv1a32 : NonCryptographicHashAlgorithm
 #pragma warning restore S101 // Types should be named in PascalCase
+#pragma warning restore SQ0079 // Unused #pragma warning directive
 {
     /// <summary>
     /// The hash size in bytes.

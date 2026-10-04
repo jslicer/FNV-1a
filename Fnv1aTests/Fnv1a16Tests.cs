@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Fnv1a128Tests.cs" company="Always Elucidated Solution Pioneers, LLC">
+// <copyright file="Fnv1a16Tests.cs" company="Always Elucidated Solution Pioneers, LLC">
 //   Copyright (c) Always Elucidated Solution Pioneers, LLC. All rights reserved.
 // </copyright>
 // <summary>
-//   Tests the FNV-1a 128-bit algorithm.
+//   Tests the FNV-1a 16-bit algorithm.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -18,28 +18,22 @@ using Fnv1a;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using static System.Text.Encoding;
-#pragma warning disable IDE0001
 using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
-#pragma warning restore IDE0001
 
 /// <summary>
-/// Tests the FNV-1a 128-bit algorithm.
+/// Tests the FNV-1a 32-bit algorithm.
 /// </summary>
 [TestClass]
-#pragma warning disable SQ0079 // Unused #pragma warning directive
-#pragma warning disable S101 // Types should be named in PascalCase
 #pragma warning disable CA1515 // Consider making public types internal
 // ReSharper disable once InconsistentNaming
 // ReSharper disable once UnusedType.Global
-// ReSharper disable once ClassTooBig
-public sealed class Fnv1a128Tests
+public sealed class Fnv1a16Tests
 #pragma warning restore CA1515 // Consider making public types internal
-#pragma warning restore S101 // Types should be named in PascalCase
-#pragma warning restore SQ0079 // Unused #pragma warning directive
 {
     /// <summary>
     /// The foobar string.
     /// </summary>
+    // ReSharper disable once InconsistentNaming
     private const string Foobar = "foobar";
 
     /// <summary>
@@ -50,12 +44,12 @@ public sealed class Fnv1a128Tests
     /// <summary>
     /// The method to run before each test.
     /// </summary>
-    /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
+    //// ReSharper disable once UnusedMember.Global
     [TestInitialize]
     //// ReSharper disable once UnusedMember.Global
     public void Initialize()
     {
-        _alg = new Fnv1a128();
+        _alg = new Fnv1a16();
         _alg.Reset();
     }
 
@@ -64,10 +58,8 @@ public sealed class Fnv1a128Tests
     /// </summary>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
-    //// ReSharper disable once InconsistentNaming
-    public void TestVector1() => AreEqual(
-        new(0x6C62272E07BB0142UL, 0x62B821756295C58DUL),
-        Fnv1a128(string.Empty));
+    //// ReSharper disable once UnusedMember.Global
+    public void TestVector1() => AreEqual((ushort)0x811CU, Fnv1a16(string.Empty));
 
     /// <summary>
     /// Tests the empty string against the known vector result.
@@ -75,15 +67,12 @@ public sealed class Fnv1a128Tests
     /// <returns>An asynchronous <see cref="Task" />.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestVector1Async()
     {
         using CancellationTokenSource cts = new();
-        AreEqual(
-            new(0x6C62272E07BB0142UL, 0x62B821756295C58DUL),
-            await Fnv1a128Async(string.Empty, cts.Token).ConfigureAwait(true));
+        AreEqual((ushort)0x811CU, await Fnv1a16Async(string.Empty, cts.Token).ConfigureAwait(true));
     }
 
     /// <summary>
@@ -92,9 +81,7 @@ public sealed class Fnv1a128Tests
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
-    public void TestVector1Try() => AreEqual(
-        new(0x6C62272E07BB0142UL, 0x62B821756295C58DUL),
-        Fnv1a128Try(string.Empty));
+    public void TestVector1Try() => AreEqual((ushort)0x811CU, Fnv1a16Try(string.Empty));
 
     /// <summary>
     /// Tests the string "a" against the known vector result.
@@ -102,9 +89,7 @@ public sealed class Fnv1a128Tests
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
-    public void TestVector2() => AreEqual(
-        new(0x0D228CB696F1A8CAFUL, 0x78912B704E4A8964UL),
-        Fnv1a128("a"));
+    public void TestVector2() => AreEqual((ushort)0xFE7DU, Fnv1a16("a"));
 
     /// <summary>
     /// Tests the string "a" against the known vector result.
@@ -112,15 +97,12 @@ public sealed class Fnv1a128Tests
     /// <returns>An asynchronous <see cref="Task" />.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestVector2Async()
     {
         using CancellationTokenSource cts = new();
-        AreEqual(
-            new(0x0D228CB696F1A8CAFUL, 0x78912B704E4A8964UL),
-            await Fnv1a128Async("a", cts.Token).ConfigureAwait(true));
+        AreEqual((ushort)0xFE7DU, await Fnv1a16Async("a", cts.Token).ConfigureAwait(true));
     }
 
     /// <summary>
@@ -129,9 +111,7 @@ public sealed class Fnv1a128Tests
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
-    public void TestVector2Try() => AreEqual(
-        new(0x0D228CB696F1A8CAFUL, 0x78912B704E4A8964UL),
-        Fnv1a128Try("a"));
+    public void TestVector2Try() => AreEqual((ushort)0xFE7DU, Fnv1a16Try("a"));
 
     /// <summary>
     /// Tests the string against the known vector result.
@@ -139,9 +119,7 @@ public sealed class Fnv1a128Tests
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
-    public void TestVector3() => AreEqual(
-        new(0x343E1662793C64BFUL, 0x6F0D3597BA446F18UL),
-        Fnv1a128(Foobar));
+    public void TestVector3() => AreEqual((ushort)0x260BU, Fnv1a16(Foobar));
 
     /// <summary>
     /// Tests the string against the known vector result.
@@ -149,15 +127,12 @@ public sealed class Fnv1a128Tests
     /// <returns>An asynchronous <see cref="Task" />.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestVector3Async()
     {
         using CancellationTokenSource cts = new();
-        AreEqual(
-            new(0x343E1662793C64BFUL, 0x6F0D3597BA446F18UL),
-            await Fnv1a128Async(Foobar, cts.Token).ConfigureAwait(true));
+        AreEqual((ushort)0x260BU, await Fnv1a16Async(Foobar, cts.Token).ConfigureAwait(true));
     }
 
     /// <summary>
@@ -166,9 +141,7 @@ public sealed class Fnv1a128Tests
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
-    public void TestVector3Try() => AreEqual(
-        new(0x343E1662793C64BFUL, 0x6F0D3597BA446F18UL),
-        Fnv1a128Try(Foobar));
+    public void TestVector3Try() => AreEqual((ushort)0x260BU, Fnv1a16Try(Foobar));
 
     /// <summary>
     /// Tests the string against the known vector result.
@@ -176,9 +149,7 @@ public sealed class Fnv1a128Tests
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
-    public void TestVector4() => AreEqual(
-        new(0xD09F538FEC03781AUL, 0x034E1E32BAB19A75UL),
-        Fnv1a128("chongo was here!\n"));
+    public void TestVector4() => AreEqual((ushort)0x314AU, Fnv1a16("chongo was here!\n"));
 
     /// <summary>
     /// Tests the string against the known vector result.
@@ -186,15 +157,12 @@ public sealed class Fnv1a128Tests
     /// <returns>An asynchronous <see cref="Task" />.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestVector4Async()
     {
         using CancellationTokenSource cts = new();
-        AreEqual(
-            new(0xD09F538FEC03781AUL, 0x034E1E32BAB19A75UL),
-            await Fnv1a128Async("chongo was here!\n", cts.Token).ConfigureAwait(true));
+        AreEqual((ushort)0x314AU, await Fnv1a16Async("chongo was here!\n", cts.Token).ConfigureAwait(true));
     }
 
     /// <summary>
@@ -203,46 +171,7 @@ public sealed class Fnv1a128Tests
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
-    public void TestVector4Try() => AreEqual(
-        new(0xD09F538FEC03781AUL, 0x034E1E32BAB19A75UL),
-        Fnv1a128Try("chongo was here!\n"));
-
-    /// <summary>
-    /// Tests the "Hello World" string against the known vector result.
-    /// </summary>
-    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
-    [TestMethod]
-    //// ReSharper disable once UnusedMember.Global
-    public void TestHelloWorld() => AreEqual(
-        new(0x0CD7FECF582839515UL, 0xF3E6ECF66B967B77UL),
-        Fnv1a128("Hello World"));
-
-    /// <summary>
-    /// Tests the "Hello World" string against the known vector result.
-    /// </summary>
-    /// <returns>An asynchronous <see cref="Task" />.</returns>
-    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
-    /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
-    [TestMethod]
-    //// ReSharper disable once UnusedMember.Global
-    public async Task TestHelloWorldAsync()
-    {
-        using CancellationTokenSource cts = new();
-        AreEqual(
-            new(0x0CD7FECF582839515UL, 0xF3E6ECF66B967B77UL),
-            await Fnv1a128Async("Hello World", cts.Token).ConfigureAwait(true));
-    }
-
-    /// <summary>
-    /// Tests the "Hello World" string against the known vector result.
-    /// </summary>
-    /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
-    [TestMethod]
-    //// ReSharper disable once UnusedMember.Global
-    public void TestHelloWorldTry() => AreEqual(
-        new(0x0CD7FECF582839515UL, 0xF3E6ECF66B967B77UL),
-        Fnv1a128Try("Hello World"));
+    public void TestVector4Try() => AreEqual((ushort)0x314AU, Fnv1a16Try("chongo was here!\n"));
 
     /// <summary>
     /// Tests the alternate prime and zero offset.
@@ -250,32 +179,28 @@ public sealed class Fnv1a128Tests
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
-    public void TestAlternatePrimeAndZeroOffset() =>
-        ThrowsExactly<ArgumentOutOfRangeException>(() => _ = new Fnv1a128(
-            new(0x0000000001000000UL, 0x000000000000013BUL),
-            UInt128.Zero));
+    public void TestAlternatePrimeAndZeroOffset() => ThrowsExactly<ArgumentOutOfRangeException>(() =>
+        _ = new Fnv1a16((ushort)0xB3CBU, (ushort)0x0U));
 
     /// <summary>
     /// Tests the alternate prime and non-zero offset.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
-    /// <exception cref="ArgumentNullException">source is <see langword="null" />.</exception>
+    /// <exception cref="ArgumentException">startIndex is greater than or equal to the length of value minus 3, and
+    /// is less than or equal to the length of value minus 1.</exception>
+    /// <exception cref="ArgumentNullException">buffer is <see langword="null" />.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public void TestAlternatePrimeAndOffset()
     {
-        Fnv1a128 alg = new(
-            new(0xFFFFFFFFFEFFFFFFUL, 0xFFFFFFFFFFFFFEC4UL),
-            new(0x939DD8D1F844FEBDUL, 0x9D47DE8A9D6A3A72UL));
+        Fnv1a16 alg = new((ushort)0xB3CBU, (ushort)0x3197U);
 
-        AreEqual(16, alg.HashLengthInBytes);
-        AreEqual(new(0xFFFFFFFFFEFFFFFFUL, 0xFFFFFFFFFFFFFEC4UL), alg.FnvPrime);
-        AreEqual(new(0x939DD8D1F844FEBDUL, 0x9D47DE8A9D6A3A72UL), alg.FnvOffsetBasis);
-        alg.Append("foobar"u8.ToArray());
-        AreEqual(
-            new(0x0AA2376793386FBA2UL, 0x5B67E764D2093DD8UL),
-            BitConverter.ToUInt128(alg.GetCurrentHash()));
+        AreEqual(2, alg.HashLengthInBytes);
+        AreEqual((ushort)0xB3CBU, alg.FnvPrime);
+        AreEqual((ushort)0x3197U, alg.FnvOffsetBasis);
+        _alg.Append("foobar"u8.ToArray());
+        AreEqual((ushort)0x260BU, (ushort)BitConverter.ToInt16(_alg.GetCurrentHash(), 0));
     }
 
     /// <summary>
@@ -284,31 +209,28 @@ public sealed class Fnv1a128Tests
     /// <returns>An asynchronous <see cref="Task" />.</returns>
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    /// <exception cref="ArgumentException">startIndex is greater than or equal to the length of value minus 3, and
+    /// is less than or equal to the length of value minus 1.</exception>
+    /// <exception cref="ArgumentNullException">buffer is <see langword="null" />.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
-    /// <exception cref="ArgumentNullException">stream is <see langword="null" />.</exception>
-    /// <exception cref="ObjectDisposedException">The token source has been disposed.</exception>
     [TestMethod]
     //// ReSharper disable once UnusedMember.Global
     public async Task TestAlternatePrimeAndOffsetAsync()
     {
-        Fnv1a128 alg = new(
-            new(0xFFFFFFFFFEFFFFFFUL, 0xFFFFFFFFFFFFFEC4UL),
-            new(0x939DD8D1F844FEBDUL, 0x9D47DE8A9D6A3A72UL));
+        Fnv1a16 alg = new((ushort)0xB3CBU, (ushort)0x3197U);
 
-        AreEqual(16, alg.HashLengthInBytes);
-        AreEqual(new(0xFFFFFFFFFEFFFFFFUL, 0xFFFFFFFFFFFFFEC4UL), alg.FnvPrime);
-        AreEqual(new(0x939DD8D1F844FEBDUL, 0x9D47DE8A9D6A3A72UL), alg.FnvOffsetBasis);
+        AreEqual(2, alg.HashLengthInBytes);
+        AreEqual((ushort)0xB3CBU, alg.FnvPrime);
+        AreEqual((ushort)0x3197U, alg.FnvOffsetBasis);
         using CancellationTokenSource cts = new();
 #pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
         await using Stream stream = new MemoryStream([.. "foobar"u8]);
 #pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
-        await alg.AppendAsync(stream, cts.Token).ConfigureAwait(true);
+        await _alg.AppendAsync(stream, cts.Token).ConfigureAwait(true);
 
-        UInt128 actual = BitConverter.ToUInt128(alg.GetCurrentHash());
+        ushort actual = (ushort)BitConverter.ToInt16(_alg.GetCurrentHash(), 0);
 
-        AreEqual(
-            new(0x0AA2376793386FBA2UL, 0x5B67E764D2093DD8UL),
-            actual);
+        AreEqual((ushort)0x260BU, actual);
     }
 
     /// <summary>
@@ -316,26 +238,22 @@ public sealed class Fnv1a128Tests
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">The offset basis must be non-zero.</exception>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
+    /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
     /// <exception cref="EncoderFallbackException">A fallback occurred (for more information, see Character
     /// Encoding in .NET)
     ///  -and-
     ///  <see cref="EncoderFallback" /> is set to <see cref="EncoderExceptionFallback" />.</exception>
-    /// <exception cref="ArgumentNullException">s is <see langword="null" />.</exception>
     [TestMethod]
     //// ReSharper disable once TooManyDeclarations
     //// ReSharper disable once UnusedMember.Global
     public void TestAlternatePrimeAndOffsetTry()
     {
-        Fnv1a128 alg = new(
-            new(0xFFFFFFFFFEFFFFFFUL, 0xFFFFFFFFFFFFFEC4UL),
-            new(0x939DD8D1F844FEBDUL, 0x9D47DE8A9D6A3A72UL));
+        Fnv1a16 alg = new((ushort)0xB3CBU, (ushort)0x3197U);
 
-        AreEqual(16, alg.HashLengthInBytes);
-        AreEqual(new(0xFFFFFFFFFEFFFFFFUL, 0xFFFFFFFFFFFFFEC4UL), alg.FnvPrime);
-        AreEqual(new(0x939DD8D1F844FEBDUL, 0x9D47DE8A9D6A3A72UL), alg.FnvOffsetBasis);
+        AreEqual(2, alg.HashLengthInBytes);
+        AreEqual((ushort)0xB3CBU, alg.FnvPrime);
+        AreEqual((ushort)0x3197U, alg.FnvOffsetBasis);
 
-        // ReSharper disable once InconsistentNaming
-        // ReSharper disable once InlineTemporaryVariable
         const string Data = Foobar;
         int inputByteCount = UTF8.GetByteCount(Data);
         Span<byte> bytes = inputByteCount < 1024
@@ -343,65 +261,67 @@ public sealed class Fnv1a128Tests
             : new byte[inputByteCount];
 
         AreEqual(inputByteCount, UTF8.GetBytes(Data, bytes));
-        alg.Append(bytes);
 
-        Span<byte> destination = stackalloc byte[alg.HashLengthInBytes];
-        bool result = alg.TryGetCurrentHash(destination, out int bytesWritten);
+        Span<byte> destination = stackalloc byte[_alg.HashLengthInBytes];
+
+        _alg.Append(bytes);
+
+        bool result = _alg.TryGetCurrentHash(destination, out int bytesWritten);
 
         IsTrue(result);
-        HasCount(bytesWritten, destination);
-        AreEqual(
-            new(0x0AA2376793386FBA2UL, 0x5B67E764D2093DD8UL),
-            BitConverter.ToUInt128(destination));
+        IsGreaterThanOrEqualTo(bytesWritten, destination.Length);
+        AreEqual((ushort)0x260BU, (ushort)BitConverter.ToInt16(destination));
     }
 
     /// <summary>
-    /// Computes the FNV-1a 128-bit hash for the specified data using
+    /// Computes the FNV-1a 16-bit hash for the specified data using
+    /// <see cref="NonCryptographicHashAlgorithm.Append(byte[])" /> and
     /// <see cref="NonCryptographicHashAlgorithm.GetCurrentHash()" />.
     /// </summary>
     /// <param name="data">The data.</param>
-    /// <returns>The FNV-1a 128-bit hash of the specified data.</returns>
+    /// <returns>The FNV-1a 32-bit hash of the specified data.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     //// ReSharper disable once InconsistentNaming
-    private UInt128 Fnv1a128(string data)
+    private ushort Fnv1a16(string data)
     {
-        AreEqual(16, _alg.HashLengthInBytes);
+        AreEqual(2, _alg.HashLengthInBytes);
         _alg.Append(UTF8.GetBytes(data));
-        return BitConverter.ToUInt128(_alg.GetCurrentHash());
+        return (ushort)BitConverter.ToInt16(_alg.GetCurrentHash(), 0);
     }
 
     /// <summary>
-    /// Asynchronously computes the FNV-1a 128-bit hash for the specified data using
-    /// <see cref="NonCryptographicHashAlgorithm.AppendAsync(Stream, CancellationToken)" /> and .
+    /// Asynchronously computes the FNV-1a 32-bit hash for the specified data using
+    /// <see cref="NonCryptographicHashAlgorithm.AppendAsync(Stream, CancellationToken)" /> and
     /// <see cref="NonCryptographicHashAlgorithm.GetCurrentHash()" />.
     /// </summary>
     /// <param name="data">The data.</param>
     /// <param name="token">The optional cancellation token.</param>
-    /// <returns>The FNV-1a 128-bit hash of the specified data.</returns>
+    /// <returns>The FNV-1a 16-bit hash of the specified data.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     /// <exception cref="OperationCanceledException">The operation was canceled.</exception>
     //// ReSharper disable once InconsistentNaming
-    private async Task<UInt128> Fnv1a128Async(string data, CancellationToken token = default)
+    private async Task<ushort> Fnv1a16Async(string data, CancellationToken token = default)
     {
-        AreEqual(16, _alg.HashLengthInBytes);
+        AreEqual(2, _alg.HashLengthInBytes);
 #pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
         await using Stream stream = new MemoryStream(UTF8.GetBytes(data));
 #pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
-        await _alg.AppendAsync(stream, token).ConfigureAwait(false);
-        return BitConverter.ToUInt128(_alg.GetCurrentHash());
+        await _alg.AppendAsync(stream, token).ConfigureAwait(true);
+        return (ushort)BitConverter.ToInt16(_alg.GetCurrentHash(), 0);
     }
 
     /// <summary>
-    /// Computes the FNV-1a 128-bit hash for the specified data using
+    /// Computes the FNV-1a 16-bit hash for the specified data using
+    /// <see cref="NonCryptographicHashAlgorithm.Append(byte[])" /> and
     /// <see cref="NonCryptographicHashAlgorithm.TryGetCurrentHash" />.
     /// </summary>
     /// <param name="data">The data.</param>
-    /// <returns>The FNV-1a 128-bit hash of the specified data.</returns>
+    /// <returns>The FNV-1a 16-bit hash of the specified data.</returns>
     /// <exception cref="AssertFailedException">Thrown if expected is not equal to actual.</exception>
     //// ReSharper disable once InconsistentNaming
-    private UInt128 Fnv1a128Try(string data)
+    private ushort Fnv1a16Try(string data)
     {
-        AreEqual(16, _alg.HashLengthInBytes);
+        AreEqual(2, _alg.HashLengthInBytes);
 
         int inputByteCount = UTF8.GetByteCount(data);
         Span<byte> bytes = inputByteCount < 1024
@@ -417,7 +337,7 @@ public sealed class Fnv1a128Tests
         bool result = _alg.TryGetCurrentHash(destination, out int bytesWritten);
 
         IsTrue(result);
-        HasCount(bytesWritten, destination);
-        return BitConverter.ToUInt128(destination);
+        IsGreaterThanOrEqualTo(bytesWritten, destination.Length);
+        return (ushort)BitConverter.ToInt16(destination);
     }
 }

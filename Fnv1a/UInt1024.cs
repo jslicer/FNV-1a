@@ -11,19 +11,18 @@
 namespace Fnv1a;
 
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 /// <summary>
 /// Minimal 1,024-bit unsigned integer helper for the FNV-1a 1024-bit variant.
 /// </summary>
-public struct UInt1024 : IEquatable<UInt1024>
+public struct UInt1024 : IEquatable<UInt1024>, IEqualityOperators<UInt1024, UInt1024, bool>
 {
 #pragma warning disable CS0169 // Fields accessed via spans
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value 0
-#pragma warning disable S1144 // Fields accessed via spans
 #pragma warning disable CA1823 // Fields accessed via spans
-#pragma warning disable S3459 // Remove unassigned field or set its value.
 #pragma warning disable RCS1169 // Make field read-only
 #pragma warning disable IDE0044 // Make field readonly
 #pragma warning disable S2933 // Make readonly
@@ -61,9 +60,7 @@ public struct UInt1024 : IEquatable<UInt1024>
 #pragma warning restore S2933 // Make readonly
 #pragma warning restore RCS1169 // Make field read-only
 #pragma warning restore IDE0044 // Make field readonly
-#pragma warning restore S3459 // Remove unassigned field or set its value.
 #pragma warning restore CA1823 // Fields accessed via spans
-#pragma warning restore S1144 // Fields accessed via spans
 #pragma warning restore CS0649 // Field is never assigned to, and will always have its default value 0
 #pragma warning restore CS0169 // Fields accessed via spans
 
@@ -88,6 +85,7 @@ public struct UInt1024 : IEquatable<UInt1024>
     /// <param name="w15">The W15.</param>
     // ReSharper disable once TooManyDependencies
 #pragma warning disable IDE0290 // Use primary constructor
+#pragma warning disable S107 // Constructor has greater than the 7 authorized parameters
     public UInt1024(
         ulong w0,
         ulong w1,
@@ -123,6 +121,7 @@ public struct UInt1024 : IEquatable<UInt1024>
         _w14 = w1;
         _w15 = w0;
     }
+#pragma warning restore S107 // Constructor has greater than the 7 authorized parameters
 #pragma warning restore IDE0290 // Use primary constructor
 
     /// <summary>
