@@ -41,10 +41,10 @@ public sealed class Fnv1a1024Tests
     /// </summary>
     private const string Foobar = "foobar";
 
+#pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// The alternate prime.
     /// </summary>
-#pragma warning disable IDE1006 // Naming Styles
     private static readonly UInt1024 _AlternatePrime = new(
 #pragma warning restore IDE1006 // Naming Styles
         0xFFFFFFFFFFFFFFFFUL,
@@ -64,10 +64,10 @@ public sealed class Fnv1a1024Tests
         0xFFFFFFFFFFFFFFFFUL,
         0xFFFFFFFFFFFFFE72UL);
 
+#pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// The alternate offset basis.
     /// </summary>
-#pragma warning disable IDE1006 // Naming Styles
     private static readonly UInt1024 _AlternateOffsetBasis = new(
 #pragma warning restore IDE1006 // Naming Styles
         0xFFFFFFFFFFFFFFFFUL,
