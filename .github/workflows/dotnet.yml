@@ -15,9 +15,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v6
       with:
         dotnet-version: 10.0.x
     - name: Restore dependencies
@@ -27,7 +27,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal --logger trx --collect:"XPlat Code Coverage"
     - name: Combine Coverage Reports # This is because one report is produced per project, and we want one result for all of them.
-      uses: danielpalme/ReportGenerator-GitHub-Action@5.2.4
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.5.11
       with:
         reports: "**/*.cobertura.xml" # REQUIRED # The coverage reports that should be parsed (separated by semicolon). Globbing is supported.
         targetdir: "${{ github.workspace }}" # REQUIRED # The directory where the generated report should be saved.
@@ -38,7 +38,7 @@ jobs:
         customSettings: "" # Optional custom settings (separated by semicolon). See: https://github.com/danielpalme/ReportGenerator/wiki/Settings.
         toolpath: "reportgeneratortool" # Default directory for installing the dotnet tool.
     - name: Upload Combined Coverage XML
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7.0.1
       with:
         name: coverage
         path: ${{ github.workspace }}/Cobertura.xml
