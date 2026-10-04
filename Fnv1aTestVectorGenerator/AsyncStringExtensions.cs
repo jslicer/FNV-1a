@@ -56,45 +56,45 @@ internal static class AsyncStringExtensions
     /// </summary>
     private const string OneThousandTwentyFour = " 1024: ";
 
+#pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// The FNV-1a 32-bit hasher.
     /// </summary>
-#pragma warning disable IDE1006 // Naming Styles
     private static readonly ThreadLocal<Fnv1a32> _Fnv1A32Hasher = new(static () => new());
 #pragma warning restore IDE1006 // Naming Styles
 
+#pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// The FNV-1a 64-bit hasher.
     /// </summary>
-#pragma warning disable IDE1006 // Naming Styles
     private static readonly ThreadLocal<Fnv1a64> _Fnv1A64Hasher = new(static () => new());
 #pragma warning restore IDE1006 // Naming Styles
 
+#pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// The FNV-1a 128-bit hasher.
     /// </summary>
-#pragma warning disable IDE1006 // Naming Styles
     private static readonly ThreadLocal<Fnv1a128> _Fnv1A128Hasher = new(static () => new());
 #pragma warning restore IDE1006 // Naming Styles
 
+#pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// The FNV-1a 256-bit hasher.
     /// </summary>
-#pragma warning disable IDE1006 // Naming Styles
     private static readonly ThreadLocal<Fnv1a256> _Fnv1A256Hasher = new(static () => new());
 #pragma warning restore IDE1006 // Naming Styles
 
+#pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// The FNVa 512-bit hasher.
     /// </summary>
-#pragma warning disable IDE1006 // Naming Styles
     private static readonly ThreadLocal<Fnv1a512> _Fnv1A512Hasher = new(static () => new());
 #pragma warning restore IDE1006 // Naming Styles
 
+#pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// The FNV-1a 1024-bit hasher.
     /// </summary>
-#pragma warning disable IDE1006 // Naming Styles
     private static readonly ThreadLocal<Fnv1a1024> _Fnv1A1024Hasher = new(static () => new());
 #pragma warning restore IDE1006 // Naming Styles
 
