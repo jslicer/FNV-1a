@@ -30,17 +30,17 @@ public sealed class Fnv1a128 : NonCryptographicHashAlgorithm
     /// </summary>
     private const int HashSizeInBytes = 16;
 
+#pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// The default prime.
     /// </summary>
-#pragma warning disable IDE1006 // Naming Styles
     private static readonly UInt128 _FnvDefaultPrime = new(0x0000000001000000UL, 0x000000000000013BUL);
 #pragma warning restore IDE1006 // Naming Styles
 
+#pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// The default non-zero offset basis.
     /// </summary>
-#pragma warning disable IDE1006 // Naming Styles
     private static readonly UInt128 _FnvDefaultOffsetBasis = new(0x6C62272E07BB0142UL, 0x62B821756295C58DUL);
 #pragma warning restore IDE1006 // Naming Styles
 

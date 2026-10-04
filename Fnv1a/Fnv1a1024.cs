@@ -28,10 +28,10 @@ public sealed class Fnv1a1024 : NonCryptographicHashAlgorithm
     /// </summary>
     private const int HashSizeInBytes = 128;
 
+#pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// The default prime.
     /// </summary>
-#pragma warning disable IDE1006 // Naming Styles
     private static readonly UInt1024 _FnvDefaultPrime = new(
 #pragma warning restore IDE1006 // Naming Styles
         0x0000000000000000UL,
@@ -51,10 +51,10 @@ public sealed class Fnv1a1024 : NonCryptographicHashAlgorithm
         0x0000000000000000UL,
         0x000000000000018DUL);
 
+#pragma warning disable IDE1006 // Naming Styles
     /// <summary>
     /// The default non-zero offset basis.
     /// </summary>
-#pragma warning disable IDE1006 // Naming Styles
     private static readonly UInt1024 _FnvDefaultOffsetBasis = new(
 #pragma warning restore IDE1006 // Naming Styles
         0x0000000000000000UL,
