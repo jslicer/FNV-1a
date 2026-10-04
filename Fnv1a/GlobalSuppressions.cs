@@ -7,24 +7,22 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Diagnostics.CodeAnalysis;
-
-[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "a", Scope = "namespace", Target = "N:Fnv1a", Justification = "Reviewed. Suppression is OK here.")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fnv", Scope = "namespace", Target = "N:Fnv1a", Justification = "Reviewed. Suppression is OK here.")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "a", Justification = "Reviewed. Suppression is OK here.")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fnv", Justification = "Reviewed. Suppression is OK here.")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "a", Scope = "type", Target = "T:Fnv1a.Fnv1a1024", Justification = "Reviewed. Suppression is OK here.")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fnv", Scope = "type", Target = "T:Fnv1a.Fnv1a1024", Justification = "Reviewed. Suppression is OK here.")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "a", Scope = "type", Target = "T:Fnv1a.Fnv1a128", Justification = "Reviewed. Suppression is OK here.")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fnv", Scope = "type", Target = "T:Fnv1a.Fnv1a128", Justification = "Reviewed. Suppression is OK here.")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "a", Scope = "type", Target = "T:Fnv1a.Fnv1a256", Justification = "Reviewed. Suppression is OK here.")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fnv", Scope = "type", Target = "T:Fnv1a.Fnv1a256", Justification = "Reviewed. Suppression is OK here.")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "a", Scope = "type", Target = "T:Fnv1a.Fnv1a32", Justification = "Reviewed. Suppression is OK here.")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fnv", Scope = "type", Target = "T:Fnv1a.Fnv1a32", Justification = "Reviewed. Suppression is OK here.")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "a", Scope = "type", Target = "T:Fnv1a.Fnv1a512", Justification = "Reviewed. Suppression is OK here.")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fnv", Scope = "type", Target = "T:Fnv1a.Fnv1a512", Justification = "Reviewed. Suppression is OK here.")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "a", Scope = "type", Target = "T:Fnv1a.Fnv1a64", Justification = "Reviewed. Suppression is OK here.")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fnv", Scope = "type", Target = "T:Fnv1a.Fnv1a64", Justification = "Reviewed. Suppression is OK here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "a", Scope = "namespace", Target = "N:Fnv1a", Justification = "Reviewed. Suppression is OK here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fnv", Scope = "namespace", Target = "N:Fnv1a", Justification = "Reviewed. Suppression is OK here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "a", Justification = "Reviewed. Suppression is OK here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fnv", Justification = "Reviewed. Suppression is OK here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "a", Scope = "type", Target = "T:Fnv1a.Fnv1a1024", Justification = "Reviewed. Suppression is OK here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fnv", Scope = "type", Target = "T:Fnv1a.Fnv1a1024", Justification = "Reviewed. Suppression is OK here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "a", Scope = "type", Target = "T:Fnv1a.Fnv1a128", Justification = "Reviewed. Suppression is OK here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fnv", Scope = "type", Target = "T:Fnv1a.Fnv1a128", Justification = "Reviewed. Suppression is OK here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "a", Scope = "type", Target = "T:Fnv1a.Fnv1a256", Justification = "Reviewed. Suppression is OK here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fnv", Scope = "type", Target = "T:Fnv1a.Fnv1a256", Justification = "Reviewed. Suppression is OK here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "a", Scope = "type", Target = "T:Fnv1a.Fnv1a32", Justification = "Reviewed. Suppression is OK here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fnv", Scope = "type", Target = "T:Fnv1a.Fnv1a32", Justification = "Reviewed. Suppression is OK here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "a", Scope = "type", Target = "T:Fnv1a.Fnv1a512", Justification = "Reviewed. Suppression is OK here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fnv", Scope = "type", Target = "T:Fnv1a.Fnv1a512", Justification = "Reviewed. Suppression is OK here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "a", Scope = "type", Target = "T:Fnv1a.Fnv1a64", Justification = "Reviewed. Suppression is OK here.")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fnv", Scope = "type", Target = "T:Fnv1a.Fnv1a64", Justification = "Reviewed. Suppression is OK here.")]
 
 // This file is used by Code Analysis to maintain SuppressMessage
 // attributes that are applied to this project.
